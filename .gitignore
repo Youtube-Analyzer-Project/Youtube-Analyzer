@@ -1,0 +1,118 @@
+# =========================
+# Global ignores
+# =========================
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDEs and editors
+.vscode/
+.idea/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+
+# Python virtual environments
+venv/
+env/
+ENV/
+.venv/
+.pyenv/
+
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment and secrets
+*.env
+*.env.*
+!.env.example
+.secret/
+secrets.json
+
+# =========================
+# Django (backend)
+# =========================
+
+# Python bytecode
+*.py[cod]
+__pycache__/
+*.so
+
+# Django stuff
+*.log
+db.sqlite3
+media/
+staticfiles/
+static/
+*.pot
+*.pyc
+
+# Django migrations (optional — keep if you want reproducible DB)
+# **/migrations/
+# !**/migrations/__init__.py
+
+# Coverage and testing
+.coverage
+htmlcov/
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.cache
+.pytest_cache/
+test-results/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+MANIFEST
+
+# =========================
+# Angular (frontend)
+# =========================
+
+# Dependencies and build output
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/.cache/
+frontend/.output/
+frontend/.env
+
+# Compiled TypeScript and temporary files
+*.js
+*.map
+*.tsbuildinfo
+
+# Angular testing
+coverage/
+karma.conf.js
+test-results/
+
+# =========================
+# Other common ignores
+# =========================
+
+# Logs
+*.log
+logs/
+debug.log
+
+# Backup and temp files
+*.bak
+*.tmp
+*.swp
+*.swo
+*.orig
+
+# Local config
+local_settings.py
+config.local.json
