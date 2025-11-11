@@ -5,7 +5,7 @@ import {YoutubeApiService} from '../services/youtube-api-service';
   selector: 'app-youtube-data-content',
   imports: [],
   templateUrl: './youtube-data-content.component.html',
-  styleUrl: './youtube-data-content.component.css'
+  styleUrl: './youtube-data-content.component.scss'
 })
 export class YoutubeDataContentComponent implements OnInit {
   private _youtubeApiService = inject(YoutubeApiService);
