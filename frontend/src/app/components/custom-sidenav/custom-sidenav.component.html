@@ -1,0 +1,13 @@
+<div class="sidenav-header">
+  <img [width]="100" [height]="100" src="logo.png" alt="App logo" />
+</div>
+
+<mat-nav-list>
+  @for(item of menuItem(); track item.id) {
+    <a mat-list-item [routerLink]="item.route" routerLinkActive #rla="routerLinkActive" [activated]="rla.isActive" >
+      <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+      <span matListItemTitle>{{ item.label }}</span>
+    </a>
+  }
+
+</mat-nav-list>

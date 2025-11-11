@@ -1,13 +1,16 @@
-import {Component, inject, signal} from '@angular/core';
-import {YoutubeApiService} from './services/youtube-api-service';
-import {YoutubeDataContent} from './youtube-data-content/youtube-data-content';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import {CustomSidenavComponent} from './components/custom-sidenav/custom-sidenav.component';
+import {YoutubeDataContentComponent} from './youtube-data-content/youtube-data-content.component';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    YoutubeDataContent
-  ],
+  imports: [YoutubeDataContentComponent, RouterOutlet, MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, CustomSidenavComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.scss'
 })
 export class AppComponent {}

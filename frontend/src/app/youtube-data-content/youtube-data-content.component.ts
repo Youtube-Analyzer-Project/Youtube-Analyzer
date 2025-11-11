@@ -4,10 +4,10 @@ import {YoutubeApiService} from '../services/youtube-api-service';
 @Component({
   selector: 'app-youtube-data-content',
   imports: [],
-  templateUrl: './youtube-data-content.html',
-  styleUrl: './youtube-data-content.css'
+  templateUrl: './youtube-data-content.component.html',
+  styleUrl: './youtube-data-content.component.css'
 })
-export class YoutubeDataContent implements OnInit {
+export class YoutubeDataContentComponent implements OnInit {
   private _youtubeApiService = inject(YoutubeApiService);
 
   ngOnInit(): void {
