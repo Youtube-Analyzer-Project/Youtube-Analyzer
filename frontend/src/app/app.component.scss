@@ -1,5 +1,9 @@
 @use '@angular/material' as mat;
 
+:host, html, body, app-root, .main-sidenav-container {
+  height: 100%;
+}
+
 :host {
   mat-toolbar {
     position: relative;
@@ -17,4 +21,8 @@
   [data-toolbar] {
     @include mat.elevation(3);
   }
+}
+
+mat-sidenav-content.content {
+  transition: margin-left 300ms ease;
 }
