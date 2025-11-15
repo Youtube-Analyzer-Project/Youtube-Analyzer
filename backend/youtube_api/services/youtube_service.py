@@ -1,7 +1,7 @@
 import requests
 
 # TODO: Add the API key here
-APY_KEY = ""
+APY_KEY = "AIzaSyDwlesdDCaeBBcEQz7eG1lCPHcIr_nNRpE"
 BASE_URL = "https://www.googleapis.com/youtube/v3/"
 
 def get_trending_videos_by_region(region_code, max_results=10):
@@ -17,7 +17,7 @@ def get_trending_videos_by_region(region_code, max_results=10):
     response = requests.get(url, params=params)
 
     if response.status_code == 200:
-        return response.json()
+        return response.json().get("items", [])
 
     return response.raise_for_status()
 
