@@ -1,7 +1,8 @@
 import requests
+from django.conf import settings
 
 # TODO: Add the API key here
-APY_KEY = "AIzaSyDwlesdDCaeBBcEQz7eG1lCPHcIr_nNRpE"
+APY_KEY = settings.YOUTUBE_API_KEY
 BASE_URL = "https://www.googleapis.com/youtube/v3/"
 
 def get_trending_videos_by_region(region_code, max_results=10):

@@ -1,6 +1,22 @@
-version: "3.9"
 name: youtube-analyzer
 services:
+  frontend:
+    build:
+      dockerfile: Dockerfile-FE
+    container_name: frontend
+    ports:
+      - "4200:4200"
+
+  backend:
+    build:
+      dockerfile: Dockerfile-BE
+    container_name: backend
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/youtube_analyzer
+      YOUTUBE_API_KEY: your_youtube_api_key_here
+    ports:
+      - "8000:8000"
+
   mongodb:
     image: mongo:latest
     container_name: mongodb
