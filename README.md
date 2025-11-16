@@ -27,8 +27,8 @@ As students in the **Big Data Master’s program**, this project demonstrates:
 
 ### Data Flow Summary
 1. **Data Sources** – YouTube Data API + stored history  
-2. **Ingestion** – Python scripts + Kafka (for streaming)  
-3. **Storage** – HDFS for raw data; PostgreSQL/MongoDB for processed results  
+2. **Ingestion** – Python scripts + Spark (for streaming)  
+3. **Storage** – JSON for raw data; MongoDB for processed results  
 4. **Processing** – PySpark for batch; Spark Streaming for real-time  
 5. **ML** – VADER or DistilBERT for sentiment analysis  
 6. **Visualization** – Django REST API + Angular dashboard  
@@ -64,13 +64,15 @@ As students in the **Big Data Master’s program**, this project demonstrates:
 |------------|--------------|-------------|
 | **Backend** | Django REST API for data access | [backend/README.md](backend/README.md) |
 | **Frontend** | Angular dashboard for visualization | [frontend/README.md](frontend/README.md) |
+| **Spark** | Spark logic | [spark/README.md](spark/README.md) |
 
 ---
 
 ## Team
 - Marian MUTU-COSTAN (Project Manager / ML Engineer)
-- Andrei FORMINTE (Product Owner / Data Developer )
-- Alexandra STANCIU (Visualization Developr)
+- Andrei FORMINTE (Product Owner / Backend Developer )
+- Paul SICHET (Spark Developer)
+- Alexandra STANCIU (Frontend Developer)
 - Patricia TRAISTARU (Quality Assurance Specialist / Documentation Specialist)
 
 ---
