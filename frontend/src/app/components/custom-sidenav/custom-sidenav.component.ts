@@ -1,20 +1,32 @@
-import {Component, computed, input, signal} from '@angular/core';
-import {MenuItem} from './custom-sidenav.types';
-import {MatListModule} from '@angular/material/list';
-import {MatIconModule} from '@angular/material/icon';
-import {RouterLink, RouterLinkActive} from '@angular/router';
+import { Component, signal, Output, EventEmitter } from '@angular/core';
+import { MenuItem } from './custom-sidenav.types';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-custom-sidenav',
-  imports: [MatListModule, MatIconModule, RouterLink, RouterLinkActive],
+  standalone: true,
+  imports: [MatListModule, MatIconModule, MatTooltipModule, RouterLink, RouterLinkActive, NgClass],
   templateUrl: './custom-sidenav.component.html',
   styleUrl: './custom-sidenav.component.scss',
+  host: { '[class.collapsed]': 'isCollapsed()' },
 })
 export class CustomSidenavComponent {
+  @Output() collapsedChange = new EventEmitter<boolean>();
+
+  isCollapsed = signal<boolean>(false);
   menuItem = signal<MenuItem[]>([
     { id: 1, icon: 'dashboard', label: 'Dashboard', route: 'dashboard' },
     { id: 2, icon: 'trending_up', label: 'Trending Videos', route: 'trending' },
-    { id: 3, icon: 'sentiment_satisfied_alt', label: 'Sentiment Analysis', route: 'sentiment' },
+    { id: 3, icon: 'mood', label: 'Sentiment Analysis', route: 'sentiment' },
     { id: 4, icon: 'analytics', label: 'Topics & Trends', route: 'topics' },
   ]);
+
+  toggleCollapsed(): void {
+    this.isCollapsed.set(!this.isCollapsed());
+    this.collapsedChange.emit(this.isCollapsed());
+  }
 }
