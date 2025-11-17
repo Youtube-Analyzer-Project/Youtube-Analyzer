@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table';
 
 export interface PeriodicElement {
@@ -25,11 +24,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 @Component({
   selector: 'app-table',
   imports: [
-    MatCard,
-    MatCardHeader,
-    MatCardTitle,
     MatTableModule,
-    MatCardContent
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
