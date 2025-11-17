@@ -68,6 +68,24 @@ As students in the **Big Data Master’s program**, this project demonstrates:
 
 ---
 
+## YouTube Trending & Sentiment Analyzer — Docker Quickstart
+
+This README explains how to run the full project (frontend, backend, MongoDB) using Docker and documents the required environment variables (.env). It also explains how to make the YouTube API key available to Docker Compose.
+
+Prerequisites
+- Docker installed.
+
+.env (what to set)
+- Place a `.env` file for the backend at `backend/.env` (or at project root) or provide equivalent variables to docker compose file.
+- Required variables:
+  - `YOUTUBE_API_KEY` — your Google YouTube Data API v3 key
+  - `MONGO_URI` — MongoDB connection string (e.g. `mongodb://mongodb:27017/youtube_analyzer` when using the included mongo service)
+
+Example `backend/.env`:
+```env
+YOUTUBE_API_KEY=YOUR_REAL_YOUTUBE_API_KEY_HERE
+MONGO_URI=mongodb://mongodb:27017/youtube_analyzer
+
 ## Team
 - Marian MUTU-COSTAN (Project Manager / ML Engineer)
 - Andrei FORMINTE (Product Owner / Backend Developer )
