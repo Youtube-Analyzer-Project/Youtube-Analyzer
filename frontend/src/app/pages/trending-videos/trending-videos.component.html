@@ -1,6 +1,13 @@
 <mat-card>
   <mat-card-content>
-    <button matButton>Fetch current trending videos</button>
-<!--    <app-table />-->
+    <button matButton (click)="getTrendingVideos()">Fetch current trending videos</button>
+
+    @if(isLoading()) {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+
+    @if (youtubeVideos().length > 0) {
+      <app-table [displayedColumns]="displayedColumns" [dataSource]="youtubeVideos()"  />
+    }
   </mat-card-content>
 </mat-card>

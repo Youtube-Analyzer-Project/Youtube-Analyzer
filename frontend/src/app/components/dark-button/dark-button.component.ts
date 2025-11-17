@@ -4,16 +4,16 @@ import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 
 @Component({
-  selector: 'app-header',
+  selector: 'app-dark-button',
   imports: [
     MatToolbar,
     MatIconButton,
     MatIcon
   ],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  templateUrl: './dark-button.component.html',
+  styleUrl: './dark-button.component.scss'
 })
-export class HeaderComponent {
+export class DarkButtonComponent {
   protected darkMode = signal<boolean>(false);
 
   protected setDarkMode() {

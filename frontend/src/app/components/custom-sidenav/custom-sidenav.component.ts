@@ -4,13 +4,12 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { NgClass } from '@angular/common';
-import {HeaderComponent} from '../header/header.component';
+import {DarkButtonComponent} from '../dark-button/dark-button.component';
 
 @Component({
   selector: 'app-custom-sidenav',
   standalone: true,
-  imports: [MatListModule, MatIconModule, MatTooltipModule, RouterLink, RouterLinkActive, HeaderComponent],
+  imports: [MatListModule, MatIconModule, MatTooltipModule, RouterLink, RouterLinkActive, DarkButtonComponent],
   templateUrl: './custom-sidenav.component.html',
   styleUrl: './custom-sidenav.component.scss',
   host: { '[class.collapsed]': 'isCollapsed()' },
