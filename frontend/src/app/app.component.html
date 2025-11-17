@@ -1,12 +1,13 @@
 <app-header />
-<mat-sidenav-container>
-  <mat-sidenav opened mode="side">
-    <app-custom-sidenav />
+<mat-sidenav-container class="main-sidenav-container">
+  <mat-sidenav [style.width.px]="isSidenavCollapsed ? 80 : 250" opened mode="side"
+    [style.transition]="'width 300ms ease'">
+    <app-custom-sidenav (collapsedChange)="onSidenavCollapsedChange($event)"></app-custom-sidenav>
   </mat-sidenav>
-  <mat-sidenav-content class="content">
-    <router-outlet />
+
+  <mat-sidenav-content class="content" [style.marginLeft.px]="isSidenavCollapsed ? 80 : 250"
+    [style.transition]="'margin-left 300ms ease'">
+    <router-outlet></router-outlet>
+    <app-youtube-data-content></app-youtube-data-content>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-<app-youtube-data-content />
-
