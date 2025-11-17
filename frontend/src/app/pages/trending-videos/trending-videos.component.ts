@@ -9,7 +9,6 @@ import {TableComponent} from '../../components/table/table.component';
     MatButton,
     MatCard,
     MatCardContent,
-    TableComponent
   ],
   templateUrl: './trending-videos.component.html',
   styleUrl: './trending-videos.component.scss'

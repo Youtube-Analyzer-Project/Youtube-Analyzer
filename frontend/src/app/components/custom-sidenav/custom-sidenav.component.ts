@@ -5,11 +5,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NgClass } from '@angular/common';
+import {HeaderComponent} from '../header/header.component';
 
 @Component({
   selector: 'app-custom-sidenav',
   standalone: true,
-  imports: [MatListModule, MatIconModule, MatTooltipModule, RouterLink, RouterLinkActive, NgClass],
+  imports: [MatListModule, MatIconModule, MatTooltipModule, RouterLink, RouterLinkActive, HeaderComponent],
   templateUrl: './custom-sidenav.component.html',
   styleUrl: './custom-sidenav.component.scss',
   host: { '[class.collapsed]': 'isCollapsed()' },
