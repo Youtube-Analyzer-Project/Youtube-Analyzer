@@ -4,7 +4,7 @@ from youtube_api.services.youtube_service import get_trending_videos_by_region
 from youtube_api.services.mongo_service import save_trending_videos
 
 @api_view(["GET"])
-def get_trending_videos(request):
+def fetch_trending_videos(request):
     region = request.GET.get("region", "RO")
     max_results = int(request.GET.get("max_results", 10))
 
