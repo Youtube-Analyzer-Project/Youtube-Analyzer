@@ -82,9 +82,11 @@ Prerequisites
   - `MONGO_URI` — MongoDB connection string (e.g. `mongodb://mongodb:27017/youtube_analyzer` when using the included mongo service)
 
 Example `backend/.env`:
+
 ```env
 YOUTUBE_API_KEY=YOUR_REAL_YOUTUBE_API_KEY_HERE
 MONGO_URI=mongodb://mongodb:27017/youtube_analyzer
+```
 
 ## Team
 - Marian MUTU-COSTAN (Project Manager / ML Engineer)
