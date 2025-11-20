@@ -26,7 +26,7 @@ export class TrendingVideosComponent implements OnDestroy {
 
   protected isLoading = signal<boolean>(false);
   protected youtubeVideos = signal<Video[]>([]);
-  protected displayedColumns: string[] = ['title', 'chanelTitle', 'viewCount', 'likeCount', 'commentCount'];
+  protected displayedColumns: string[] = ['title', 'channelTitle', 'viewCount', 'likeCount', 'commentCount'];
 
   protected getTrendingVideos() {
     this.isLoading.set(true);
