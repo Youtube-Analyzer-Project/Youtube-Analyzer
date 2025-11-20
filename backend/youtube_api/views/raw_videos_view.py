@@ -13,7 +13,7 @@ def get_trending_videos(request):
         result = []
         for item in data:
             result.append({
-                "chanelTitle": item['snippet']['channelTitle'],
+                "channelTitle": item['snippet']['channelTitle'],
                 "title": item['snippet']['title'],
                 "viewCount": item['statistics']['viewCount'],
                 "likeCount": item['statistics'].get('likeCount', 'N/A'),
