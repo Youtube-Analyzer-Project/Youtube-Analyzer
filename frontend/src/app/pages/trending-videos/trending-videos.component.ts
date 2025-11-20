@@ -4,6 +4,7 @@ import {MatCard, MatCardContent} from '@angular/material/card';
 import {TableComponent} from '../../components/table/table.component';
 import {YoutubeApiService} from '../../services/youtube-api-service';
 import {Subscription} from 'rxjs';
+import {finalize, switchMap} from 'rxjs/operators';
 import {Video} from '../../types/raw-video.type';
 import {MatProgressBar} from '@angular/material/progress-bar';
 
@@ -22,7 +23,6 @@ import {MatProgressBar} from '@angular/material/progress-bar';
 export class TrendingVideosComponent implements OnDestroy {
   private _youtubeApiService = inject(YoutubeApiService);
   private _youtubeVideosSubscription: Subscription = new Subscription();
-  private _youtubeRawVideosSubscription: Subscription = new Subscription();
 
   protected isLoading = signal<boolean>(false);
   protected youtubeVideos = signal<Video[]>([]);
@@ -31,20 +31,22 @@ export class TrendingVideosComponent implements OnDestroy {
   protected getTrendingVideos() {
     this.isLoading.set(true);
 
-    setTimeout(() => {
-      this._youtubeVideosSubscription = this._youtubeApiService.getVideosByRegion().subscribe(() => {
-        this._youtubeRawVideosSubscription = this._youtubeApiService.getRawVideos().subscribe((data) => {
-          console.log(data);
-          this.youtubeVideos.set(data);
-        });
-      });
-      this.isLoading.set(false);
-    }, 1500);
+    this._youtubeVideosSubscription = this._youtubeApiService.getVideosByRegion().pipe(
+      switchMap(() => this._youtubeApiService.getRawVideos()),
+      finalize(() => this.isLoading.set(false))
+    ).subscribe({
+      next: (data: Video[]) => {
+        console.log(data);
+        this.youtubeVideos.set(data);
+      },
+      error: (error: Error) => {
+        console.error('Error fetching trending videos:', error);
+      }
+    });
   }
 
   ngOnDestroy() {
     this._youtubeVideosSubscription.unsubscribe();
-    this._youtubeRawVideosSubscription.unsubscribe();
   }
 
 }
