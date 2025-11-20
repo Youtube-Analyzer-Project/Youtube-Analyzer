@@ -1,0 +1,9 @@
+<mat-toolbar>
+  <button matIconButton (click)="setDarkMode()">
+    @if (darkMode()) {
+      <mat-icon>light_mode</mat-icon>
+    } @else {
+      <mat-icon>dark_mode</mat-icon>
+    }
+  </button>
+</mat-toolbar>
