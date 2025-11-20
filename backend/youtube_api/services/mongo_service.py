@@ -13,7 +13,12 @@ def save_trending_videos(videos):
     collection = get_collection("raw_videos")
 
     if videos:
-        collection.insert_many(videos)
+        for video in videos:
+            # Ensure each video has a unique _id field (using its 'id')
+            video_doc = dict(video)
+            if 'id' in video_doc:
+                video_doc['_id'] = video_doc['id']
+            collection.update_one({'_id': video_doc.get('_id')}, {'$set': video_doc}, upsert=True)
     return len(videos)
 
 def get_raw_videos(max_results=10):
