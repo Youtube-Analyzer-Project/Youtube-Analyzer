@@ -1,7 +1,8 @@
-import {Component, signal} from '@angular/core';
-import {MatToolbar} from '@angular/material/toolbar';
-import {MatIconButton} from '@angular/material/button';
-import {MatIcon} from '@angular/material/icon';
+import { Component, inject } from '@angular/core';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-dark-button',
@@ -14,14 +15,12 @@ import {MatIcon} from '@angular/material/icon';
   styleUrl: './dark-button.component.scss'
 })
 export class DarkButtonComponent {
-  protected darkMode = signal<boolean>(false);
+  private themeService = inject(ThemeService);
+  
+  // Expose the signal directly so the template can call it
+  protected darkMode = this.themeService.darkMode;
 
   protected setDarkMode() {
-    this.darkMode.set(!this.darkMode());
-    if (this.darkMode()) {
-      document.body.style.setProperty('color-scheme', 'dark');
-    } else {
-      document.body.style.setProperty('color-scheme', 'light');
-    }
+    this.themeService.toggleTheme();
   }
 }
