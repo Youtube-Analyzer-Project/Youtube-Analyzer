@@ -1,7 +1,8 @@
 from pymongo import MongoClient
+from django.conf import settings
 
 # MongoDB Configuration
-MONGO_URI = "mongodb://localhost:27017/youtube_analyzer"
+MONGO_URI = settings.MONGO_URI
 mongo_client = MongoClient(MONGO_URI)
 mongo_db = mongo_client["youtube_analyzer"]
 

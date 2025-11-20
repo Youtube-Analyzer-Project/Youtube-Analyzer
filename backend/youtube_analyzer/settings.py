@@ -11,6 +11,14 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
+import os
+
+env = environ.Env()
+environ.Env.read_env(os.path.join(Path(__file__).resolve().parent.parent, '.env'))
+
+MONGO_URI = env("MONGO_URI")
+YOUTUBE_API_KEY = env("YOUTUBE_API_KEY")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,6 +34,8 @@ SECRET_KEY = 'django-insecure-g2$_iic5*9fh-%5ms_yt=n&y5m#3lbp)y-=csgl_&m76o0=pb-
 DEBUG = True
 
 CORS_ORIGIN_ALLOW_ALL = True
+ALLOWED_HOSTS = ["*"]
+
 
 # Application definition
 
