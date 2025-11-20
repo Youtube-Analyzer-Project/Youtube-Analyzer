@@ -11,7 +11,7 @@ export class YoutubeDataContentComponent implements OnInit {
   private _youtubeApiService = inject(YoutubeApiService);
 
   ngOnInit(): void {
-    this._youtubeApiService.getVideosByRegion().subscribe((data: any) => {
+    this._youtubeApiService.getVideosByRegion().subscribe((data) => {
       console.log(data);
     });
   }
