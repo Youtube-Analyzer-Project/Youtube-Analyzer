@@ -13,7 +13,7 @@ services:
     container_name: backend
     environment:
       MONGO_URI: mongodb://mongodb:27017/youtube_analyzer
-      YOUTUBE_API_KEY: AIzaSyASJAT0gIX9viuaLsZVnyKjRfmcuR5lLRI
+      YOUTUBE_API_KEY: <your private youtube api key here>
     ports:
       - "8000:8000"
 
