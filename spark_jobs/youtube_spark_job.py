@@ -23,8 +23,18 @@ params = {
     "key": API_KEY
 }
 
-response = requests.get(url, params=params)
-data = response.json()
+try:
+    response = requests.get(url, params=params, timeout=10)
+    response.raise_for_status()
+    data = response.json()
+except requests.exceptions.RequestException as e:
+    print(f"Error fetching data from YouTube API: {e}")
+    spark.stop()
+    exit(1)
+except ValueError as e:
+    print(f"Error parsing JSON response: {e}")
+    spark.stop()
+    exit(1)
 
 # Convert to RDD
 json_str = json.dumps(data)
