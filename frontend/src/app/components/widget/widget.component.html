@@ -1,0 +1,9 @@
+<mat-card class="kpi-card">
+  <mat-card-header>
+    <mat-card-title class="kpi-title">{{ data().label }}</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content class="kpi-value">
+    <ng-container [ngComponentOutlet]="data().content" />
+  </mat-card-content>
+</mat-card>
