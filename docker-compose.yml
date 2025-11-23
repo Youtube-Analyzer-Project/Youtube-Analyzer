@@ -31,7 +31,7 @@ services:
     environment:
       - CLUSTER_NAME=hadoop
     command: > 
-      sh -c "//run.sh && sleep 10 && hdfs dfsadmin -safemode leave && hdfs dfs -mkdir -p /youtube && hdfs dfs -chmod -R 777 /youtube && tail -f /dev/null"
+      sh -c "/run.sh && sleep 10 && hdfs dfsadmin -safemode leave && hdfs dfs -mkdir -p /youtube && hdfs dfs -chmod -R 777 /youtube && tail -f /dev/null"
     ports:
       - "9870:9870" # Web UI
       - "8020:8020" # HDFS port
