@@ -88,8 +88,10 @@ YOUTUBE_API_KEY=YOUR_REAL_YOUTUBE_API_KEY_HERE
 MONGO_URI=mongodb://mongodb:27017/youtube_analyzer
 ```
 
-To build our enitre application run: 
-``` docker compose -f docker-compose.yml up -d --build ```
+To build our entire application run: 
+``` 
+docker compose -f docker-compose.yml up -d --build
+```
 
 If you don't have a YouTube API key, you can create a key in the Console by clicking [Create credentials](https://console.cloud.google.com/apis/credentials)  > API key
 
