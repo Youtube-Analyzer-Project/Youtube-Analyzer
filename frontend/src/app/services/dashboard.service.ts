@@ -4,6 +4,7 @@ import {TrendingCountComponent} from '../pages/dashboard/widgets/trending-count/
 import {
   TrendingViewsCountComponent
 } from '../pages/dashboard/widgets/trending-views-count/trending-views-count.component';
+import {ViewsPerCategoryComponent} from '../pages/dashboard/widgets/views-per-category/views-per-category.component';
 
 @Injectable()
 export class DashboardService {
@@ -18,6 +19,11 @@ export class DashboardService {
       id: 2,
       label: 'Total Views',
       content: TrendingViewsCountComponent
+    },
+    {
+      id: 2,
+      label: 'Views Per Category',
+      content: ViewsPerCategoryComponent
     }
   ]);
 

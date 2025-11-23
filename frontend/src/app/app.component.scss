@@ -17,3 +17,8 @@
 mat-sidenav-content.content {
   transition: margin-left 300ms ease;
 }
+
+.chart-container {
+  height: calc(100% - 100px);
+  width: 100%;
+}

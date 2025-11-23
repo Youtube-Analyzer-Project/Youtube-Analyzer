@@ -5,7 +5,7 @@ import { Injectable, signal, effect } from '@angular/core';
 })
 export class ThemeService {
   private readonly STORAGE_KEY = 'theme-mode';
-  
+
   // Signal to track dark mode state
   public darkMode = signal<boolean>(this.loadThemePreference());
 

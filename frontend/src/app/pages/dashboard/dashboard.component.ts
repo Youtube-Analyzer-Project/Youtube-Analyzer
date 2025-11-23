@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   private _dashboardService = inject(DashboardService);
 
   protected widgets = signal<Widget[]>([]);
+  protected charts = signal<Widget[]>([]);
 
   ngOnInit(): void {
     this._getWidgets();

@@ -1,9 +1,15 @@
+.kpi-card {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .kpi-title {
   font-weight: 500;
 }
 
 .kpi-value {
-  margin-top: 8px;
   font-size: 24px;
   font-weight: 600;
 }

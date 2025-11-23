@@ -1,5 +1,5 @@
 .dashboard-widgets {
   display: grid;
-  grid-template-columns: repeat(4, minmax(250px, 1fr));
+  grid-template-columns: 1fr 1fr 2fr;
   gap: 16px;
 }
