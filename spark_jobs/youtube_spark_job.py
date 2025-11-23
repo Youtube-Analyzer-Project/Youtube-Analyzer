@@ -38,16 +38,24 @@ except ValueError as e:
     spark.stop()
     exit(1)
 
-# Convert to RDD
-json_str = json.dumps(data)
-rdd = spark.sparkContext.parallelize([json_str])
+# Extract video items and parallelize for distributed processing
+items = data.get('items', [])
+if not items:
+    print("No items found in API response")
+    spark.stop()
+    exit(1)
 
+# Create RDD from individual items for parallel processing
+rdd = spark.sparkContext.parallelize(items)
+
+# Convert each item to JSON string
+json_rdd = rdd.map(lambda item: json.dumps(item))
 # Output path with timestamp
 timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
 output_path = f"hdfs://hadoop-namenode:8020/youtube/raw_spark/trending/{timestamp}"
 
 # Write to HDFS
-rdd.coalesce(1).saveAsTextFile(output_path)
+json_rdd.coalesce(1).saveAsTextFile(output_path)
 print(f"Saved to {output_path}")
 
 spark.stop()
