@@ -1,0 +1,9 @@
+FROM spark:python3
+
+USER root
+
+# Install python3 + pip + libs needed by Spark jobs
+# For future dependencies, just add them here
+RUN pip3 install --no-cache-dir requests pyspark python-dateutil
+
+USER 185
