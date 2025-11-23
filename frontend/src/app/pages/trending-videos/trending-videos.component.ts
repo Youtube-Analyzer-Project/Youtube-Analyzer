@@ -7,6 +7,7 @@ import {Subscription} from 'rxjs';
 import {finalize, switchMap} from 'rxjs/operators';
 import {Video} from '../../types/raw-video.type';
 import {MatProgressBar} from '@angular/material/progress-bar';
+import {MatToolbar} from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-trending-videos',
@@ -16,6 +17,7 @@ import {MatProgressBar} from '@angular/material/progress-bar';
     MatCardContent,
     TableComponent,
     MatProgressBar,
+    MatToolbar,
   ],
   templateUrl: './trending-videos.component.html',
   styleUrl: './trending-videos.component.scss'

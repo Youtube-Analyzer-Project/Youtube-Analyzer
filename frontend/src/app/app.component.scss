@@ -5,21 +5,12 @@
 }
 
 :host {
-  mat-toolbar {
-    position: relative;
-    z-index: 5;
-  }
-
   mat-sidenav-container {
     height: 100vh;
   }
 
   .content {
     padding: 24px;
-  }
-
-  [data-toolbar] {
-    @include mat.elevation(3);
   }
 }
 
