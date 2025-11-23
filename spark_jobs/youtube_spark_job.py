@@ -5,6 +5,8 @@ from datetime import datetime
 import os
 
 API_KEY = os.getenv("YOUTUBE_API_KEY")
+if not API_KEY:
+    raise RuntimeError("Missing YOUTUBE_API_KEY environment variable. Please set it before running this script.")
 
 spark = SparkSession.builder \
     .appName("YouTubeSparkIngestion") \
