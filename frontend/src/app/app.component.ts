@@ -5,12 +5,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CustomSidenavComponent } from './components/custom-sidenav/custom-sidenav.component';
-import { YoutubeDataContentComponent } from './youtube-data-content/youtube-data-content.component';
 
 @Component({
   selector: 'app-root',
   imports: [
-    YoutubeDataContentComponent,
     RouterOutlet,
     MatToolbarModule,
     MatButtonModule,
