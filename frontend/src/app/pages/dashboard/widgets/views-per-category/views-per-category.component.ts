@@ -1,5 +1,5 @@
-import {Component, ElementRef, OnInit, viewChild} from '@angular/core';
-import {Chart, registerables} from 'chart.js';
+import { Component, ElementRef, OnInit, viewChild } from '@angular/core';
+import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables);
 
@@ -7,10 +7,9 @@ Chart.register(...registerables);
   selector: 'app-views-per-category',
   imports: [],
   templateUrl: './views-per-category.component.html',
-  styleUrl: './views-per-category.component.scss'
+  styleUrl: './views-per-category.component.scss',
 })
 export class ViewsPerCategoryComponent implements OnInit {
-
   // TODO: Replace with dynamic data
 
   protected chart = viewChild.required<ElementRef>('chart');
@@ -24,19 +23,23 @@ export class ViewsPerCategoryComponent implements OnInit {
           {
             label: '',
             data: [23, 17, 27, 15, 22],
-            backgroundColor: ['#36A2EB']
-          }
-        ]
+            backgroundColor: ['#36A2EB'],
+          },
+        ],
       },
       options: {
         maintainAspectRatio: false,
         responsive: true,
         plugins: {
           legend: {
-            display: false
-          }
-        }
-      }
+            display: false,
+          },
+        },
+      },
     });
+  }
+
+  ngOnDestroy(): void {
+    this.chart().nativeElement.remove();
   }
 }
