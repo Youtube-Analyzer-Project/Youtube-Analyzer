@@ -1,7 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { MatToolbar } from '@angular/material/toolbar';
 import { MatDialog } from '@angular/material/dialog';
-
 import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
 import { TrendingCategoriesComponent } from './widgets/trending-categories/trending-categories.component';
 import { VideosTableComponent } from './widgets/videos-table/videos-table.component';
@@ -17,7 +15,7 @@ import {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [MatToolbar, SearchBarComponent, TrendingCategoriesComponent, VideosTableComponent],
+  imports: [SearchBarComponent, TrendingCategoriesComponent, VideosTableComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
