@@ -7,12 +7,9 @@
 
   <!-- Container scrollabil -->
   <div class="scroll-container" #scrollContainer>
-    <mat-card
-      class="category-card"
-      *ngFor="let cat of categories"
-      [class.selected]="cat.category_id === selectedId"
-      (click)="selectCategory(cat)"
-    >
+    <mat-card class="category-card" *ngFor="let cat of categories" [class.selected]="cat.category_id === selectedId"
+      (click)="selectCategory(cat)">
+
       <mat-card-title>{{ cat.category_name }}</mat-card-title>
       <p>{{ cat.videos_count }} videos</p>
       <p>{{ cat.sentiment_label }}</p>
