@@ -1,5 +1,12 @@
-.dashboard-widgets {
-  display: grid;
-  grid-template-columns: 1fr 1fr 2fr;
-  gap: 16px;
+.dashboard-container {
+  max-width: 1500px;
+  margin: 0;
+  padding: 0 1.5rem 2rem;
+}
+
+.section-title {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.4rem;
+  font-weight: 600;
 }

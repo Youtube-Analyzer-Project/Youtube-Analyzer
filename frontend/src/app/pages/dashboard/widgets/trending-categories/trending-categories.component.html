@@ -1,0 +1,22 @@
+<div class="categories-wrapper">
+  <button class="arrow-btn left" (click)="scrollLeft()">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+
+  <div class="scroll-container" #scrollContainer>
+    @for (cat of categories; track cat.category_id) {
+    <mat-card class="category-card">
+      <div class="category-title">{{ cat.category_name }}</div>
+      <div class="category-meta">
+        <span>{{ cat.videos_count }} videos</span>
+        <span>{{ cat.sentiment_label }}</span>
+      </div>
+    </mat-card>
+    }
+  </div>
+
+  <!-- Săgeată dreapta -->
+  <button class="arrow-btn right" (click)="scrollRight()">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+</div>

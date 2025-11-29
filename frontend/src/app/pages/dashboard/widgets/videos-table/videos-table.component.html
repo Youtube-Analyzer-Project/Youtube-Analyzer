@@ -1,0 +1,43 @@
+<div class="videos-wrapper" *ngIf="paginated as data">
+  <div class="video-row" *ngFor="let video of data.items" (click)="onOpen(video)">
+    <div class="video-icon">
+      <mat-icon>smart_display</mat-icon>
+    </div>
+
+    <div class="video-main">
+      <div class="video-title">{{ video.title }}</div>
+      <div class="video-meta">
+        <span class="meta-chip">{{ video.channel_name }}</span>
+        <span class="dot">•</span>
+        <span class="meta-text">{{ video.category_badge }}</span>
+        <span class="dot">•</span>
+        <span class="meta-text">{{ video.stats.views }} views</span>
+      </div>
+    </div>
+
+    <div class="video-actions" (click)="$event.stopPropagation()">
+      <button mat-icon-button>
+        <mat-icon>share</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="paginator-wrapper">
+    <mat-paginator
+      class="videos-paginator"
+      [length]="data.total_pages * data.items.length"
+      [pageIndex]="data.current_page - 1"
+      [pageSize]="data.items.length"
+      [pageSizeOptions]="[data.items.length]"
+      (page)="onPageChange($event)"
+    >
+    </mat-paginator>
+  </div>
+</div>
+
+<div *ngIf="!paginated">
+  <p style="padding: 1rem">No video data available.</p>
+</div>

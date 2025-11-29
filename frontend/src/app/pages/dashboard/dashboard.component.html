@@ -1,9 +1,18 @@
-<mat-toolbar>
-  <h1>Dashboard</h1>
-</mat-toolbar>
+<section class="dashboard-container">
+  <app-dashboard-search-bar (searchChange)="onSearchChange($event)"> </app-dashboard-search-bar>
 
-<div class="dashboard-widgets">
-  @for (widget of widgets(); track widget.id) {
-  <app-widget [data]="widget" />
-  }
-</div>
+  <h2 class="section-title">Trending categories</h2>
+  <app-trending-categories
+    [categories]="trendingCategories"
+    (categorySelected)="onCategorySelected($event)"
+  >
+  </app-trending-categories>
+
+  <h2>Videos analyzed</h2>
+  <app-videos-table
+    [paginated]="videosPaginated"
+    (pageChange)="onPageChange($event)"
+    (openVideo)="onOpenVideo($event)"
+  >
+  </app-videos-table>
+</section>
