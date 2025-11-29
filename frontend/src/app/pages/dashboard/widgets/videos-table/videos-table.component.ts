@@ -20,7 +20,7 @@ export class VideosTableComponent {
   @Output() openVideo = new EventEmitter<VideoItem>();
 
   onPageChange(event: PageEvent): void {
-    const newPage = event.pageIndex + 1; // paginator e 0-based, noi vrem 1-based
+    const newPage = event.pageIndex + 1;
     this.pageChange.emit(newPage);
   }
 

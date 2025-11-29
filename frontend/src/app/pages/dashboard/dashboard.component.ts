@@ -22,7 +22,6 @@ import {
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent {
-  // 👉 in loc de constructor(private dialog: MatDialog)
   private readonly dialog = inject(MatDialog);
 
   trendingCategories: TopCategoryCard[] = [
