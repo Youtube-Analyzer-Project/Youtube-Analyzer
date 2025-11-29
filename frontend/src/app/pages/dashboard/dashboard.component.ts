@@ -1,28 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
+import { MatDialog } from '@angular/material/dialog';
+
 import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
 import { TrendingCategoriesComponent } from './widgets/trending-categories/trending-categories.component';
-import { TopCategoryCard } from '../../types/dashboard-api.types';
-import { VideosTableComponent, VideosListPaginated, VideoItem } from './widgets/videos-table/videos-table.component';
-import { MatDialog } from '@angular/material/dialog';
-import { VideoDialogComponent, VideoDialogData } from './widgets/video-dialog/video-dialog.component';
+import { VideosTableComponent } from './widgets/videos-table/videos-table.component';
+import { VideoDialogComponent } from './widgets/video-dialog/video-dialog.component';
 
-
+import {
+  TopCategoryCard,
+  VideoItem,
+  VideosListPaginated,
+  VideoDialogData,
+} from '../../types/dashboard-api.types';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [
-    MatToolbar,
-    SearchBarComponent,
-    TrendingCategoriesComponent,
-    VideosTableComponent,
-  ],
+  imports: [MatToolbar, SearchBarComponent, TrendingCategoriesComponent, VideosTableComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent {
-  constructor(private dialog: MatDialog) {}
+  private readonly dialog = inject(MatDialog);
+
   trendingCategories: TopCategoryCard[] = [
     {
       category_id: '10',
@@ -76,7 +77,7 @@ export class DashboardComponent {
     },
   ];
 
-    videosPaginated: VideosListPaginated = {
+  videosPaginated: VideosListPaginated = {
     sort_by: 'views_desc',
     current_page: 1,
     total_pages: 15,
@@ -98,7 +99,7 @@ export class DashboardComponent {
       },
       {
         video_id: 'X-algikO_lo',
-        title: 'Claudiu Gherguț câștigă Chefi la cuțite, sezonul 15! ',
+        title: 'Claudiu Gherguț câștigă Chefi la cuțite, sezonul 15!',
         thumbnail_url: 'https://via.placeholder.com/150',
         category_badge: 'Entertainment',
         channel_name: 'Chefi la cuțite',
@@ -131,7 +132,7 @@ export class DashboardComponent {
         title: 'Football Manager 26 | Official Launch Trailer',
         thumbnail_url: 'https://via.placeholder.com/150',
         category_badge: 'Gaming',
-        channel_name: 'Fotball Manager',
+        channel_name: 'Football Manager',
         published_at: '2025-11-04',
         stats: {
           views: '679K',
@@ -159,19 +160,27 @@ export class DashboardComponent {
     ],
   };
 
-  
-  
-   
-
-
   onSearchChange(term: string): void {
     console.log('search term:', term);
-    // aici o să filtrăm mai târziu dacă e nevoie
   }
 
   onCategorySelected(cat: TopCategoryCard | null): void {
     console.log('category selected:', cat);
-    // aici o să filtrăm video-urile după categorie
+  }
+
+  onPageChange(page: number): void {
+    console.log('Change to page:', page);
+  }
+
+  onOpenVideo(video: VideoItem): void {
+    console.log('Open video dialog for:', video.video_id);
+
+    this.dialog.open<VideoDialogComponent, VideoDialogData>(VideoDialogComponent, {
+      width: '900px',
+      maxWidth: '95vw',
+      data: { video },
+      panelClass: 'video-dialog-panel',
+    });
   }
 
   onPageChange(page: number): void {

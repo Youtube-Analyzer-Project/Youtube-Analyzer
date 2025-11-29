@@ -1,7 +1,7 @@
 import { Injectable, signal, effect } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ThemeService {
   private readonly STORAGE_KEY = 'theme-mode';

@@ -25,15 +25,13 @@ export class TrendingCategoriesComponent {
   }
 
   scrollLeft() {
-  const el = this.scrollContainer?.nativeElement;
-  if (!el) return;
-  el.scrollBy({ left: -300, behavior: 'smooth' });
-}
+    const el = this.scrollContainer?.nativeElement;
+    if (!el) return;
+    el.scrollBy({ left: -300, behavior: 'smooth' });
+  }
   scrollRight() {
     const el = this.scrollContainer?.nativeElement;
     if (!el) return;
     el.scrollBy({ left: 300, behavior: 'smooth' });
   }
-
-  
 }
