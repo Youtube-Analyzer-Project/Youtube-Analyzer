@@ -17,7 +17,6 @@ import { ThemeService } from '../../services/theme.service';
 export class DarkButtonComponent {
   private themeService = inject(ThemeService);
   
-  // Expose the signal directly so the template can call it
   protected darkMode = this.themeService.darkMode;
 
   protected setDarkMode() {

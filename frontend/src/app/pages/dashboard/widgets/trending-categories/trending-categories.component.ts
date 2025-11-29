@@ -1,13 +1,12 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { NgFor, NgClass } from '@angular/common';
 import { TopCategoryCard } from '../../../../types/dashboard-api.types';
 
 @Component({
   selector: 'app-trending-categories',
   standalone: true,
-  imports: [MatCardModule, MatIconModule, NgFor, NgClass],
+  imports: [MatCardModule, MatIconModule],
   templateUrl: './trending-categories.component.html',
   styleUrl: './trending-categories.component.scss',
 })

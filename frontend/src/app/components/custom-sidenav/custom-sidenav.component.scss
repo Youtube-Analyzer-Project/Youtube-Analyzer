@@ -4,6 +4,7 @@
   height: 100%;
   width: 250px;
   transition: width 0.3s ease;
+  background: var(--mat-sys-surface-variant);
 
   &.collapsed {
     width: 100px;
@@ -26,8 +27,8 @@
     border-radius: 100%;
     object-fit: cover;
     margin-top: 24px;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     transition: all 0.3s ease;
   }
 
