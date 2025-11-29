@@ -3,10 +3,11 @@ from rest_framework.response import Response
 
 from youtube_api.services.mongo_service import get_view_videos
 
+
+
 @api_view(["GET"])
 def get_trending_videos(request):
     max_results = int(request.GET.get("max_results", 10))
-
     try:
         data = get_view_videos(max_results)
         return Response(data, status=200)
@@ -17,6 +18,7 @@ def create_trending_videos_view(videos):
     videos_view = []
     for video in videos:
         videos_view.append({
+            "id": video['id'],
             "channelTitle": video['snippet']['channelTitle'],
             "title": video['snippet']['title'],
             "viewCount": video['statistics']['viewCount'],

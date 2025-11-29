@@ -16,6 +16,8 @@ services:
       YOUTUBE_API_KEY: AIzaSyDxe1RyVhEiM7CGF1zTglcSTolO7Var7S0
     ports:
       - "8000:8000"
+    networks:
+      - my_network
 
   mongodb:
     image: mongo:latest
@@ -24,6 +26,8 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    networks:
+      - my_network
 
   hadoop-namenode:
     image: bde2020/hadoop-namenode:2.0.0-hadoop3.1.3-java8
@@ -37,6 +41,9 @@ services:
       - "8020:8020" # HDFS port
     volumes:
       - hadoop-namenode-data:/hadoop/dfs/name
+    networks:
+      - my_network
+
   
   hadoop-datanode:
     image: bde2020/hadoop-datanode:2.0.0-hadoop3.1.3-java8
@@ -49,6 +56,8 @@ services:
       - "9864:9864" # DataNode Web UI
     depends_on:
       - hadoop-namenode
+    networks:
+      - my_network
 
   spark-master:
     build:
@@ -63,6 +72,8 @@ services:
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
     volumes:
       - ./spark_jobs:/opt/spark-jobs
+    networks:
+      - my_network
 
   spark-worker:
     image: spark:python3
@@ -75,6 +86,11 @@ services:
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
     volumes:
       - ./spark_jobs:/opt/spark-jobs
+
+networks:
+  my_network:
+    driver: bridge
+
 
 volumes:
   mongo-data:

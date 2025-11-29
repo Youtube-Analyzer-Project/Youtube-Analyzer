@@ -6,6 +6,7 @@ MONGO_URI = settings.MONGO_URI
 mongo_client = MongoClient(MONGO_URI)
 mongo_db = mongo_client["youtube_analyzer"]
 
+# TO-DO -> every time save method is invoked, the previous data is deleted
 def get_collection(name: str):
     return mongo_db[name]
 
