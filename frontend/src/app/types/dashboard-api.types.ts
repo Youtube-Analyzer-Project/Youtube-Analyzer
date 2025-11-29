@@ -22,7 +22,7 @@ export interface VideoStats {
   sentiment_label: string;
 }
 
-export interface VideoListItem {
+export interface VideoItem {
   video_id: string;
   title: string;
   thumbnail_url: string;
@@ -36,11 +36,15 @@ export interface VideosListPaginated {
   sort_by: string;
   current_page: number;
   total_pages: number;
-  items: VideoListItem[];
+  items: VideoItem[];
 }
 
 export interface DashboardResponse {
   dashboard_meta: DashboardMeta;
   top_categories_cards: TopCategoryCard[];
   videos_list_paginated: VideosListPaginated;
+}
+
+export interface VideoDialogData {
+  video: VideoItem;
 }

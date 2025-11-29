@@ -31,12 +31,13 @@
   transition: 0.25s ease;
   display: flex;
   flex-direction: column;
-  justify-content: center;   /* centrăm vertical */
-  gap: 6px;                  /* spațiu între rânduri */
+  justify-content: center; /* centrăm vertical */
+  gap: 6px; /* spațiu între rânduri */
 
   font-family: 'Inter', sans-serif;
 
-  h3, mat-card-title {
+  h3,
+  mat-card-title {
     font-size: 18px;
     font-weight: 600;
     margin: 0;
@@ -60,7 +61,6 @@
   outline: 3px solid #ff3b3b;
   transform: scale(1.03);
 }
-
 
 .arrow-btn {
   background: #494848;

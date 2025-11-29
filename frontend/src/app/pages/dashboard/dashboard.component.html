@@ -1,20 +1,18 @@
 <section class="dashboard-container">
-  <app-dashboard-search-bar
-    (searchChange)="onSearchChange($event)">
-  </app-dashboard-search-bar>
+  <app-dashboard-search-bar (searchChange)="onSearchChange($event)"> </app-dashboard-search-bar>
 
-  <h2 class="section-title">Your trending categories</h2>
+  <h2 class="section-title">Trending categories</h2>
   <app-trending-categories
     [categories]="trendingCategories"
-    (categorySelected)="onCategorySelected($event)">
+    (categorySelected)="onCategorySelected($event)"
+  >
   </app-trending-categories>
 
-  <h2>Video analyse</h2>
+  <h2>Videos analyzed</h2>
   <app-videos-table
     [paginated]="videosPaginated"
     (pageChange)="onPageChange($event)"
-    (openVideo)="onOpenVideo($event)">
+    (openVideo)="onOpenVideo($event)"
+  >
   </app-videos-table>
-
-
 </section>

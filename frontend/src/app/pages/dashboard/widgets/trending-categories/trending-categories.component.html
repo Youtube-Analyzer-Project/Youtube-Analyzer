@@ -1,5 +1,4 @@
 <div class="categories-wrapper">
-
   <!-- Săgeată stânga -->
   <button class="arrow-btn left" (click)="scrollLeft()">
     <mat-icon>chevron_left</mat-icon>
@@ -7,21 +6,19 @@
 
   <!-- Container scrollabil -->
   <div class="scroll-container" #scrollContainer>
-    <mat-card
-      class="category-card"
-      *ngFor="let cat of categories"
-      [class.selected]="cat.category_id === selectedId"
-      (click)="selectCategory(cat)"
-    >
-      <mat-card-title>{{ cat.category_name }}</mat-card-title>
-      <p>{{ cat.videos_count }} videos</p>
-      <p>{{ cat.sentiment_label }}</p>
+    @for (cat of categories; track cat.category_id) {
+    <mat-card class="category-card">
+      <div class="category-title">{{ cat.category_name }}</div>
+      <div class="category-meta">
+        <span>{{ cat.videos_count }} videos</span>
+        <span>{{ cat.sentiment_label }}</span>
+      </div>
     </mat-card>
+    }
   </div>
 
   <!-- Săgeată dreapta -->
   <button class="arrow-btn right" (click)="scrollRight()">
     <mat-icon>chevron_right</mat-icon>
   </button>
-
 </div>

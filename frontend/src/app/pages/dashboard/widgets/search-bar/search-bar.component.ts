@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './search-bar.component.scss',
 })
 export class SearchBarComponent {
-  @Output() searchChange = new EventEmitter<string>();
+  searchChange = output<string>();
 
   onInput(value: string) {
     this.searchChange.emit(value);
