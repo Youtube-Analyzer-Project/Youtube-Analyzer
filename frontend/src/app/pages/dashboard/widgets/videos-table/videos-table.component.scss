@@ -5,7 +5,6 @@
   gap: 0.75rem;
 }
 
-/* Rand video = „card” pe orizontală */
 .video-row {
   display: flex;
   align-items: center;
@@ -27,7 +26,6 @@
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
 
-/* Iconul de play din stanga */
 .video-icon {
   width: 40px;
   height: 40px;
@@ -45,13 +43,12 @@
   }
 }
 
-/* Zona de text (titlu + meta) */
 .video-main {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  min-width: 0; // ca sa nu impinga butoanele in afara
+  min-width: 0;
 }
 
 .video-title {
@@ -62,7 +59,6 @@
   text-overflow: ellipsis;
 }
 
-/* Linie cu canal, categorie, views */
 .video-meta {
   display: flex;
   align-items: center;

@@ -182,22 +182,4 @@ export class DashboardComponent {
       panelClass: 'video-dialog-panel',
     });
   }
-
-  onPageChange(page: number): void {
-  // deocamdată doar log, backend mai târziu
-  console.log('Change to page:', page);
-}
-
-  onOpenVideo(video: VideoItem): void {
-  console.log('Open video dialog for:', video.video_id);
-
-  this.dialog.open<VideoDialogComponent, VideoDialogData>(VideoDialogComponent, {
-    width: '900px',
-    maxWidth: '95vw',
-    data: { video },
-    panelClass: 'video-dialog-panel',
-  });
-}
-
-
 }

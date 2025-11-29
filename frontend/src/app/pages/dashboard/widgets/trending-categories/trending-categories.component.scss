@@ -13,7 +13,6 @@
   gap: 12px;
   padding: 8px 0;
 
-  /* ascunde scrollbar-ul */
   scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;
@@ -30,8 +29,8 @@
   transition: 0.25s ease;
   display: flex;
   flex-direction: column;
-  justify-content: center;   /* centrăm vertical */
-  gap: 6px;                  /* spațiu între rânduri */
+  justify-content: center;
+  gap: 6px;
 
   font-family: 'Inter', sans-serif;
 
