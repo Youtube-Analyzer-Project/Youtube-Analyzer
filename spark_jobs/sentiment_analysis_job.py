@@ -1,15 +1,13 @@
 import sys
 import traceback
-
+import nltk
 import pymongo
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import (
-    col, udf, collect_list, struct, regexp_extract, input_file_name,
-    current_timestamp, avg, count
+    col, udf, collect_list, struct,
+    current_timestamp, avg, count, explode
 )
 from pyspark.sql.types import FloatType
-
-import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 
@@ -22,46 +20,41 @@ analyzer = SentimentIntensityAnalyzer()
 
 
 def translate_and_score(text):
-    """
-    Pure free sentiment analysis with emojis and slang,
-    no external APIs, no translation, Spark safe.
-    """
     if not text:
-        return 0
+        return 0.0
 
     try:
         score = analyzer.polarity_scores(text)['compound']
-        return score
-
+        return float(score)
     except Exception as e:
         print("Sentiment error:", e, file=sys.stderr)
         traceback.print_exc()
-        return 0
+        return 0.0
 
 
 def get_sentiment_label(score):
     if score <= -0.5:
         return "Very Negative"
-    if score <= 0:
+    elif score <= -0.1:
         return "Negative"
-    if score <= 0:
+    elif score < 0.1:
         return "Neutral"
-    if score <= 0.5:
+    elif score < 0.5:
         return "Positive"
-    return "Very Positive"
+    else:
+        return "Very Positive"
 
 
 def find_highlights(comments_list):
-
     if not comments_list:
-        return {"pos": None, "neg": None}
+        return {"top_pos": [], "top_neg": []}
 
     sorted_comments = sorted(comments_list, key=lambda x: x['score'])
 
-    neg = sorted_comments[0] if sorted_comments[0]['score'] < 0 else None
-    pos = sorted_comments[-1] if sorted_comments[-1]['score'] > 0 else None
+    top_neg = [c for c in sorted_comments if c['score'] < 0][:2]
+    top_pos = [c for c in reversed(sorted_comments) if c['score'] > 0][:3]
 
-    return {"pos": pos, "neg": neg}
+    return {"top_pos": top_pos, "top_neg": top_neg}
 
 
 def save_rich_data_mongo(partition_data):
@@ -70,18 +63,18 @@ def save_rich_data_mongo(partition_data):
     collection = db["videos"]
 
     for row in partition_data:
-        video_id = row.video_id
+        video_id = (getattr(row, "video_id", None) or getattr(row, "v_id", None))
 
         if not video_id:
             continue
 
-        current_score = float(row.avg_sentiment) if row.avg_sentiment is not None else 0
+        current_score = float(row.avg_sentiment) if row.avg_sentiment is not None else 0.0
         highlights = find_highlights(row.all_comments)
 
         existing = collection.find_one({"_id": video_id})
 
         history = []
-        last_score = 0
+        last_score = 0.0
 
         if existing and "sentiment" in existing:
             history = existing["sentiment"].get("history", [])
@@ -90,9 +83,9 @@ def save_rich_data_mongo(partition_data):
                 last_score = float(stored_score)
 
         trend = "stable"
-        if current_score > last_score + 0.5:
+        if current_score > last_score + 0.1:
             trend = "increasing"
-        elif current_score < last_score - 0.5:
+        elif current_score < last_score - 0.1:
             trend = "decreasing"
 
         history.append({
@@ -122,8 +115,8 @@ def save_rich_data_mongo(partition_data):
                 "history": history
             },
             "highlights": {
-                "top_positive": highlights['pos'],
-                "top_negative": highlights['neg']
+                "top_positive": highlights['top_pos'],
+                "top_negative": highlights['top_neg']
             },
             "last_updated": row.analysis_date
         }
@@ -141,13 +134,23 @@ def run_job():
 
     spark.sparkContext.setLogLevel("WARN")
 
-    comments_df = spark.read.json("hdfs://hadoop-namenode:8020/youtube/raw_spark/comments/*")
+    comments_raw = spark.read.json("hdfs://hadoop-namenode:8020/youtube/raw_spark/comments/*")
+
+    comments_df = comments_raw.select(
+        col("video_id"),
+        explode("comments").alias("comment")
+    )
 
     score_udf = udf(translate_and_score, FloatType())
 
-    comments_scored = comments_df.filter(col("text").isNotNull()) \
-        .withColumn("score", score_udf(col("text"))) \
-        .withColumn("video_id", regexp_extract(input_file_name(), r"comments/([^_]+)_", 1))
+    comments_scored = comments_df.filter(col("comment.text").isNotNull()) \
+        .withColumn("score", score_udf(col("comment.text"))) \
+        .select(
+            col("video_id"),                            # 👈 KEEP video_id
+            col("comment.author").alias("author"),
+            col("comment.text").alias("text"),
+            col("score")
+        )
 
     videos_df = spark.read.json("hdfs://hadoop-namenode:8020/youtube/raw_spark/trending/*")
 

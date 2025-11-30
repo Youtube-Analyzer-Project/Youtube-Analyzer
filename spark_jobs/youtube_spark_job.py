@@ -47,7 +47,11 @@ def run_job():
     for video in videos:
         video_id = video["id"]
         comments = fetch_video_comments(video_id)
-        store_in_hadoop(spark, f"comments/{video_id}_{timestamp}", comments)
+        wrapper = {
+            "video_id": video_id,
+            "comments": comments
+        }
+        store_in_hadoop(spark, f"comments/{video_id}_{timestamp}", [wrapper])
 
     spark.stop()
 
