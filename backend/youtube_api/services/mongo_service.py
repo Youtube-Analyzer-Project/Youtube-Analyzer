@@ -22,6 +22,14 @@ def save_trending_videos(videos):
             collection.update_one({'_id': video_doc.get('_id')}, {'$set': video_doc}, upsert=True)
     return len(videos)
 
-def get_view_videos(max_results=10):
+def get_view_videos(skip, limit, search):
     collection = get_collection("view_videos")
-    return list(collection.find().limit(max_results))
+    match = {}
+    if search is not None:
+        match = {
+                "$or": [
+                    {"title": {"$regex": search, "$options": "i"}},
+                    {"channelTitle": {"$regex": search, "$options": "i"}}
+                ]
+            }
+    return list(collection.aggregate([{"$match":  match}, {'$skip':  skip}, {'$limit':  limit}]))
