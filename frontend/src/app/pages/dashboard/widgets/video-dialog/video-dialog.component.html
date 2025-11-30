@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>{{ data.video.title }}</h2>
+
+<div mat-dialog-content class="video-dialog-content" *ngIf="safeUrl">
+  <div class="video-frame-wrapper">
+    <iframe
+      [src]="safeUrl"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    >
+    </iframe>
+  </div>
+
+  <div class="video-extra">
+    <p><strong>Channel:</strong> {{ data.video.channel_name }}</p>
+    <p><strong>Category:</strong> {{ data.video.category_badge }}</p>
+    <p><strong>Views:</strong> {{ data.video.stats.views }}</p>
+    <p><strong>Sentiment:</strong> {{ data.video.stats.sentiment_label }}</p>
+  </div>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="close()">
+    <mat-icon>close</mat-icon>
+    Close
+  </button>
+</div>

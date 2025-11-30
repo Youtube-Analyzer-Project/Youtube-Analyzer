@@ -1,15 +1,22 @@
 import { Component, signal, Output, EventEmitter } from '@angular/core';
-import { MenuItem } from './custom-sidenav.types';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import {DarkButtonComponent} from '../dark-button/dark-button.component';
+import { DarkButtonComponent } from '../dark-button/dark-button.component';
+import { MenuItem } from '../../types/custom-sidenav.types';
 
 @Component({
   selector: 'app-custom-sidenav',
   standalone: true,
-  imports: [MatListModule, MatIconModule, MatTooltipModule, RouterLink, RouterLinkActive, DarkButtonComponent],
+  imports: [
+    MatListModule,
+    MatIconModule,
+    MatTooltipModule,
+    RouterLink,
+    RouterLinkActive,
+    DarkButtonComponent,
+  ],
   templateUrl: './custom-sidenav.component.html',
   styleUrl: './custom-sidenav.component.scss',
   host: { '[class.collapsed]': 'isCollapsed()' },
