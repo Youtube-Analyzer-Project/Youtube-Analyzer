@@ -162,7 +162,7 @@ def run_job():
         col("snippet.tags").alias("tags"),
         col("statistics.viewCount").alias("view_count"),
         col("statistics.likeCount").alias("like_count")
-    ).dropDuplicates(["v_id"])
+    )
 
     comments_agg = comments_scored.groupBy("video_id").agg(
         avg("score").alias("avg_sentiment"),
