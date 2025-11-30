@@ -12,8 +12,8 @@ services:
       dockerfile: Dockerfile-BE
     container_name: backend
     environment:
-      MONGO_URI: mongodb://mongodb:27017/youtube_analyzer
-      YOUTUBE_API_KEY: AIzaSyDxe1RyVhEiM7CGF1zTglcSTolO7Var7S0
+      MONGO_URI: ${MONGO_URI}
+      YOUTUBE_API_KEY: ${YOUTUBE_API_KEY}
     ports:
       - "8000:8000"
     networks:
@@ -65,7 +65,7 @@ services:
     container_name: spark-master
     environment:
       - SPARK_MODE=master
-      - YOUTUBE_API_KEY=AIzaSyDxe1RyVhEiM7CGF1zTglcSTolO7Var7S0
+      - YOUTUBE_API_KEY=${YOUTUBE_API_KEY}
     ports:
       - "8080:8080"
       - "7077:7077"
