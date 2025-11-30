@@ -88,6 +88,18 @@ and update the output path:
 ```python
 output_path = f"hdfs://localhost:9000/youtube/raw_spark/trending/{timestamp}"
 ```
+Inside the hadoop-namenode container, run the following commands
+
+These will create the comments and trending folders
+and allow spark to create files inside them:
+```bash 
+hdfs dfsadmin -safemode leave
+hdfs dfs -mkdir -p /youtube/raw_spark/trending
+hdfs dfs -chmod -R 777 /youtube/raw_spark/trending
+
+hdfs dfs -mkdir -p /youtube/raw_spark/comments
+hdfs dfs -chmod -R 777 /youtube/raw_spark/comments
+```
 After editing, run:
 ```bash
 spark-submit spark_jobs/youtube_spark_job.py
