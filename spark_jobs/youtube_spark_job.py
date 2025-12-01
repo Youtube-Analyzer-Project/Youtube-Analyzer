@@ -51,6 +51,7 @@ def run_job():
             "video_id": video_id,
             "comments": comments
         }
+        print(f"Fetched {len(comments)} comments for {video_id}")
         store_in_hadoop(spark, f"comments/{video_id}_{timestamp}", [wrapper])
 
     spark.stop()

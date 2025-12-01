@@ -19,7 +19,7 @@ except LookupError:
 analyzer = SentimentIntensityAnalyzer()
 
 
-def translate_and_score(text):
+def calculate_sentiment_score(text):
     if not text:
         return 0.0
 
@@ -102,7 +102,7 @@ def save_rich_data_mongo(partition_data):
             "published_at": row.published_at,
             "category_id": row.category_id,
             "tags": row.tags if row.tags else [],
-            "description": (row.description[:1000] + "...") if row.description else "",
+            "description": (row.description + "...") if row.description else "",
             "stats": {
                 "views": int(row.view_count) if row.view_count else 0,
                 "likes": int(row.like_count) if row.like_count else 0,
@@ -141,12 +141,12 @@ def run_job():
         explode("comments").alias("comment")
     )
 
-    score_udf = udf(translate_and_score, FloatType())
+    score_udf = udf(calculate_sentiment_score, FloatType())
 
     comments_scored = comments_df.filter(col("comment.text").isNotNull()) \
         .withColumn("score", score_udf(col("comment.text"))) \
         .select(
-            col("video_id"),                            # 👈 KEEP video_id
+            col("video_id"),
             col("comment.author").alias("author"),
             col("comment.text").alias("text"),
             col("score")
