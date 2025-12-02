@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from youtube_api.services.mongo_service import get_view_videos
+from youtube_api.services.mongo_service import get_view_videos, get_view_video, get_view_top_categories
 
 
 
@@ -21,6 +21,23 @@ def get_trending_videos(request):
             "items": videos
         }
         return Response(response_json, status=200)
+    except Exception as e:
+        return Response({"error": str(e)}, status=500)
+
+
+@api_view(["GET"])
+def get_video(request, _id):
+    try:
+        video = get_view_video(_id)
+        return Response(video, status=200)
+    except Exception as e:
+        return Response({"error": str(e)}, status=500)
+
+@api_view(["GET"])
+def get_top_categories(request):
+    try:
+        categories = get_view_top_categories()
+        return Response(categories, status=200)
     except Exception as e:
         return Response({"error": str(e)}, status=500)
 
