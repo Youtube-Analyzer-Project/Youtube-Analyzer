@@ -1,27 +1,87 @@
 <h2 mat-dialog-title>{{ data.video.title }}</h2>
 
-<div mat-dialog-content class="video-dialog-content" *ngIf="safeUrl">
-  <div class="video-frame-wrapper">
-    <iframe
-      [src]="safeUrl"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-    >
+<mat-dialog-content>
+
+  @if (safeUrl) {
+  <div class="video-embed">
+    <iframe [src]="safeUrl" frameborder="0" allowfullscreen>
     </iframe>
   </div>
+  }
 
-  <div class="video-extra">
-    <p><strong>Channel:</strong> {{ data.video.channel_name }}</p>
-    <p><strong>Category:</strong> {{ data.video.category_badge }}</p>
-    <p><strong>Views:</strong> {{ data.video.stats.views }}</p>
-    <p><strong>Sentiment:</strong> {{ data.video.stats.sentiment_label }}</p>
+  @if (loading) {
+  <mat-progress-spinner mode="indeterminate" diameter="50" strokeWidth="5" class="loading-spinner">
+  </mat-progress-spinner>
+  }
+
+  @if (error) {
+  <p class="error">{{ error }}</p>
+  }
+
+  @if (hasDetails && details) {
+  <div class="video-details">
+
+    <p><strong>Channel:</strong> {{ details.channel_name }}</p>
+
+    <p>
+      <strong>Published:</strong>
+      {{ details.published_at | date : 'medium' }}
+    </p>
+
+    <p>
+      <strong>Views:</strong>
+      {{ details.stats.views | number }}
+    </p>
+
+    <p>
+      <strong>Likes:</strong>
+      {{ details.stats.likes | number }}
+    </p>
+
+    <p>
+      <strong>Comments:</strong>
+      {{ details.stats.comments | number }}
+    </p>
+
+    <p>
+      <strong>Sentiment:</strong>
+      {{ details.stats.sentiment_label }}
+      ({{ details.stats.sentiment_score | number : '1.2-2' }})
+    </p>
+
+    @if (hasTags) {
+    <div class="tag-list">
+      <strong>Tags:</strong>
+      @for (tag of tags; track tag) {
+      <span class="tag-chip">{{ tag }}</span>
+      }
+    </div>
+    }
+
+    <div class="highlights">
+      <h3>Top Positive Comments</h3>
+      @for (item of positiveHighlights; track $index) {
+      <div class="comment">
+        <strong>{{ item[0] }}</strong> — {{ item[1] }} <em>({{ item[2] }})</em>
+      </div>
+      }
+
+      <h3>Top Negative Comments</h3>
+      @for (item of negativeHighlights; track $index) {
+      <div class="comment">
+        <strong>{{ item[0] }}</strong> — {{ item[1] }} <em>({{ item[2] }})</em>
+      </div>
+      }
+    </div>
+
   </div>
-</div>
+  }
 
-<div mat-dialog-actions align="end">
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
   <button mat-button (click)="close()">
     <mat-icon>close</mat-icon>
     Close
   </button>
-</div>
+</mat-dialog-actions>

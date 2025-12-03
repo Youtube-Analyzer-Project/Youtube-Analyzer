@@ -12,15 +12,12 @@ import { TopCategoryCard } from '../../../../types/dashboard-api.types';
 })
 export class TrendingCategoriesComponent {
   @Input() categories: TopCategoryCard[] = [];
-  @Output() categorySelected = new EventEmitter<TopCategoryCard | null>();
-
   @ViewChild('scrollContainer') scrollContainer!: ElementRef<HTMLDivElement>;
 
   selectedId: string | null = null;
 
   selectCategory(cat: TopCategoryCard) {
     this.selectedId = cat.category_id;
-    this.categorySelected.emit(cat);
   }
 
   scrollLeft() {
