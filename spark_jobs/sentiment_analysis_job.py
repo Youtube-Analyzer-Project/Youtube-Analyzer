@@ -2,6 +2,7 @@ import sys
 import traceback
 import nltk
 import pymongo
+import os
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import (
     col, udf, collect_list, struct,
@@ -14,7 +15,9 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 try:
     nltk.data.find('sentiment/vader_lexicon.zip')
 except LookupError:
-    nltk.download('vader_lexicon')
+    os.makedirs('./nltk_data', exist_ok=True)
+    nltk.download('vader_lexicon', download_dir='./nltk_data')
+    nltk.data.path.append('./nltk_data')
 
 analyzer = SentimentIntensityAnalyzer()
 
@@ -109,7 +112,7 @@ def save_rich_data_mongo(partition_data):
                 "comments": int(row.comment_count) if row.comment_count else 0
             },
             "sentiment": {
-                "score": current_score,
+                "score": (current_score + 1.0) / 2.0,
                 "label": get_sentiment_label(current_score),
                 "trend": trend,
                 "history": history
