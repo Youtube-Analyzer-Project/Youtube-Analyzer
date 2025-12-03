@@ -11,12 +11,12 @@ def get_trending_videos(request):
     limit = int(request.GET.get("limit", 10))
     search = request.GET.get("search", None)
     try:
-        videos = get_view_videos((page - 1) * limit, limit, search)
+        videos, total_videos = get_view_videos((page - 1) * limit, limit, search)
         response_json = {
             "meta": {
                 "page_number": page,
                 "items_per_page": limit,
-                "total_items": len(videos)
+                "total_items": total_videos
             },
             "items": videos
         }

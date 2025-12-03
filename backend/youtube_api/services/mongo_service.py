@@ -6,7 +6,6 @@ MONGO_URI = settings.MONGO_URI
 mongo_client = MongoClient(MONGO_URI)
 mongo_db = mongo_client["youtube_analytics"]
 
-# TO-DO -> every time save method is invoked, the previous data is deleted
 def get_collection(name: str):
     return mongo_db[name]
 
@@ -44,9 +43,12 @@ def get_view_videos(skip, limit, search):
         "tags": 0, "description": 0,  "highlights": 0, "last_updated": 0
     }
     videos = list(collection.aggregate([{"$match": match}, {'$skip': skip}, {'$limit': limit}, {"$project": project}]))
+
+    total_videos = collection.count_documents({})
+
     for video in videos:
         create_stats_view(video)
-    return videos
+    return videos, total_videos
 
 
 def get_view_video(video_id):
