@@ -2,17 +2,11 @@
   <app-dashboard-search-bar (searchChange)="onSearchChange($event)"> </app-dashboard-search-bar>
 
   <h2 class="section-title">Trending categories</h2>
-  <app-trending-categories
-    [categories]="trendingCategories"
-    (categorySelected)="onCategorySelected($event)"
-  >
+  <app-trending-categories [categories]="trendingCategories">
   </app-trending-categories>
 
   <h2>Videos analyzed</h2>
-  <app-videos-table
-    [paginated]="videosPaginated"
-    (pageChange)="onPageChange($event)"
-    (openVideo)="onOpenVideo($event)"
-  >
+  <app-videos-table [paginated]="videosPaginated" [pageSize]="pageSize" (pageChange)="onPageChange($event)"
+    (openVideo)="onOpenVideo($event)">
   </app-videos-table>
 </section>
