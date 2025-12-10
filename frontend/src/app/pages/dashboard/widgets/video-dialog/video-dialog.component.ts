@@ -12,7 +12,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-video-dialog',
   standalone: true,
-  imports: [MatDialogModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, DatePipe, DecimalPipe],
+  imports: [
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    DatePipe,
+    DecimalPipe,
+  ],
   templateUrl: './video-dialog.component.html',
   styleUrl: './video-dialog.component.scss',
 })
@@ -71,5 +78,12 @@ export class VideoDialogComponent {
 
   close(): void {
     this.dialogRef.close();
+  }
+
+  openOnYoutube(): void {
+    const videoId = this.data.video.video_id;
+    if (!videoId) return;
+
+    window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
   }
 }

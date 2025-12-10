@@ -1,85 +1,120 @@
-<h2 mat-dialog-title>{{ data.video.title }}</h2>
-
-<mat-dialog-content>
-
-  @if (safeUrl) {
-  <div class="video-embed">
-    <iframe [src]="safeUrl" frameborder="0" allowfullscreen>
-    </iframe>
-  </div>
-  }
-
+<mat-dialog-content class="video-dialog-content">
   @if (loading) {
-  <mat-progress-spinner mode="indeterminate" diameter="50" strokeWidth="5" class="loading-spinner">
-  </mat-progress-spinner>
-  }
+  <div class="loading-state">
+    <mat-progress-spinner mode="indeterminate" diameter="40" strokeWidth="4">
+    </mat-progress-spinner>
+    <p>Loading video details...</p>
+  </div>
+  } @if (error) {
+  <p class="error-message">{{ error }}</p>
+  } @if (!loading && !error && hasDetails && details) {
 
-  @if (error) {
-  <p class="error">{{ error }}</p>
-  }
+  <div class="video-dialog">
+    <div class="video-header">
+      @if (safeUrl) {
+      <div class="video-frame-wrapper">
+        <iframe [src]="safeUrl" frameborder="0" allowfullscreen> </iframe>
+      </div>
+      }
 
-  @if (hasDetails && details) {
-  <div class="video-details">
+      <div class="video-info-right">
+        <h2 class="dialog-title">
+          {{ data.video.title }}
+        </h2>
 
-    <p><strong>Channel:</strong> {{ details.channel_name }}</p>
+        <div class="channel-name">
+          {{ details.channel_name }}
+        </div>
 
-    <p>
-      <strong>Published:</strong>
-      {{ details.published_at | date : 'medium' }}
-    </p>
+        <div
+          class="sentiment-pill"
+          [class.sentiment-positive]="details.stats.sentiment_label === 'Positive'"
+          [class.sentiment-neutral]="details.stats.sentiment_label === 'Neutral'"
+          [class.sentiment-negative]="details.stats.sentiment_label === 'Negative'"
+        >
+          {{ details.stats.sentiment_label }}
+          ({{ details.stats.sentiment_score | number : '1.2-2' }})
+        </div>
+      </div>
+    </div>
 
-    <p>
-      <strong>Views:</strong>
-      {{ details.stats.views | number }}
-    </p>
+    <section class="stats-section">
+      <h3>Stats</h3>
 
-    <p>
-      <strong>Likes:</strong>
-      {{ details.stats.likes | number }}
-    </p>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <mat-icon>event</mat-icon>
+          <div class="stat-content">
+            <span class="stat-label">Published</span>
+            <span class="stat-value">
+              {{ details.published_at | date : 'mediumDate' }}
+            </span>
+          </div>
+        </div>
 
-    <p>
-      <strong>Comments:</strong>
-      {{ details.stats.comments | number }}
-    </p>
+        <div class="stat-card">
+          <mat-icon>visibility</mat-icon>
+          <div class="stat-content">
+            <span class="stat-label">Views</span>
+            <span class="stat-value">
+              {{ details.stats.views | number }}
+            </span>
+          </div>
+        </div>
 
-    <p>
-      <strong>Sentiment:</strong>
-      {{ details.stats.sentiment_label }}
-      ({{ details.stats.sentiment_score | number : '1.2-2' }})
-    </p>
+        <div class="stat-card">
+          <mat-icon>thumb_up</mat-icon>
+          <div class="stat-content">
+            <span class="stat-label">Likes</span>
+            <span class="stat-value">
+              {{ details.stats.likes | number }}
+            </span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <mat-icon>comment</mat-icon>
+          <div class="stat-content">
+            <span class="stat-label">Comments</span>
+            <span class="stat-value">
+              {{ details.stats.comments | number }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
 
     @if (hasTags) {
-    <div class="tag-list">
-      <strong>Tags:</strong>
-      @for (tag of tags; track tag) {
-      <span class="tag-chip">{{ tag }}</span>
-      }
-    </div>
-    }
-
-    <div class="highlights">
+    <section class="tags-section">
+      <h3>Tags</h3>
+      <div class="tag-list">
+        @for (tag of tags; track tag) {
+        <span class="tag-chip">{{ tag }}</span>
+        }
+      </div>
+    </section>
+    } @if (positiveHighlights?.length) {
+    <section class="comments-section">
       <h3>Top Positive Comments</h3>
+
       @for (item of positiveHighlights; track $index) {
-      <div class="comment">
-        <strong>{{ item[0] }}</strong> — {{ item[1] }} <em>({{ item[2] }})</em>
+      <div class="comment-row">
+        <div class="comment-text">
+          <div class="comment-author">{{ item[0] }}</div>
+          <div class="comment-body">{{ item[1] }}</div>
+        </div>
+        <div class="comment-score">+{{ item[2] | number : '1.2-2' }}</div>
       </div>
       }
-
-      <h3>Top Negative Comments</h3>
-      @for (item of negativeHighlights; track $index) {
-      <div class="comment">
-        <strong>{{ item[0] }}</strong> — {{ item[1] }} <em>({{ item[2] }})</em>
-      </div>
-      }
-    </div>
-
+    </section>
+    }
   </div>
   }
-
 </mat-dialog-content>
 
-<mat-dialog-actions align="end">
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-stroked-button color="primary" (click)="openOnYoutube()">Open on YouTube</button>
+
   <button mat-button (click)="close()">
     <mat-icon>close</mat-icon>
     Close
