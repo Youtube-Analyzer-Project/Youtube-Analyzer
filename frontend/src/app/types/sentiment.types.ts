@@ -23,3 +23,20 @@ export interface SentimentSummaryDto {
   };
   overall_trend_label: string;
 }
+
+export interface SentimentChartSeriesDto {
+  date: string;
+  category_id: string;
+  avg_score: number
+}
+
+export interface SentimentChartCategoriesDto {
+  id: string;
+  total_views: number;
+  views_count: number
+}
+
+export interface SentimentChartDto {
+  categories: SentimentChartCategoriesDto[];
+  series: SentimentChartSeriesDto[];
+}

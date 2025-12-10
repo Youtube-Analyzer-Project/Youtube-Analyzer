@@ -1,9 +1,16 @@
-<mat-toolbar>
-  <h1>Sentiment Analysis</h1>
-</mat-toolbar>
-
-<div class="dashboard-widgets">
+<div class="summary-widgets">
   @for (widget of widgets(); track widget.id) {
     <app-widget [data]="widget" />
   }
 </div>
+
+@if (chartIsLoaded()) {
+  <div class="chart-widgets">
+    <app-sentiment-line-chart [dataset1]="dataset1()" [dataset2]="dataset2()" [dataset3]="dataset3()" />
+  </div>
+} @else {
+  <div class="loading-container">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+}
+

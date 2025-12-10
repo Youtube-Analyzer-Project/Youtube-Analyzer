@@ -1,5 +1,19 @@
-.dashboard-widgets {
+.summary-widgets {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 16px;
+  margin-bottom: 16px;
+}
+
+.chart-widgets {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(700px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 1200px) {
+  .chart-widgets {
+    grid-template-columns: 1fr;
+  }
 }

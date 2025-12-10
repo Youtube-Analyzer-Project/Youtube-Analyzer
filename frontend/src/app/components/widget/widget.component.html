@@ -2,7 +2,7 @@
   <mat-card-header class="kpi-title-container">
     <mat-card-title class="kpi-title">{{ data().label }}</mat-card-title>
     <mat-icon [class.neutral]="data().content.includes('Neutral')"
-              [class.negative]="data().content.includes('Negative')"
+              [class.negative]="data().content.includes('Negative') || data().content.includes('Decreasing')"
               [class.positive]="data().content.includes('Positive') || data().content.includes('Increasing')">
       {{ data().icon }}
     </mat-icon>
@@ -11,7 +11,7 @@
   <mat-card-content>
     <p class="kpi-value"
        [class.neutral]="data().content.includes('Neutral')"
-       [class.negative]="data().content.includes('Negative')"
+       [class.negative]="data().content.includes('Negative') || data().content.includes('Decreasing')"
        [class.positive]="data().content.includes('Positive') || data().content.includes('Increasing')">
       {{ data().content }}</p>
     <p class="kpi-details">{{ data().details }}</p>
