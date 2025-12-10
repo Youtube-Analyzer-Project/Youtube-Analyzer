@@ -13,7 +13,7 @@ import { getCategoryName } from '../constants/youtube_categories';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardApiService {
-  private readonly apiBaseUrl = 'http://backend:8000/api';
+  private readonly apiBaseUrl = 'http://localhost:8000/api';
 
   constructor(private http: HttpClient) {}
 

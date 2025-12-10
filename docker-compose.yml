@@ -11,9 +11,7 @@ services:
     build:
       dockerfile: Dockerfile-BE
     container_name: backend
-    environment:
-      MONGO_URI: ${MONGO_URI}
-      YOUTUBE_API_KEY: ${YOUTUBE_API_KEY}
+    env_file: ./backend/.env
     ports:
       - "8000:8000"
     networks:
@@ -34,8 +32,6 @@ services:
     container_name: hadoop-namenode
     environment:
       - CLUSTER_NAME=hadoop
-    command: > 
-      sh -c "/run.sh && sleep 10 && hdfs dfsadmin -safemode leave && hdfs dfs -mkdir -p /youtube && hdfs dfs -chmod -R 777 /youtube && tail -f /dev/null"
     ports:
       - "9870:9870" # Web UI
       - "8020:8020" # HDFS port
@@ -63,9 +59,7 @@ services:
     build:
       dockerfile: Dockerfile-SPARK
     container_name: spark-master
-    environment:
-      - SPARK_MODE=master
-      - YOUTUBE_API_KEY=${YOUTUBE_API_KEY}
+    env_file: ./backend/.env
     ports:
       - "8080:8080"
       - "7077:7077"
