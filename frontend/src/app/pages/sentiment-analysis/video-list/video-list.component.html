@@ -1,0 +1,11 @@
+<mat-card>
+  <mat-card-header class="kpi-title-container">
+    <mat-card-title class="kpi-title">{{ title() }}</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    @for(video of videos(); track video.id) {
+      <app-video-list-item [video]="video" />
+    }
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,20 @@
+<div class="video-row">
+  <div class="video-icon">
+    <mat-icon>smart_display</mat-icon>
+  </div>
+
+  <div class="video-main">
+    <div class="video-title">{{ video().title }}</div>
+    <div class="video-meta">
+      <div class="meta-chip">{{ video().channel_name }}</div>
+      <span class="dot">•</span>
+      <span class="meta-text">{{ video().stats.views | formatNumber }}</span>
+      <span class="dot">•</span>
+      <span class="meta-text"
+      [class.negative]="video().stats.sentiment_label === 'Negative'"
+      [class.positive]="video().stats.sentiment_label === 'Positive'"
+      [class.neutral]="video().stats.sentiment_label === 'Neutral'">{{ video().stats.sentiment_label }}</span>
+    </div>
+  </div>
+
+</div>

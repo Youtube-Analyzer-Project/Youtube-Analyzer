@@ -5,6 +5,13 @@
   margin-bottom: 16px;
 }
 
+.video-widgets {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(700px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
 .chart-widgets {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(700px, 1fr));
@@ -13,6 +20,14 @@
 }
 
 @media (max-width: 1200px) {
+  .summary-widgets {
+    grid-template-columns: 1fr;
+  }
+
+  .video-widgets {
+    grid-template-columns: 1fr;
+  }
+
   .chart-widgets {
     grid-template-columns: 1fr;
   }

@@ -1,12 +1,12 @@
 import {Component, OnInit, inject, signal, OnDestroy} from '@angular/core';
 import { WidgetComponent } from '../../components/widget/widget.component';
-import { MatToolbar } from '@angular/material/toolbar';
 import {SentimentApiService} from '../../services/sentiment-api.service';
 import {Subscription} from 'rxjs';
-import {SentimentChartSeriesDto, SentimentSummaryDto, Widget} from '../../types/sentiment.types';
+import {SentimentChartSeriesDto, SentimentSummaryDto, SentimentVideoDto, Widget} from '../../types/sentiment.types';
 import {SentimentLineChartComponent} from './charts/sentiment-line-chart/sentiment-line-chart.component';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {SentimentPieChartComponent} from './charts/sentiment-pie-chart/sentiment-pie-chart.component';
+import {VideoListComponent} from './video-list/video-list.component';
 
 // TODO: Remove mock data when added more sentiment data
 const MOCK_SERIES: SentimentChartSeriesDto[] = [
@@ -50,7 +50,7 @@ const MOCK_SERIES: SentimentChartSeriesDto[] = [
 @Component({
   selector: 'app-sentiment-analysis',
   standalone: true,
-  imports: [WidgetComponent, SentimentLineChartComponent, MatProgressSpinner, SentimentPieChartComponent],
+  imports: [WidgetComponent, SentimentLineChartComponent, MatProgressSpinner, SentimentPieChartComponent, VideoListComponent],
   templateUrl: './sentiment-analysis.component.html',
   styleUrl: './sentiment-analysis.component.scss',
 })
@@ -58,23 +58,33 @@ export class SentimentAnalysisComponent implements OnInit, OnDestroy {
   private _sentimentService = inject(SentimentApiService);
   private _sentimentSummarySubscription: Subscription = new Subscription();
   private _sentimentChartsSubscription: Subscription = new Subscription();
+  private _positiveVideosSubscription: Subscription = new Subscription();
+  private _neutralVideosSubscription: Subscription = new Subscription()
+  private _negativeVideosSubscription: Subscription = new Subscription();
 
   protected chartIsLoaded = signal<boolean>(false);
+  protected videosAreLoaded = signal<boolean>(false);
   protected widgets = signal<Widget[]>([]);
   protected lineChartData = signal<SentimentChartSeriesDto[]>([]);
   protected dataset1 = signal<SentimentChartSeriesDto[]>([]);
   protected dataset2 = signal<SentimentChartSeriesDto[]>([]);
   protected dataset3 = signal<SentimentChartSeriesDto[]>([]);
-  protected sentimentDistributions = signal<number[]>([]); // [positive, neutral, negative]
+  protected sentimentDistributions = signal<number[]>([]);
+  protected positiveVideos = signal<SentimentVideoDto[]>([]);
+  protected negativeVideos = signal<SentimentVideoDto[]>([]);
 
   ngOnInit(): void {
     this._getWidgets();
     this._getChartData();
+    this._getSentimentVideos();
   }
 
   ngOnDestroy(): void {
     this._sentimentSummarySubscription.unsubscribe();
     this._sentimentChartsSubscription.unsubscribe();
+    this._positiveVideosSubscription.unsubscribe();
+    this._neutralVideosSubscription.unsubscribe();
+    this._negativeVideosSubscription.unsubscribe();
   }
 
   private _getWidgets(): void {
@@ -144,24 +154,38 @@ export class SentimentAnalysisComponent implements OnInit, OnDestroy {
     });
   }
 
-  private _formatNumber(n: number): string {
-    if (n >= 1_000_000_000) {
-      return (n / 1_000_000_000).toFixed(1) + 'B';
-    }
-
-    if (n >= 1_000_000) {
-      return (n / 1_000_000).toFixed(1) + 'M';
-    }
-
-    if (n >= 1_000) {
-      return (n / 1_000).toFixed(1) + 'K';
-    }
-
-    return n.toString();
+  private _getSentimentVideos(): void {
+    this._positiveVideosSubscription = this._sentimentService.getVideosBySentiment('positive').subscribe((data: SentimentVideoDto[]) => {
+      this.positiveVideos.set(data);
+      this._negativeVideosSubscription = this._sentimentService.getVideosBySentiment('negative').subscribe((data: SentimentVideoDto[]) => {
+        this.negativeVideos.set(data);
+        this.videosAreLoaded.set(true);
+      });
+    });
   }
 
   private _getSeriesByCategory(categoryId: string): SentimentChartSeriesDto[] {
     return this.lineChartData().filter(series => series.category_id === categoryId);
+  }
+
+  private _formatNumber(value: number): string {
+    if (!value) {
+      return '';
+    }
+
+    if (value >= 1_000_000_000) {
+      return (value / 1_000_000_000).toFixed(1) + 'B';
+    }
+
+    if (value >= 1_000_000) {
+      return (value / 1_000_000).toFixed(1) + 'M';
+    }
+
+    if (value >= 1_000) {
+      return (value / 1_000).toFixed(1) + 'K';
+    }
+
+    return value.toString();
   }
 
 }

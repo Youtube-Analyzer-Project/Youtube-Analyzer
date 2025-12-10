@@ -40,3 +40,19 @@ export interface SentimentChartDto {
   categories: SentimentChartCategoriesDto[];
   series: SentimentChartSeriesDto[];
 }
+
+export interface SentimentVideoDto {
+  id: string;
+  title: string;
+  thumbnail_url: string;
+  channel_name: string;
+  published_at: string;
+  category_id: string;
+  stats: {
+    views: number;
+    likes: number;
+    comments: number;
+    sentiment_score: number;
+    sentiment_label: string;
+  };
+}

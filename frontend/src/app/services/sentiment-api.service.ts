@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {catchError, Observable} from 'rxjs';
-import {SentimentChartDto, SentimentSummaryDto} from '../types/sentiment.types';
+import {SentimentChartDto, SentimentSummaryDto, SentimentVideoDto} from '../types/sentiment.types';
 import {BaseService} from '../types/base-service';
 
 @Injectable({ providedIn: 'root' })
@@ -17,4 +17,11 @@ export class SentimentApiService extends BaseService {
       params: { days: '30', top: '1' }
     }).pipe(catchError(this.handleError));
   }
+
+  public getVideosBySentiment(sentiment: string): Observable<SentimentVideoDto[]> {
+    return this.httpClient.get<SentimentVideoDto[]>(`${this._apiBaseUrl}/top-videos`, {
+      params: { direction: sentiment, limit: '3' }
+    }).pipe(catchError(this.handleError));
+  }
+
 }

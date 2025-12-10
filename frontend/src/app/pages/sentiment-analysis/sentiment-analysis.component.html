@@ -15,3 +15,15 @@
   </div>
 }
 
+@if (videosAreLoaded()) {
+  <div class="video-widgets">
+    <app-video-list [title]="'Most Positive Videos'" [videos]="positiveVideos()" />
+    <app-video-list [title]="'Most Negative Videos'" [videos]="negativeVideos()" />
+  </div>
+} @else {
+  <div class="loading-container">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+}
+
+
