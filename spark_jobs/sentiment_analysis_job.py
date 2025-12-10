@@ -21,20 +21,22 @@ except LookupError:
 
 analyzer = SentimentIntensityAnalyzer()
 
-def list_hdfs_dirs(spark, hdfs_path):
-    sc = spark.sparkContext
-    hadoop_conf = sc._jsc.hadoopConfiguration()
-    fs = sc._jvm.org.apache.hadoop.fs.FileSystem.get(hadoop_conf)
-    base = sc._jvm.org.apache.hadoop.fs.Path(hdfs_path)
+# TODO: Use this method in case you need to list HDFS directories dynamically
 
-    status = fs.listStatus(base)
-    dirs = []
+# def list_hdfs_dirs(spark, hdfs_path):
+#     sc = spark.sparkContext
+#     hadoop_conf = sc._jsc.hadoopConfiguration()
+#     fs = sc._jvm.org.apache.hadoop.fs.FileSystem.get(hadoop_conf)
+#     base = sc._jvm.org.apache.hadoop.fs.Path(hdfs_path)
 
-    for file in status:
-        if file.isDirectory():
-            dirs.append(str(file.getPath()))
+#     status = fs.listStatus(base)
+#     dirs = []
 
-    return dirs
+#     for file in status:
+#         if file.isDirectory():
+#             dirs.append(str(file.getPath()))
+
+#     return dirs
 
 def calculate_sentiment_score(text):
     if not text:
@@ -151,9 +153,13 @@ def run_job():
 
     spark.sparkContext.setLogLevel("WARN")
 
-    comments_base_path = "hdfs://hadoop-namenode:8020/youtube/raw_spark/comments/"
-    comments_paths = list_hdfs_dirs(spark, comments_base_path)
-    comments_raw = spark.read.json(comments_paths)
+    comments_raw = spark.read.json("hdfs://hadoop-namenode:8020/youtube/raw_spark/comments/*")
+
+    # TODO: Use this block in case you need to list HDFS directories dynamically
+
+    # comments_base_path = "hdfs://hadoop-namenode:8020/youtube/raw_spark/comments/"
+    # comments_paths = list_hdfs_dirs(spark, comments_base_path)
+    # comments_raw = spark.read.json(comments_paths)
 
     comments_df = comments_raw.select(
         col("video_id"),
@@ -171,9 +177,13 @@ def run_job():
             col("score")
         )
 
-    videos_base_path = "hdfs://hadoop-namenode:8020/youtube/raw_spark/trending/"
-    videos_paths = list_hdfs_dirs(spark, videos_base_path)
-    videos_df = spark.read.json(videos_paths)
+    videos_df = spark.read.json("hdfs://hadoop-namenode:8020/youtube/raw_spark/trending/*")
+
+    # TODO: Use this block in case you need to list HDFS directories dynamically
+
+    # videos_base_path = "hdfs://hadoop-namenode:8020/youtube/raw_spark/trending/"
+    # videos_paths = list_hdfs_dirs(spark, videos_base_path)
+    # videos_df = spark.read.json(videos_paths)
 
     videos_clean = videos_df.select(
         col("id").alias("v_id"),
