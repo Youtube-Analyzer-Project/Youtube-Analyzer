@@ -1,0 +1,25 @@
+export interface Widget {
+  id: number;
+  label: string;
+  content: string;
+  details: string;
+  icon: string;
+}
+
+export interface SentimentSummaryDto {
+  total_videos: number;
+  total_views: number;
+  avg_sentiment: number;
+  overall_sentiment_label: string;
+  sentiment_distribution: {
+    positive: number;
+    neutral: number;
+    negative: number;
+  };
+  trend_distribution: {
+    increasing: number;
+    stable: number;
+    decreasing: number;
+  };
+  overall_trend_label: string;
+}
