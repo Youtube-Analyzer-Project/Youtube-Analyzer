@@ -23,8 +23,6 @@ export class SentimentPieChartComponent implements OnInit, OnDestroy {
             label: '',
             data: this.data(),
             backgroundColor: ['#DD4046', '#499F5A', '#F3BC24'],
-            borderColor: '#1c1c1cff',
-            borderWidth: 4,
           },
         ],
       },
