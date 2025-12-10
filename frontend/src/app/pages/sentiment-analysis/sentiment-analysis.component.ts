@@ -6,6 +6,7 @@ import {Subscription} from 'rxjs';
 import {SentimentChartSeriesDto, SentimentSummaryDto, Widget} from '../../types/sentiment.types';
 import {SentimentLineChartComponent} from './charts/sentiment-line-chart/sentiment-line-chart.component';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {SentimentPieChartComponent} from './charts/sentiment-pie-chart/sentiment-pie-chart.component';
 
 // TODO: Remove mock data when added more sentiment data
 const MOCK_SERIES: SentimentChartSeriesDto[] = [
@@ -49,7 +50,7 @@ const MOCK_SERIES: SentimentChartSeriesDto[] = [
 @Component({
   selector: 'app-sentiment-analysis',
   standalone: true,
-  imports: [WidgetComponent, SentimentLineChartComponent, MatProgressSpinner],
+  imports: [WidgetComponent, SentimentLineChartComponent, MatProgressSpinner, SentimentPieChartComponent],
   templateUrl: './sentiment-analysis.component.html',
   styleUrl: './sentiment-analysis.component.scss',
 })
@@ -64,6 +65,7 @@ export class SentimentAnalysisComponent implements OnInit, OnDestroy {
   protected dataset1 = signal<SentimentChartSeriesDto[]>([]);
   protected dataset2 = signal<SentimentChartSeriesDto[]>([]);
   protected dataset3 = signal<SentimentChartSeriesDto[]>([]);
+  protected sentimentDistributions = signal<number[]>([]); // [positive, neutral, negative]
 
   ngOnInit(): void {
     this._getWidgets();
@@ -110,6 +112,10 @@ export class SentimentAnalysisComponent implements OnInit, OnDestroy {
           icon: increasing
         }
       ];
+      const positiveCount = data.sentiment_distribution.positive;
+      const neutralCount = data.sentiment_distribution.neutral;
+      const negativeCount = data.sentiment_distribution.negative;
+      this.sentimentDistributions.set([positiveCount, neutralCount, negativeCount]);
       this.widgets.set(sentimentWidgets);
     });
   }

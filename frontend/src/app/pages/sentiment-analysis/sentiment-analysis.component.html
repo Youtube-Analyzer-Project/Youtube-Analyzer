@@ -7,6 +7,7 @@
 @if (chartIsLoaded()) {
   <div class="chart-widgets">
     <app-sentiment-line-chart [dataset1]="dataset1()" [dataset2]="dataset2()" [dataset3]="dataset3()" />
+    <app-sentiment-pie-chart [data]="sentimentDistributions()"/>
   </div>
 } @else {
   <div class="loading-container">

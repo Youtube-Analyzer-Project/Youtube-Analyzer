@@ -38,8 +38,8 @@ export class SentimentLineChartComponent implements OnInit, OnDestroy {
           {
             label: '',
             data: this.dataset2().map(point => point.avg_score),
-            borderColor: '#098af1',
-            backgroundColor: ['#098af1'],
+            borderColor: '#3dff00',
+            backgroundColor: ['#3dff00'],
           },
           {
             label: '',
