@@ -1,20 +1,15 @@
-import {Component, ElementRef, input, OnDestroy, OnInit, viewChild} from '@angular/core';
-import {SentimentChartSeriesDto} from '../../../../types/sentiment.types';
+import { Component, ElementRef, input, OnDestroy, OnInit, viewChild } from '@angular/core';
+import { SentimentChartSeriesDto } from '../../../../types/sentiment.types';
 import { Chart, registerables } from 'chart.js';
-import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-sentiment-line-chart',
-  imports: [
-    MatCard,
-    MatCardContent,
-    MatCardHeader,
-    MatCardTitle
-  ],
+  imports: [MatCard, MatCardContent, MatCardHeader, MatCardTitle],
   templateUrl: './sentiment-line-chart.component.html',
-  styleUrl: './sentiment-line-chart.component.scss'
+  styleUrl: './sentiment-line-chart.component.scss',
 })
 export class SentimentLineChartComponent implements OnInit, OnDestroy {
   dataset1 = input.required<SentimentChartSeriesDto[]>();
@@ -31,26 +26,43 @@ export class SentimentLineChartComponent implements OnInit, OnDestroy {
         datasets: [
           {
             label: '',
-            data: this.dataset1().map(point => point.avg_score),
+            data: this.dataset1().map((point) => point.avg_score),
             borderColor: '#DD4046',
             backgroundColor: ['#DD4046'],
+            tension: 0.4,
+            borderWidth: 2,
+            pointRadius: 0,
+            pointHoverRadius: 6,
           },
           {
             label: '',
-            data: this.dataset2().map(point => point.avg_score),
+            data: this.dataset2().map((point) => point.avg_score),
             borderColor: '#499F5A',
             backgroundColor: ['#499F5A'],
+            tension: 0.4,
+            borderWidth: 2,
+            pointRadius: 0,
+            pointHoverRadius: 6,
           },
           {
             label: '',
-            data: this.dataset3().map(point => point.avg_score),
+            data: this.dataset3().map((point) => point.avg_score),
             borderColor: '#F3BC24',
             backgroundColor: ['#F3BC24'],
+            tension: 0.4,
+            borderWidth: 2,
+            pointRadius: 0,
+            pointHoverRadius: 6,
           },
         ],
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
         plugins: {
           legend: {
             display: false,
@@ -61,10 +73,10 @@ export class SentimentLineChartComponent implements OnInit, OnDestroy {
             min: -1,
             max: 2,
             ticks: {
-              stepSize: 0.5
-            }
-          }
-        }
+              stepSize: 0.5,
+            },
+          },
+        },
       },
     });
   }
@@ -84,8 +96,18 @@ export class SentimentLineChartComponent implements OnInit, OnDestroy {
       const day = d.getDate().toString().padStart(2, '0');
 
       const monthNames = [
-        "Ian", "Feb", "Mar", "Apr", "Mai", "Iun",
-        "Iul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        'Ian',
+        'Feb',
+        'Mar',
+        'Apr',
+        'Mai',
+        'Iun',
+        'Iul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
       ];
 
       const month = monthNames[d.getMonth()];
@@ -95,5 +117,4 @@ export class SentimentLineChartComponent implements OnInit, OnDestroy {
 
     return result.reverse();
   }
-
 }

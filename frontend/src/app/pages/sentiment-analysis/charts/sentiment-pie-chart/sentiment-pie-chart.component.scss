@@ -1,10 +1,11 @@
 .chart-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 325px;
+  height: 325px;
+  position: relative;
+  margin: 0 auto;
 }
 
 canvas {
-  width: 325px !important;
-  height: 325px !important;
+  width: 100%;
+  height: 100%;
 }

@@ -3,17 +3,30 @@
     <mat-icon>smart_display</mat-icon>
   </div>
 
-  <div class="video-main">
-    <div class="video-title">{{ video().title }}</div>
-    <div class="video-meta">
-      <div class="meta-chip">{{ video().channel_name }}</div>
-      <span class="dot">•</span>
-      <span class="meta-text">{{ video().stats.views | formatNumber }}</span>
-      <span class="dot">•</span>
-      <span class="meta-text"
-      [class.negative]="video().stats.sentiment_label === 'Negative'"
-      [class.positive]="video().stats.sentiment_label === 'Positive'"
-      [class.neutral]="video().stats.sentiment_label === 'Neutral'">{{ video().stats.sentiment_label }}</span>
+  <div class="video-info">
+    <div class="video-details">
+      <div class="video-title">{{ video().title }}</div>
+      <div class="video-meta">
+        <div class="meta-chip">{{ video().channel_name }}</div>
+        <span class="dot">•</span>
+        <span class="meta-text">{{ video().stats.views | formatNumber }}</span>
+        <span class="dot">•</span>
+        <span class="meta-text" [class.negative]="video().stats.sentiment_label === 'Negative'"
+          [class.positive]="video().stats.sentiment_label === 'Positive'"
+          [class.neutral]="video().stats.sentiment_label === 'Neutral'">{{ video().stats.sentiment_label }}</span>
+      </div>
+    </div>
+    <div class="video-actions">
+      <a [href]="'https://www.youtube.com/watch?v=' + video()._id" target="_blank" rel="noopener noreferrer"
+        class="action-btn youtube-btn">
+        <mat-icon>open_in_new</mat-icon>
+        <span>Open in YouTube</span>
+      </a>
+
+      <button class="action-btn share-btn" (click)="onShare()">
+        <mat-icon>share</mat-icon>
+        <span>Share</span>
+      </button>
     </div>
   </div>
 

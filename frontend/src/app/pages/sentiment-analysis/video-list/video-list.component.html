@@ -4,8 +4,8 @@
   </mat-card-header>
 
   <mat-card-content>
-    @for(video of videos(); track video.id) {
-      <app-video-list-item [video]="video" />
+    @for(video of videos(); track video._id) {
+    <app-video-list-item [video]="video" />
     }
   </mat-card-content>
 </mat-card>

@@ -27,13 +27,13 @@ export interface SentimentSummaryDto {
 export interface SentimentChartSeriesDto {
   date: string;
   category_id: string;
-  avg_score: number
+  avg_score: number;
 }
 
 export interface SentimentChartCategoriesDto {
   id: string;
   total_views: number;
-  views_count: number
+  views_count: number;
 }
 
 export interface SentimentChartDto {
@@ -42,7 +42,7 @@ export interface SentimentChartDto {
 }
 
 export interface SentimentVideoDto {
-  id: string;
+  _id: string;
   title: string;
   thumbnail_url: string;
   channel_name: string;
