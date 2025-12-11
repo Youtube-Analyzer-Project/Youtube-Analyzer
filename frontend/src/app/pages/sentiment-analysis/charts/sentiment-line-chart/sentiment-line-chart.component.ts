@@ -71,7 +71,7 @@ export class SentimentLineChartComponent implements OnInit, OnDestroy {
         scales: {
           y: {
             min: -1,
-            max: 2,
+            max: 1,
             ticks: {
               stepSize: 0.5,
             },
