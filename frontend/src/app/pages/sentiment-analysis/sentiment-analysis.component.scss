@@ -1,5 +1,35 @@
-.dashboard-widgets {
-  display: grid;
-  grid-template-columns: 1fr 1fr 2fr;
-  gap: 16px;
+.summary-widgets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.summary-widgets > * {
+  flex: 1 1 350px;
+  max-width: 100%; 
+}
+
+.video-widgets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.video-widgets > * {
+  flex: 1 1 700px;
+  max-width: 100%;
+}
+
+.chart-widgets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.chart-widgets > * {
+  flex: 1 1 700px;
+  max-width: 100%;
 }
