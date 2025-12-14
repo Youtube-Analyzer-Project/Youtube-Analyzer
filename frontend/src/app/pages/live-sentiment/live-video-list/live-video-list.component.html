@@ -1,0 +1,13 @@
+<mat-card>
+  <mat-card-header class="kpi-title-container">
+    <mat-card-title class="kpi-title">Other Active Live Streams</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    @for(video of videos(); track video._id; let i = $index) {
+      @if (i >= 3) {
+        <app-live-video-item [video]="video" />
+      }
+    }
+  </mat-card-content>
+</mat-card>
