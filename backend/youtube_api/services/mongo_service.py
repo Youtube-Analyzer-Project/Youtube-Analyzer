@@ -96,3 +96,12 @@ def get_view_top_categories():
         }
     ]
     return list(collection.aggregate(pipeline))
+
+def store_live_trends(videos):
+    if videos:
+        collection = get_collection("view_live_trends")
+        collection.delete_many({})
+        collection.insert_many(videos)
+
+def get_live_trend_view():
+    return list(get_collection("view_live_trends").find({}))
