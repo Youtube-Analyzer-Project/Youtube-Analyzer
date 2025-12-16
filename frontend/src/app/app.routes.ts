@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import {DashboardComponent} from './pages/dashboard/dashboard.component';
 import {TrendingVideosComponent} from './pages/trending-videos/trending-videos.component';
 import {SentimentAnalysisComponent} from './pages/sentiment-analysis/sentiment-analysis.component';
-import {TopicTrendsComponent} from './pages/topic-trends/topic-trends.component';
+import {LiveSentimentComponent} from './pages/live-sentiment/live-sentiment.component';
 
 export const routes: Routes = [
   {
@@ -24,6 +24,6 @@ export const routes: Routes = [
   },
   {
     path: 'topics',
-    component: TopicTrendsComponent
+    component: LiveSentimentComponent
   }
 ];

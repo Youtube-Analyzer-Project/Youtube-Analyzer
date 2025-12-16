@@ -1,0 +1,33 @@
+<div class="sidenav-header">
+  <button class="collapse-btn" (click)="toggleCollapsed()" aria-label="Toggle sidenav">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-tab-nav-panel>
+  <div>
+    <h1 class="live-video-title">{{ video()?.title }}</h1>
+    <p class="live-video-details">{{ video()?.channel }}</p>
+  </div>
+
+  @if(video()?.sentimentHistory) {
+    <h2 class="live-video-title">Sentiment History</h2>
+    <app-live-sentiment-chart [dataset]="video()?.sentimentHistory!" />
+  }
+
+  @if(video()?.recentMessages) {
+    <h2 class="live-video-details">Recent Messages</h2>
+
+    @for (message of video()?.recentMessages; track $index) {
+      <mat-card class="kpi-card">
+        <mat-card-content>
+          <p class="message-text">{{ message.text }}</p>
+        </mat-card-content>
+      </mat-card>
+    }
+  }
+
+  <mat-chip class="meta-chip">
+    {{ 'Avg Sentiment: ' + video()?.avgSentiment }}
+  </mat-chip>
+</mat-tab-nav-panel>
