@@ -7,6 +7,7 @@ import {LiveVideo} from '../types/live-video.type';
 export class LiveVideoDetailsService {
   private _showDetails = signal<boolean>(true);
   private _video = signal<LiveVideo | null>(null);
+  private _detailsChanged = signal<boolean>(false);
 
   public updateShowDetails(showDetails: boolean): void {
     this._showDetails.set(showDetails);
@@ -22,6 +23,14 @@ export class LiveVideoDetailsService {
 
   public getVideo(): LiveVideo | null {
     return this._video();
+  }
+
+  public notifyDetailsChanged(): void {
+    this._detailsChanged.set(true);
+  }
+
+  public detailsChanged() {
+    return this._detailsChanged();
   }
 
 }

@@ -26,5 +26,6 @@ export class TopVideoCardComponent {
 
   collapseDetails(): void {
     this._liveVideoDetailsService.updateShowDetails(false);
+    this._liveVideoDetailsService.updateVideo(this.video());
   }
 }
