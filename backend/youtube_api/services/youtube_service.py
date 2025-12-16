@@ -37,3 +37,67 @@ def get_comments_by_video_id(video_id):
         return response.json().get("items", [])
 
     return response.raise_for_status()
+
+def get_trending_live_streams():
+    url = f"{BASE_URL}search"
+    params = {
+        "part": "snippet",
+        "eventType": "live",
+        "type": "video",
+        "order": "viewCount",
+        "maxResults": 30,
+        "regionCode": "GB",
+        "key": YOUTUBE_API_KEY,
+        "q": " ",
+        "relevanceLanguage": "en"
+    }
+    response = requests.get(url, params=params)
+    search_data = response.json()
+    video_ids = [item["id"]["videoId"] for item in search_data.get("items", [])]
+
+    if not video_ids:
+        return []
+
+    videos_url = f"{BASE_URL}videos"
+    videos_params = {
+        "part": "snippet,liveStreamingDetails,statistics",
+        "id": ",".join(video_ids),
+        "key": YOUTUBE_API_KEY,
+        "regionCode": "GB",
+    }
+    videos_resp = requests.get(videos_url, params=videos_params)
+    videos_data = videos_resp.json()
+
+    live_streams = []
+    for item in videos_data.get("items", []):
+        live_chat_id = item.get("liveStreamingDetails", {}).get("activeLiveChatId")
+        if live_chat_id:  # only include currently live streams
+            live_streams.append({
+                "_id": item["id"],  # correct usage for /videos
+                "title": item["snippet"]["title"],
+                "liveChatId": live_chat_id,
+                "viewCount": item.get("statistics", {}).get("viewCount")
+            })
+    return live_streams
+
+
+def fetch_live_comments(live_chat_id, max_comments=20):
+    url = f"{BASE_URL}liveChat/messages"
+    params = {
+        "liveChatId": live_chat_id,
+        "part": "snippet",
+        "maxResults": max_comments,
+        "key": YOUTUBE_API_KEY
+    }
+    response = requests.get(url, params=params)
+    data = response.json()
+
+    comments = []
+    for msg in data.get("items", []):
+        try:
+            text = msg["snippet"]["displayMessage"]
+            comments.append(text)
+        except Exception as e:
+            pass
+    print(live_chat_id, len(comments), end="\n", flush=True)
+    return comments

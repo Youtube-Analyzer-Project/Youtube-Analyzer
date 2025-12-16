@@ -308,3 +308,12 @@ def get_sentiment_timeseries_top_categories(days: int = 30, top_k: int = 5):
         "categories": categories_meta,
         "series": series,
     }
+
+def store_live_trends(videos):
+    if videos:
+        collection = get_collection("view_live_trends")
+        collection.delete_many({})
+        collection.insert_many(videos)
+
+def get_live_trend_view():
+    return list(get_collection("view_live_trends").find({}))
