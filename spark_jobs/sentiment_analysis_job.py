@@ -52,13 +52,13 @@ def calculate_sentiment_score(text):
 
 
 def get_sentiment_label(score):
-    if score <= -0.5:
+    if score < 0.2:
         return "Very Negative"
-    elif score <= -0.1:
+    elif score < 0.4:
         return "Negative"
-    elif score < 0.1:
+    elif score < 0.6:
         return "Neutral"
-    elif score < 0.5:
+    elif score < 0.8:
         return "Positive"
     else:
         return "Very Positive"
@@ -129,7 +129,7 @@ def save_rich_data_mongo(partition_data):
             },
             "sentiment": {
                 "score": (current_score + 1.0) / 2.0,
-                "label": get_sentiment_label(current_score),
+                "label": get_sentiment_label((current_score + 1.0) / 2.0),
                 "trend": trend,
                 "history": history
             },

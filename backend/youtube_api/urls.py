@@ -7,7 +7,7 @@ from youtube_api.views.videos_view import get_trending_videos, get_video, get_to
 
 urlpatterns = [
     path('fetch_trending/', fetch_trending_videos, name='fetch_trending_videos'),
-    path('get-trending/', get_trending_videos, name='get_trending'),
+    path('get_trending/', get_trending_videos, name='get_trending'),
     path('fetch_comments/', fetch_video_comments, name='fetch_comments'),
     path('videos/', get_trending_videos, name='get_videos'),
     path('videos/<str:_id>', get_video, name='get_video'),
