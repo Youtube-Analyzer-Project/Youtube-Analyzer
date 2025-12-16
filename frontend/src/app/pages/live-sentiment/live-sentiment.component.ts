@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {TopVideosComponent} from './top-videos/top-videos.component';
 import {VIDEOS} from './videos-mock';
 import {LiveVideoListComponent} from './live-video-list/live-video-list.component';
@@ -7,7 +7,7 @@ import {LiveVideoListComponent} from './live-video-list/live-video-list.componen
   selector: 'app-live-sentiment',
   imports: [
     TopVideosComponent,
-    LiveVideoListComponent
+    LiveVideoListComponent,
   ],
   templateUrl: './live-sentiment.component.html',
   styleUrl: './live-sentiment.component.scss'

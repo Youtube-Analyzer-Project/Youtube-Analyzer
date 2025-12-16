@@ -1,0 +1,9 @@
+@import "../custom-sidenav/custom-sidenav.component.scss";
+
+:host {
+  width: 300px;
+}
+
+.sidenav-header {
+  border: none;
+}

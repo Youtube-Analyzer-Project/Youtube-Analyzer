@@ -1,11 +1,29 @@
-<mat-sidenav-container class="main-sidenav-container">
-  <mat-sidenav [style.width.px]="isSidenavCollapsed ? 150 : 255" opened mode="side"
+<mat-sidenav-container autosize class="main-sidenav-container">
+
+  <mat-sidenav
+    position="start"
+    mode="side"
+    opened
+    [style.width.px]="isSidenavCollapsed ? 150 : 255"
     [style.transition]="'width 300ms ease'">
-    <app-custom-sidenav (collapsedChange)="onSidenavCollapsedChange($event)"></app-custom-sidenav>
+    <app-custom-sidenav
+      (collapsedChange)="onSidenavCollapsedChange($event)">
+    </app-custom-sidenav>
   </mat-sidenav>
 
-  <mat-sidenav-content class="content" [style.marginLeft.px]="isSidenavCollapsed ? 150 : 255"
-    [style.transition]="'margin-left 300ms ease'">
+  <mat-sidenav
+    position="end"
+    mode="side"
+    opened
+    [style.width.px]="getDetailsCollapsed() ? 0 : 300"
+    [style.transition]="'width 300ms ease'">
+    <app-details-sidenav
+      (collapseDetails)="onSidenavDetailsChange($event)">
+    </app-details-sidenav>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content">
     <router-outlet />
   </mat-sidenav-content>
+
 </mat-sidenav-container>
