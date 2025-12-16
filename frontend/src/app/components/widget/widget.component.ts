@@ -1,7 +1,7 @@
 import {Component, input} from '@angular/core';
-import {Widget} from '../../types/dashboard.type';
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
-import {NgComponentOutlet} from '@angular/common';
+import {MatIcon} from '@angular/material/icon';
+import {Widget} from '../../types/sentiment.types';
 
 @Component({
   selector: 'app-widget',
@@ -10,7 +10,7 @@ import {NgComponentOutlet} from '@angular/common';
     MatCardContent,
     MatCardHeader,
     MatCardTitle,
-    NgComponentOutlet
+    MatIcon
   ],
   templateUrl: './widget.component.html',
   styleUrl: './widget.component.scss'

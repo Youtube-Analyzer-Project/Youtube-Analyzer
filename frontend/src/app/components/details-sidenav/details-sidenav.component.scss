@@ -1,0 +1,40 @@
+@import '../../../styles.scss';
+@import '../custom-sidenav/custom-sidenav.component.scss';
+
+:host {
+  width: 395px;
+}
+
+.sidenav-header {
+  border: none;
+}
+
+.live-video-title {
+  @extend .kpi-title;
+  margin: 24px 0 8px 16px;
+  line-height: 1.5;
+}
+
+.live-video-details {
+  @extend .kpi-details;
+  margin: 0 0 16px 16px;
+  font-size: 16px;
+}
+
+.kpi-card {
+  margin: 16px;
+  width: 90%;
+  height: 40px;
+  display: flex;
+  padding-bottom: 12px;
+}
+
+.message-text {
+  @extend .kpi-details;
+  margin-bottom: 8px;
+}
+
+.meta-chip {
+  @extend .meta-chip;
+  margin-left: 16px;
+}

@@ -32,4 +32,43 @@ body {
 
   // Reset the user agent margin.
   margin: 0;
+
+  .kpi-card {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .kpi-title {
+    font-weight: 500;
+  }
+
+  .kpi-title-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .kpi-value {
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .kpi-details {
+    margin-top: 8px;
+    font-size: 14px;
+    color: gray;
+  }
+
+  .positive {
+    color: #499F5A;
+  }
+
+  .negative {
+    color: #DD4046;
+  }
+
+  .neutral {
+    color: #F3BC24;
+  }
+
 }

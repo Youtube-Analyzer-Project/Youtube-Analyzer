@@ -9,6 +9,10 @@
     height: 100vh;
   }
 
+  details-sidenav-container {
+    height: 100vh;
+  }
+
   .content {
     padding: 24px;
   }
@@ -19,6 +23,5 @@ mat-sidenav-content.content {
 }
 
 .chart-container {
-  height: calc(100% - 100px);
   width: 100%;
 }

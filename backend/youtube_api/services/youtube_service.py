@@ -1,7 +1,6 @@
 import requests
 from django.conf import settings
 
-# TODO: Add the API key here
 YOUTUBE_API_KEY = settings.YOUTUBE_API_KEY
 BASE_URL = "https://www.googleapis.com/youtube/v3/"
 
