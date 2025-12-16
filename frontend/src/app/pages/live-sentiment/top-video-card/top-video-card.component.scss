@@ -22,6 +22,15 @@
   font-weight: bold;
 }
 
+.neutral {
+  background-color: #FFF3CD !important;
+}
+
+.neutral-text {
+  color: #B38700;
+  font-weight: bold;
+}
+
 .negative {
   color: #DD4046 !important;
 }
@@ -39,8 +48,32 @@
   margin: 0.5rem auto;
   padding: 0.5rem;
   font-size: 1.25rem;
-  background-color: #b1f1b1;
-  color: #01871c;
+  background-color: #FFF3CD;
+  color: #B38700;
   width: fit-content;
   border-radius: 8px;
 }
+
+.second-position {
+  font-weight: bold;
+  margin: 0.5rem auto;
+  padding: 0.5rem;
+  font-size: 1.25rem;
+  background-color: lightgray;
+  color: gray;
+  width: fit-content;
+  border-radius: 8px;
+}
+
+.third-position {
+  font-weight: bold;
+  margin: 0.5rem auto;
+  padding: 0.5rem;
+  font-size: 1.25rem;
+  background-color: #F1E3D3;
+  color: #8C5A2B;
+  width: fit-content;
+  border-radius: 8px;
+}
+
+

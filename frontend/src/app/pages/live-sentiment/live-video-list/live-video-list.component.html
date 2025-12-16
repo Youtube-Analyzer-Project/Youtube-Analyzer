@@ -4,10 +4,8 @@
   </mat-card-header>
 
   <mat-card-content>
-    @for(video of videos(); track video._id; let i = $index) {
-      @if (i >= 3) {
-        <app-live-video-item [video]="video" />
-      }
+    @for(video of videos(); track video._id) {
+      <app-live-video-item [video]="video" />
     }
   </mat-card-content>
 </mat-card>

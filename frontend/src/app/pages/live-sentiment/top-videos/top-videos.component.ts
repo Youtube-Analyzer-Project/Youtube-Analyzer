@@ -11,5 +11,5 @@ import {TopVideoCardComponent} from '../top-video-card/top-video-card.component'
   styleUrl: './top-videos.component.scss'
 })
 export class TopVideosComponent {
-  videos = input<LiveVideo[]>([]);
+  videos = input.required<LiveVideo[]>();
 }
