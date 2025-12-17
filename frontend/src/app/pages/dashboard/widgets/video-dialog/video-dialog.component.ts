@@ -8,11 +8,20 @@ import { DashboardApiService } from '../../../../services/dashboard-api.service'
 import { BackendVideoDetails } from '../../../../types/backend-api.types';
 import { DecimalPipe, DatePipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatChip} from '@angular/material/chips';
 
 @Component({
   selector: 'app-video-dialog',
   standalone: true,
-  imports: [MatDialogModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, DatePipe, DecimalPipe],
+  imports: [
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    DatePipe,
+    DecimalPipe,
+    MatChip,
+  ],
   templateUrl: './video-dialog.component.html',
   styleUrl: './video-dialog.component.scss',
 })

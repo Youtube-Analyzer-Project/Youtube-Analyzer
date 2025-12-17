@@ -1,7 +1,7 @@
 @if (paginated) {
 <div class="videos-wrapper">
   @for (video of paginated.items; track video.video_id) {
-  <div class="video-row" (click)="onOpen(video)">
+  <div class="video-row">
     <div class="video-icon">
       <mat-icon>smart_display</mat-icon>
     </div>
@@ -17,12 +17,21 @@
       </div>
     </div>
 
-    <div class="video-actions" (click)="$event.stopPropagation()">
-      <button mat-icon-button>
-        <mat-icon>share</mat-icon>
+    <div class="video-actions">
+      <a [href]="'https://www.youtube.com/watch?v=' + video.video_id" target="_blank" rel="noopener noreferrer"
+         class="action-btn youtube-btn">
+        <mat-icon>open_in_new</mat-icon>
+        <span>Open in YouTube</span>
+      </a>
+
+      <button class="action-btn share-btn" (click)="onOpen(video)">
+        <mat-icon>visibility</mat-icon>
+        <span>View Details</span>
       </button>
-      <button mat-icon-button>
-        <mat-icon>more_vert</mat-icon>
+
+      <button class="action-btn share-btn" (click)="onShare(video)">
+        <mat-icon>share</mat-icon>
+        <span>Share</span>
       </button>
     </div>
   </div>
