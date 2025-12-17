@@ -25,4 +25,24 @@ export class VideosTableComponent {
   onOpen(video: VideoItem): void {
     this.openVideo.emit(video);
   }
+
+  onShare(video: VideoItem): void {
+    const currentVideo = video;
+    const url = `https://www.youtube.com/watch?v=${currentVideo.video_id}`;
+    console.log('Sharing URL:', url);
+
+    if (navigator.share) {
+      navigator
+        .share({
+          title: currentVideo.title,
+          text: `Check out this analysis for: ${currentVideo.title}`,
+          url: url,
+        })
+        .catch((error) => console.log('Error sharing:', error));
+    } else {
+      navigator.clipboard.writeText(url).then(() => {
+        alert('Link copied to clipboard!');
+      });
+    }
+  }
 }

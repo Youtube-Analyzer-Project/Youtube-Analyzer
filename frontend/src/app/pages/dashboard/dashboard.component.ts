@@ -72,8 +72,8 @@ export class DashboardComponent {
 
   onOpenVideo(video: VideoItem): void {
     this.dialog.open<VideoDialogComponent, VideoDialogData>(VideoDialogComponent, {
-      width: '900px',
-      maxWidth: '95vw',
+      width: '1000px',
+      maxWidth: '100vw',
       data: { video },
       panelClass: 'video-dialog-panel',
     });

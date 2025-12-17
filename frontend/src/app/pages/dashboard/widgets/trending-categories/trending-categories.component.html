@@ -1,22 +1,5 @@
-<!-- TODO: Add style here -->
-
 <div class="categories-wrapper">
-
-  <button class="arrow-btn left" (click)="scrollLeft()">
-    <mat-icon>chevron_left</mat-icon>
-  </button>
-
-  <div class="scroll-container" #scrollContainer>
-    @for (cat of categories; track cat.category_id) {
-    <mat-card class="category-card">
-      <mat-card-title>{{ cat.category_name }}</mat-card-title>
-      <p>{{ cat.videos_count }} videos</p>
-      <p>{{ cat.sentiment_label }}</p>
-    </mat-card>
-    }
-  </div>
-
-  <button class="arrow-btn right" (click)="scrollRight()">
-    <mat-icon>chevron_right</mat-icon>
-  </button>
+  @for (cat of categoriesData(); track cat.id) {
+    <app-widget class="category-card" [data]="cat" />
+  }
 </div>

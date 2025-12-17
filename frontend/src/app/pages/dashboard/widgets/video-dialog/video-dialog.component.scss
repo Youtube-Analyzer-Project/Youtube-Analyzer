@@ -1,15 +1,16 @@
+@import '../../../../components/video-list-item/video-list-item.component';
+
 .video-dialog-content {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  padding-top: 0.5rem;
 }
 
 .dialog-title {
-  margin: 0;
-  margin-top: 1.3rem;
+  margin: 1.3rem 0 0;
   font-size: 1.3rem;
   font-weight: 600;
+  line-height: 2rem;
 }
 
 .video-dialog {
@@ -35,6 +36,7 @@
   border-radius: 16px;
   overflow: hidden;
   background: #000;
+  margin-top: 1rem;
 
   iframe {
     position: absolute;
@@ -61,10 +63,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: flex-start;
-  gap: 0.4rem;
-  margin-top: 0.3rem;
 }
 
 .channel-row {
@@ -236,7 +236,7 @@
 
 .comment-score {
   min-width: 3rem;
-  text-align: right;
+  text-align: center;
   font-weight: 600;
   font-size: 0.85rem;
   border-radius: 999px;
@@ -272,4 +272,28 @@
 .dialog-actions {
   padding-top: 0.5rem;
   gap: 0.5rem;
+}
+
+.positive {
+  color: #499F5A;
+}
+
+.negative {
+  color: #DD4046;
+}
+
+.neutral {
+  color: #F3BC24;
+}
+
+.video-info-details {
+  display: flex;
+  gap: 1rem;
+}
+
+.meta-chip {
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -8,6 +8,7 @@ import { DashboardApiService } from '../../../../services/dashboard-api.service'
 import { BackendVideoDetails } from '../../../../types/backend-api.types';
 import { DecimalPipe, DatePipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatChip} from '@angular/material/chips';
 
 @Component({
   selector: 'app-video-dialog',
@@ -19,6 +20,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatProgressSpinnerModule,
     DatePipe,
     DecimalPipe,
+    MatChip,
   ],
   templateUrl: './video-dialog.component.html',
   styleUrl: './video-dialog.component.scss',
@@ -78,12 +80,5 @@ export class VideoDialogComponent {
 
   close(): void {
     this.dialogRef.close();
-  }
-
-  openOnYoutube(): void {
-    const videoId = this.data.video.video_id;
-    if (!videoId) return;
-
-    window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
   }
 }

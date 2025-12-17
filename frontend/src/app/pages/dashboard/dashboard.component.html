@@ -1,11 +1,13 @@
 <section class="dashboard-container">
   <app-dashboard-search-bar (searchChange)="onSearchChange($event)"> </app-dashboard-search-bar>
 
-  <h2 class="section-title">Trending categories</h2>
-  <app-trending-categories [categories]="trendingCategories">
-  </app-trending-categories>
+  @if (trendingCategories.length > 0) {
+    <h2 class="section-title">Trending categories</h2>
+    <app-trending-categories [categories]="trendingCategories" />
+  }
 
-  <h2>Videos analyzed</h2>
+
+  <h2 class="section-title">Videos analyzed</h2>
   <app-videos-table [paginated]="videosPaginated" [pageSize]="pageSize" (pageChange)="onPageChange($event)"
     (openVideo)="onOpenVideo($event)">
   </app-videos-table>

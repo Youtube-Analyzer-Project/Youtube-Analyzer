@@ -22,19 +22,19 @@
           {{ data.video.title }}
         </h2>
 
-        <div class="channel-name">
-          {{ details.channel_name }}
+        <div class="video-info-details">
+          <mat-chip class="meta-chip">{{ details.channel_name }}</mat-chip>
+
+          <div class="meta-chip"
+               [class.positive]="details.stats.sentiment_label === 'Positive'"
+               [class.neutral]="details.stats.sentiment_label === 'Neutral'"
+               [class.negative]="details.stats.sentiment_label === 'Negative'"
+          >
+            {{ details.stats.sentiment_label }}
+            ({{ details.stats.sentiment_score | number : '1.2-2' }})
+          </div>
         </div>
 
-        <div
-          class="sentiment-pill"
-          [class.sentiment-positive]="details.stats.sentiment_label === 'Positive'"
-          [class.sentiment-neutral]="details.stats.sentiment_label === 'Neutral'"
-          [class.sentiment-negative]="details.stats.sentiment_label === 'Negative'"
-        >
-          {{ details.stats.sentiment_label }}
-          ({{ details.stats.sentiment_score | number : '1.2-2' }})
-        </div>
       </div>
     </div>
 
@@ -103,7 +103,11 @@
           <div class="comment-author">{{ item[0] }}</div>
           <div class="comment-body">{{ item[1] }}</div>
         </div>
-        <div class="comment-score">+{{ item[2] | number : '1.2-2' }}</div>
+        <div class="comment-score"
+          [class.positive]="item[2] > 0.3"
+          [class.neutral]="item[2] <= 0.3 && item[2] >= 0"
+          [class.negative]="item[2] < 0"
+        >+{{ item[2] | number : '1.2-2' }}</div>
       </div>
       }
     </section>
@@ -113,9 +117,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end" class="dialog-actions">
-  <button mat-stroked-button color="primary" (click)="openOnYoutube()">Open on YouTube</button>
-
-  <button mat-button (click)="close()">
+  <button class="action-btn youtube-btn" (click)="close()">
     <mat-icon>close</mat-icon>
     Close
   </button>
