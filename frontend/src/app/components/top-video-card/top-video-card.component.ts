@@ -1,8 +1,9 @@
 import {Component, inject, input} from '@angular/core';
 import {MatCard, MatCardActions, MatCardHeader, MatCardSubtitle, MatCardTitle} from '@angular/material/card';
 import {MatChip} from '@angular/material/chips';
-import {LiveVideoDetailsService} from '../../../services/live-video-details.service';
-import {LiveVideo} from '../../../types/live-video.type';
+import {LiveVideoDetailsService} from '../../services/live-video-details.service';
+import {LiveVideo} from '../../types/live-video.type';
+import {DecimalPipe} from '@angular/common';
 
 @Component({
   selector: 'app-top-video-card',
@@ -12,7 +13,8 @@ import {LiveVideo} from '../../../types/live-video.type';
     MatCardTitle,
     MatCardSubtitle,
     MatChip,
-    MatCardActions
+    MatCardActions,
+    DecimalPipe
   ],
   templateUrl: './top-video-card.component.html',
   styleUrl: './top-video-card.component.scss'
@@ -27,5 +29,6 @@ export class TopVideoCardComponent {
   collapseDetails(): void {
     this._liveVideoDetailsService.updateShowDetails(false);
     this._liveVideoDetailsService.updateVideo(this.video());
+    this._liveVideoDetailsService.updateShowYoutubeButton(true);
   }
 }

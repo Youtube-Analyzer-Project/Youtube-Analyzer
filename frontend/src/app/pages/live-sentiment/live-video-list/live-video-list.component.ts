@@ -1,5 +1,5 @@
 import {Component, input} from '@angular/core';
-import {LiveVideoItemComponent} from '../live-video-item/live-video-item.component';
+import {LiveVideoItemComponent} from '../../../components/live-video-item/live-video-item.component';
 import {LiveVideo} from '../../../types/live-video.type';
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
 

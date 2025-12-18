@@ -3,9 +3,6 @@ import {MatIcon} from "@angular/material/icon";
 import {MatTabNavPanel} from '@angular/material/tabs';
 import {LiveVideoDetailsService} from '../../services/live-video-details.service';
 import {LiveVideo} from '../../types/live-video.type';
-import {
-  LiveSentimentChartComponent
-} from '../../pages/live-sentiment/charts/live-sentiment-chart/live-sentiment-chart.component';
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatChip} from '@angular/material/chips';
 
@@ -14,7 +11,6 @@ import {MatChip} from '@angular/material/chips';
   imports: [
     MatIcon,
     MatTabNavPanel,
-    LiveSentimentChartComponent,
     MatCard,
     MatCardContent,
     MatChip
@@ -28,11 +24,13 @@ export class DetailsSidenavComponent {
   collapseDetails = output<boolean>();
   isCollapsed = signal<boolean>(false);
   video = signal<LiveVideo | null>(null);
+  showYoutubeButton = signal<boolean>(false);
 
   constructor() {
     effect(() => {
       this.isCollapsed.set(this.liveVideoDetailsService.getShowDetails());
       this.video.set(this.liveVideoDetailsService.getVideo());
+      this.showYoutubeButton.set(this.liveVideoDetailsService.showYoutubeButton())
     });
   }
 

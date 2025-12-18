@@ -8,26 +8,30 @@
   <div>
     <h1 class="live-video-title">{{ video()?.title }}</h1>
     <p class="live-video-details">{{ video()?.channel }}</p>
+
+    @if (showYoutubeButton()) {
+      <a [href]="'https://www.youtube.com/watch?v=' + video()?._id" target="_blank" rel="noopener noreferrer"
+         class="action-btn youtube-btn">
+        <mat-icon>open_in_new</mat-icon>
+        <span>Open in YouTube</span>
+      </a>
+    }
+
   </div>
 
-  @if(video()?.sentimentHistory) {
-    <h2 class="live-video-title">Sentiment History</h2>
-    <app-live-sentiment-chart [dataset]="video()?.sentimentHistory!" />
-  }
-
-  @if(video()?.recentMessages) {
+  @if(video()?.comments) {
     <h2 class="live-video-details">Recent Messages</h2>
 
-    @for (message of video()?.recentMessages; track $index) {
+    @for (comment of video()?.comments?.slice(0, 10); track $index) {
       <mat-card class="kpi-card">
         <mat-card-content>
-          <p class="message-text">{{ message.text }}</p>
+          <p class="message-text">{{ comment }}</p>
         </mat-card-content>
       </mat-card>
     }
   }
 
   <mat-chip class="meta-chip">
-    {{ 'Avg Sentiment: ' + video()?.avgSentiment }}
+    {{ 'Avg Sentiment: ' + video()?.score }}
   </mat-chip>
 </mat-tab-nav-panel>

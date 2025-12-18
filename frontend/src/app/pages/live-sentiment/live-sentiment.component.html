@@ -1,2 +1,6 @@
-<app-top-videos [videos]="topVideos()" />
-<app-live-video-list [videos]="activeStreams()" />
+@if(videos().length > 0) {
+  <app-top-videos [videos]="topVideos()" />
+  <app-live-video-list [videos]="activeStreams()" />
+} @else {
+  <mat-progress-bar mode="indeterminate" />
+}

@@ -38,3 +38,43 @@
   @extend .meta-chip;
   margin-left: 16px;
 }
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 16px 16px 16px;
+
+  height: 36px;
+  padding: 0 20px;
+  border-radius: 999px;
+
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap; /* Prevents "Open in YouTube" from wrapping */
+
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  background: transparent;
+
+  .material-symbols-rounded, mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+  }
+}
+
+.youtube-btn {
+  border: 1px solid rgba(255, 82, 82, 0.5); /* Subtle Red Border */
+  color: #ff5252;
+
+  &:hover {
+    background-color: #ff5252;
+    color: white;
+    border-color: #ff5252;
+    transform: translateY(-2px);
+  }
+}

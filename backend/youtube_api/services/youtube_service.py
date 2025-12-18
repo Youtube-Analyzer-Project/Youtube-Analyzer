@@ -75,6 +75,7 @@ def get_trending_live_streams():
             live_streams.append({
                 "_id": item["id"],  # correct usage for /videos
                 "title": item["snippet"]["title"],
+                "channel": item["snippet"]["channelTitle"],
                 "liveChatId": live_chat_id,
                 "viewCount": item.get("statistics", {}).get("viewCount")
             })

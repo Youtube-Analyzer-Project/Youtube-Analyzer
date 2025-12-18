@@ -1,6 +1,6 @@
 import {Component, input} from '@angular/core';
 import {LiveVideo} from '../../../types/live-video.type';
-import {TopVideoCardComponent} from '../top-video-card/top-video-card.component';
+import {TopVideoCardComponent} from '../../../components/top-video-card/top-video-card.component';
 
 @Component({
   selector: 'app-top-videos',
