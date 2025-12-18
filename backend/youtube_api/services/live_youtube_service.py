@@ -7,6 +7,7 @@ def fetch_live_trends_worker():
     for video in videos:
         comments = fetch_live_comments(video["liveChatId"])
         video["score"] = analyze_video(comments)
+        video["comments"] = comments
     videos.sort(key=lambda x: x["score"], reverse=True)
     videos_with_live_chat = [video for video in videos if video["score"] > 0.0]
     store_live_trends(videos_with_live_chat)

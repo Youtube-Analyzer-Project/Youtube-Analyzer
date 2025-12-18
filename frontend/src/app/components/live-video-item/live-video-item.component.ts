@@ -1,7 +1,7 @@
 import {Component, inject, input} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
-import {LiveVideo} from '../../../types/live-video.type';
-import {LiveVideoDetailsService} from '../../../services/live-video-details.service';
+import {LiveVideo} from '../../types/live-video.type';
+import {LiveVideoDetailsService} from '../../services/live-video-details.service';
 
 @Component({
   selector: 'app-live-video-item',
@@ -18,6 +18,7 @@ export class LiveVideoItemComponent {
   viewVideoDetails(): void {
     this._liveVideoDetailsService.updateShowDetails(false);
     this._liveVideoDetailsService.updateVideo(this.video());
+    this._liveVideoDetailsService.updateShowYoutubeButton(false);
   }
 
 }

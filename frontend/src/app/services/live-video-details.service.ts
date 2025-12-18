@@ -8,6 +8,7 @@ export class LiveVideoDetailsService {
   private _showDetails = signal<boolean>(true);
   private _video = signal<LiveVideo | null>(null);
   private _detailsChanged = signal<boolean>(false);
+  private _showYoutubeButton = signal<boolean>(false);
 
   public updateShowDetails(showDetails: boolean): void {
     this._showDetails.set(showDetails);
@@ -27,6 +28,14 @@ export class LiveVideoDetailsService {
 
   public notifyDetailsChanged(): void {
     this._detailsChanged.set(true);
+  }
+
+  public updateShowYoutubeButton(showVideo: boolean) {
+    this._showYoutubeButton.set(showVideo);
+  }
+
+  public showYoutubeButton(): boolean {
+    return this._showYoutubeButton();
   }
 
   public detailsChanged() {
