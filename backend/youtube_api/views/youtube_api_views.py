@@ -13,7 +13,7 @@ import threading
 @api_view(["GET"])
 def fetch_trending_videos(request):
     region = request.GET.get("region", "RO")
-    max_results = int(request.GET.get("max_results", 20))
+    max_results = int(request.GET.get("max_results", 10))
 
     try:
         raw_data = get_trending_videos_by_region(region, max_results)

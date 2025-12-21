@@ -11,9 +11,9 @@
         <span class="dot">•</span>
         <span class="meta-text">{{ video().stats.views | formatNumber }}</span>
         <span class="dot">•</span>
-        <span class="meta-text" [class.negative]="video().stats.sentiment_label === 'Negative'"
-          [class.positive]="video().stats.sentiment_label === 'Positive'"
-          [class.neutral]="video().stats.sentiment_label === 'Neutral'">{{ video().stats.sentiment_label }}</span>
+        <span class="meta-text" [ngClass]="getLabelClass(video().stats.sentiment_label)">
+          {{ video().stats.sentiment_label }}
+        </span>
       </div>
     </div>
     <div class="video-actions">

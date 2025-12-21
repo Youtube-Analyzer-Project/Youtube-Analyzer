@@ -17,12 +17,12 @@ export class SentimentPieChartComponent implements OnInit, OnDestroy {
     new Chart(this.chart().nativeElement, {
       type: 'doughnut',
       data: {
-        labels: ['Positive', 'Neutral', 'Negative'],
+        labels: ['Very Postive', 'Positive', 'Neutral', 'Negative', 'Very Negative'],
         datasets: [
           {
             label: '',
             data: this.data(),
-            backgroundColor: ['#DD4046', '#499F5A', '#F3BC24'],
+            backgroundColor: ['#1E5631', '#499F5A', '#F3BC24', '#DD4046', '#9B1B1E'],
           },
         ],
       },

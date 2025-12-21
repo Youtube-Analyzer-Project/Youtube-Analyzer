@@ -6,11 +6,11 @@ import os
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import (
     col, udf, collect_list, struct,
-    current_timestamp, avg, count, explode
+    current_timestamp, avg, count, explode,
+    sum as _sum, when
 )
 from pyspark.sql.types import FloatType
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-
 
 try:
     nltk.data.find('sentiment/vader_lexicon.zip')
@@ -41,7 +41,6 @@ analyzer = SentimentIntensityAnalyzer()
 def calculate_sentiment_score(text):
     if not text:
         return 0.0
-
     try:
         score = analyzer.polarity_scores(text)['compound']
         return float(score)
@@ -51,14 +50,14 @@ def calculate_sentiment_score(text):
         return 0.0
 
 
-def get_sentiment_label(score):
-    if score < 0.2:
+def get_sentiment_label(ratio):
+    if ratio < 0.25:
         return "Very Negative"
-    elif score < 0.4:
+    elif ratio < 0.45:
         return "Negative"
-    elif score < 0.6:
+    elif ratio < 0.55:
         return "Neutral"
-    elif score < 0.8:
+    elif ratio < 0.75:
         return "Positive"
     else:
         return "Very Positive"
@@ -67,12 +66,9 @@ def get_sentiment_label(score):
 def find_highlights(comments_list):
     if not comments_list:
         return {"top_pos": [], "top_neg": []}
-
     sorted_comments = sorted(comments_list, key=lambda x: x['score'])
-
-    top_neg = [c for c in sorted_comments if c['score'] < 0][:2]
-    top_pos = [c for c in reversed(sorted_comments) if c['score'] > 0][:3]
-
+    top_neg = [c for c in sorted_comments if c['score'] < -0.05][:2]
+    top_pos = [c for c in reversed(sorted_comments) if c['score'] > 0.05][:3]
     return {"top_pos": top_pos, "top_neg": top_neg}
 
 
@@ -83,33 +79,35 @@ def save_rich_data_mongo(partition_data):
 
     for row in partition_data:
         video_id = (getattr(row, "video_id", None) or getattr(row, "v_id", None))
-
         if not video_id:
             continue
 
-        current_score = float(row.avg_sentiment) if row.avg_sentiment is not None else 0.0
-        highlights = find_highlights(row.all_comments)
+        ratio_val = getattr(row, "sentiment_ratio", None)
+        current_ratio = float(ratio_val) if ratio_val is not None else 0.5
+
+        highlights = find_highlights(row.all_comments) if getattr(row, "all_comments", None) else {"top_pos": [],
+                                                                                                   "top_neg": []}
 
         existing = collection.find_one({"_id": video_id})
 
         history = []
-        last_score = 0.0
+        last_ratio = 0.5
 
         if existing and "sentiment" in existing:
             history = existing["sentiment"].get("history", [])
             stored_score = existing["sentiment"].get("score")
             if stored_score is not None:
-                last_score = float(stored_score)
+                last_ratio = float(stored_score)
 
         trend = "stable"
-        if current_score > last_score + 0.1:
+        if current_ratio > last_ratio + 0.05:
             trend = "increasing"
-        elif current_score < last_score - 0.1:
+        elif current_ratio < last_ratio - 0.05:
             trend = "decreasing"
 
         history.append({
             "date": row.analysis_date.isoformat(),
-            "score": current_score,
+            "score": current_ratio,
             "views": int(row.view_count) if row.view_count else 0
         })
 
@@ -128,8 +126,8 @@ def save_rich_data_mongo(partition_data):
                 "comments": int(row.comment_count) if row.comment_count else 0
             },
             "sentiment": {
-                "score": (current_score + 1.0) / 2.0,
-                "label": get_sentiment_label((current_score + 1.0) / 2.0),
+                "score": current_ratio,
+                "label": get_sentiment_label(current_ratio),
                 "trend": trend,
                 "history": history
             },
@@ -139,11 +137,9 @@ def save_rich_data_mongo(partition_data):
             },
             "last_updated": row.analysis_date
         }
-
         collection.replace_one({"_id": video_id}, doc, upsert=True)
 
     client.close()
-
 
 def run_job():
     spark = SparkSession.builder \
@@ -171,20 +167,39 @@ def run_job():
     comments_scored = comments_df.filter(col("comment.text").isNotNull()) \
         .withColumn("score", score_udf(col("comment.text"))) \
         .select(
-            col("video_id"),
-            col("comment.author").alias("author"),
-            col("comment.text").alias("text"),
-            col("score")
-        )
+        col("video_id"),
+        col("comment.author").alias("author"),
+        col("comment.text").alias("text"),
+        col("score")
+    )
 
-    videos_df = spark.read.json("hdfs://hadoop-namenode:8020/youtube/raw_spark/trending/*")
+    comments_with_flags = comments_scored.withColumn(
+        "is_pos", when(col("score") > 0.05, 1).otherwise(0)
+    ).withColumn(
+        "is_neg", when(col("score") < -0.05, 1).otherwise(0)
+    )
 
-    # TODO: Use this block in case you need to list HDFS directories dynamically
+    comments_agg = comments_with_flags.groupBy("video_id").agg(
+        _sum("is_pos").alias("pos_count"),
+        _sum("is_neg").alias("neg_count"),
+        count("score").alias("comment_count"),
+        avg("score").alias("avg_vader_score"),
+        collect_list(struct(
+            col("author").alias("author"),
+            col("text").alias("text"),
+            col("score").alias("score")
+        )).alias("all_comments")
+    )
 
-    # videos_base_path = "hdfs://hadoop-namenode:8020/youtube/raw_spark/trending/"
-    # videos_paths = list_hdfs_dirs(spark, videos_base_path)
-    # videos_df = spark.read.json(videos_paths)
+    comments_agg = comments_agg.withColumn(
+        "sentiment_ratio",
+        when(
+            (col("pos_count") + col("neg_count")) > 0,
+            col("pos_count") / (col("pos_count") + col("neg_count"))
+        ).otherwise(0.5)
+    )
 
+    videos_df = spark.read.json("hdfs://localhost:9000/youtube/raw_spark/trending/*")
     videos_clean = videos_df.select(
         col("id").alias("v_id"),
         col("snippet.title").alias("title"),
@@ -196,16 +211,6 @@ def run_job():
         col("snippet.tags").alias("tags"),
         col("statistics.viewCount").alias("view_count"),
         col("statistics.likeCount").alias("like_count")
-    )
-
-    comments_agg = comments_scored.groupBy("video_id").agg(
-        avg("score").alias("avg_sentiment"),
-        count("score").alias("comment_count"),
-        collect_list(struct(
-            col("author").alias("author"),
-            col("text").alias("text"),
-            col("score").alias("score")
-        )).alias("all_comments")
     )
 
     final_df = videos_clean.join(

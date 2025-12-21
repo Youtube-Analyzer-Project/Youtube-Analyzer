@@ -6,14 +6,15 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { VideoDialogData } from '../../../../types/dashboard-api.types';
 import { DashboardApiService } from '../../../../services/dashboard-api.service';
 import { BackendVideoDetails } from '../../../../types/backend-api.types';
-import { DecimalPipe, DatePipe } from '@angular/common';
+import { DecimalPipe, DatePipe, CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {MatChip} from '@angular/material/chips';
+import { MatChip } from '@angular/material/chips';
 
 @Component({
   selector: 'app-video-dialog',
   standalone: true,
   imports: [
+    CommonModule,
     MatDialogModule,
     MatButtonModule,
     MatIconModule,
@@ -54,6 +55,19 @@ export class VideoDialogComponent {
 
   get negativeHighlights() {
     return this.details?.highlights?.top_negative ?? [];
+  }
+
+  getLabelClass(label: string | undefined): string {
+    if (!label) return '';
+    return label.toLowerCase().replace(/\s+/g, '-');
+  }
+
+  getSentimentClass(score: number): string {
+    if (score > 0.8) return 'very-positive';
+    if (score > 0.55 && score <= 0.8) return 'positive';
+    if (score >= 0.45 && score <= 0.55) return 'neutral';
+    if (score < 0.45) return 'negative';
+    return 'very-negative';
   }
 
   ngOnInit(): void {

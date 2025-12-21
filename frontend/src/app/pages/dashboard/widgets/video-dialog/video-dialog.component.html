@@ -13,7 +13,7 @@
     <div class="video-header">
       @if (safeUrl) {
       <div class="video-frame-wrapper">
-        <iframe [src]="safeUrl" frameborder="0" allowfullscreen> </iframe>
+        <iframe [src]="safeUrl" frameborder="0" allowfullscreen></iframe>
       </div>
       }
 
@@ -25,11 +25,7 @@
         <div class="video-info-details">
           <mat-chip class="meta-chip">{{ details.channel_name }}</mat-chip>
 
-          <div class="meta-chip"
-               [class.positive]="details.stats.sentiment_label === 'Positive'"
-               [class.neutral]="details.stats.sentiment_label === 'Neutral'"
-               [class.negative]="details.stats.sentiment_label === 'Negative'"
-          >
+          <div class="meta-chip sentiment-badge" [ngClass]="getLabelClass(details.stats.sentiment_label)">
             {{ details.stats.sentiment_label }}
             ({{ details.stats.sentiment_score | number : '1.2-2' }})
           </div>
@@ -40,15 +36,12 @@
 
     <section class="stats-section">
       <h3>Stats</h3>
-
       <div class="stats-grid">
         <div class="stat-card">
           <mat-icon>event</mat-icon>
           <div class="stat-content">
             <span class="stat-label">Published</span>
-            <span class="stat-value">
-              {{ details.published_at | date : 'mediumDate' }}
-            </span>
+            <span class="stat-value">{{ details.published_at | date : 'mediumDate' }}</span>
           </div>
         </div>
 
@@ -56,9 +49,7 @@
           <mat-icon>visibility</mat-icon>
           <div class="stat-content">
             <span class="stat-label">Views</span>
-            <span class="stat-value">
-              {{ details.stats.views | number }}
-            </span>
+            <span class="stat-value">{{ details.stats.views | number }}</span>
           </div>
         </div>
 
@@ -66,19 +57,15 @@
           <mat-icon>thumb_up</mat-icon>
           <div class="stat-content">
             <span class="stat-label">Likes</span>
-            <span class="stat-value">
-              {{ details.stats.likes | number }}
-            </span>
+            <span class="stat-value">{{ details.stats.likes | number }}</span>
           </div>
         </div>
 
         <div class="stat-card">
           <mat-icon>comment</mat-icon>
           <div class="stat-content">
-            <span class="stat-label">Comments</span>
-            <span class="stat-value">
-              {{ details.stats.comments | number }}
-            </span>
+            <span class="stat-label">Comments analyzed</span>
+            <span class="stat-value">{{ details.stats.comments | number }}</span>
           </div>
         </div>
       </div>
@@ -93,23 +80,21 @@
         }
       </div>
     </section>
-    } @if (positiveHighlights?.length) {
+    }
+
+    @if (positiveHighlights.length) {
     <section class="comments-section">
       <h3>Top Positive Comments</h3>
-
       @for (item of positiveHighlights; track $index) {
       <div class="comment-row">
         <div class="comment-text">
           <div class="comment-author">{{ item[0] }}</div>
           <div class="comment-body">{{ item[1] }}</div>
         </div>
-        <div class="comment-score"
-          [class.positive]="item[2] > 0.3"
-          [class.neutral]="item[2] <= 0.3 && item[2] >= 0"
-          [class.negative]="item[2] < 0"
-        >+{{ item[2] | number : '1.2-2' }}</div>
-      </div>
-      }
+        <div class="comment-score" [ngClass]="getSentimentClass(item[2])">
+          {{ item[2] > 0 ? '+' : '' }}{{ item[2] | number : '1.2-2' }}
+        </div>
+      </div> }
     </section>
     }
   </div>

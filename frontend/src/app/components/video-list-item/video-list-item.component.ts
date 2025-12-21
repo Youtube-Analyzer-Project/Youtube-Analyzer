@@ -1,5 +1,6 @@
 import { Component, input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SentimentVideoDto } from '../../types/sentiment.types';
@@ -7,12 +8,16 @@ import { FormatNumberPipe } from '../../pipes/format-number.pipe';
 
 @Component({
   selector: 'app-video-list-item',
-  imports: [MatIcon, FormatNumberPipe, MatButtonModule, MatIconModule],
+  imports: [CommonModule, MatIcon, FormatNumberPipe, MatButtonModule, MatIconModule],
   templateUrl: './video-list-item.component.html',
   styleUrl: './video-list-item.component.scss',
 })
 export class VideoListItemComponent {
   video = input.required<SentimentVideoDto>();
+
+  getLabelClass(label: string): string {
+    return label ? label.toLowerCase().replace(/\s+/g, '-') : '';
+  }
 
   onShare() {
     const currentVideo = this.video();
