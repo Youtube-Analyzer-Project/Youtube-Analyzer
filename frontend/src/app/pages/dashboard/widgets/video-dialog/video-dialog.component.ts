@@ -63,11 +63,11 @@ export class VideoDialogComponent {
   }
 
   getSentimentClass(score: number): string {
-    if (score > 0.8) return 'very-positive';
-    if (score > 0.55 && score <= 0.8) return 'positive';
-    if (score >= 0.45 && score <= 0.55) return 'neutral';
+    if (score < 0.25) return 'very-negative';
     if (score < 0.45) return 'negative';
-    return 'very-negative';
+    if (score < 0.55) return 'neutral';
+    if (score < 0.75) return 'positive';
+    return 'very-positive';
   }
 
   ngOnInit(): void {

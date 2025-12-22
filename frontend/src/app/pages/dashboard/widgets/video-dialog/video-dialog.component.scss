@@ -239,14 +239,14 @@
   text-align: center;
   font-weight: 600;
   font-size: 0.85rem;
-  border-radius: 999px;
+  border-radius: 20px;
   padding: 0.2rem 0.6rem;
   align-self: center;
-  background: color-mix(in srgb, var(--mat-sys-primary) 16%, transparent);
+  background: color-mix(in srgb, var(--mat-sys-primary) 25%, transparent);
   color: var(--mat-sys-primary);
   &.very-positive {
     color: #1E5631; 
-    background-color: rgba(30, 86, 49, 0.15);
+    background-color: rgba(100, 248, 130, 0.15);
     border: 1px solid rgba(30, 86, 49, 0.2);
   }
   &.positive {
@@ -329,6 +329,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: transparent;
 
   &.sentiment-badge {
 

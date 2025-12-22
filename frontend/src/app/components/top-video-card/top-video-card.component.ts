@@ -34,15 +34,19 @@ export class TopVideoCardComponent {
   third = input<boolean>(false);
 
   getSentimentClass(score: number): string {
-    if (score > 0.75) return 'positive-text';
-    if (score > 0.25) return 'neutral-text';
-    return 'negative-text';
+    if (score < 0.25) return 'very-negative';
+    if (score < 0.45) return 'negative';
+    if (score < 0.55) return 'neutral';
+    if (score < 0.75) return 'positive';
+    return 'very-positive';
   }
 
   getSentimentLabel(score: number): string {
-    if (score > 0.75) return 'Positive';
-    if (score > 0.25) return 'Neutral';
-    return 'Negative';
+    if (score < 0.25) return 'Very Negative';
+    if (score < 0.45) return 'Negative';
+    if (score < 0.55) return 'Neutral';
+    if (score < 0.75) return 'Positive';
+    return 'Very Positive';
   }
 
   collapseDetails(): void {

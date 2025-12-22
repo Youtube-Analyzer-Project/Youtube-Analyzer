@@ -1,18 +1,13 @@
 <mat-card class="kpi-card">
   <mat-card-header class="kpi-title-container">
     <mat-card-title class="kpi-title">{{ data().label }}</mat-card-title>
-    <mat-icon [class.neutral]="data().content.includes('Neutral')"
-              [class.negative]="data().content.includes('Negative') || data().content.includes('Decreasing')"
-              [class.positive]="data().content.includes('Positive') || data().content.includes('Increasing')">
+    <mat-icon [ngClass]="getKpiClass(data().content)">
       {{ data().icon }}
     </mat-icon>
   </mat-card-header>
 
   <mat-card-content>
-    <p class="kpi-value"
-       [class.neutral]="data().content.includes('Neutral')"
-       [class.negative]="data().content.includes('Negative') || data().content.includes('Decreasing')"
-       [class.positive]="data().content.includes('Positive') || data().content.includes('Increasing')">
+    <p class="kpi-value" [ngClass]="getKpiClass(data().content)">
       {{ data().content }}</p>
     <p class="kpi-details">{{ data().details }}</p>
   </mat-card-content>

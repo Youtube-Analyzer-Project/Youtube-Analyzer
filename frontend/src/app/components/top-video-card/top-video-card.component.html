@@ -17,8 +17,7 @@
 
   <mat-card-actions>
 
-    <mat-chip class="sentiment-details" [class.positive]="video().score > 0.75"
-      [class.neutral]="video().score > 0.25 && video().score <= 0.75" [class.negative]="video().score <= 0.25">
+    <mat-chip class="sentiment-details" [ngClass]="getSentimentClass(video().score)">
 
       <span [ngClass]="getSentimentClass(video().score)">
         {{ video().score | number : '1.2-2' }}
