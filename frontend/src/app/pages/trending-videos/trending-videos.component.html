@@ -4,8 +4,9 @@
 
 <mat-card>
   <mat-card-content>
-    <div style="margin-bottom: 16px;">
-      <button mat-raised-button color="primary" (click)="getTrendingVideos()">
+
+    <div class="actions-header" style="margin-bottom: 16px;">
+      <button mat-raised-button color="primary" (click)="getTrendingVideos()" [disabled]="isLoading()">
         Fetch current trending videos
       </button>
     </div>
@@ -15,13 +16,22 @@
     }
 
     @if (errorMessage()) {
-    <div class="error-container" style="color: red; padding: 16px; text-align: center;">
+    <div class="error-container">
+      <mat-icon color="warn">error_outline</mat-icon>
       <p>{{ errorMessage() }}</p>
     </div>
     }
 
-    @if (youtubeVideos().length > 0) {
-    <app-table [displayedColumns]="displayedColumns" [dataSource]="youtubeVideos()" />
+    @if (paginatedData().items.length > 0) {
+
+    <app-videos-table [paginated]="paginatedData()" (openVideo)="onViewDetails($event)">
+    </app-videos-table>
+
+    } @else if (!isLoading() && !errorMessage()) {
+    <div style="padding: 2rem; text-align: center; color: gray;">
+      <p>No trending data loaded. Click fetch to start.</p>
+    </div>
     }
+
   </mat-card-content>
 </mat-card>
