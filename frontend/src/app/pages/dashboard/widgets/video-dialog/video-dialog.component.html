@@ -7,6 +7,12 @@
   </div>
   } @if (error) {
   <p class="error-message">{{ error }}</p>
+  } @if(!hasDetails) {
+  <div class="no-details-state ai-theme">
+    <mat-icon class="large-icon" color="accent">psychology</mat-icon>
+    <h3>Our AI is still watching...</h3>
+    <p>This video is fresh! Our algorithms haven't analyzed the comments yet to calculate the sentiment score.</p>
+  </div>
   } @if (!loading && !error && hasDetails && details) {
 
   <div class="video-dialog">

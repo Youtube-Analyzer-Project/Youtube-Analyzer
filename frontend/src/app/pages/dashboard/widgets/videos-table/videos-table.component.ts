@@ -14,6 +14,7 @@ import { VideoItem, VideosListPaginated } from '../../../../types/dashboard-api.
 export class VideosTableComponent {
   @Input() paginated: VideosListPaginated | null = null;
   @Input() pageSize = 5;
+  @Input() pageSizeOptions: number[] | undefined;
   @Output() pageChange = new EventEmitter<PageEvent>();
   @Output() openVideo = new EventEmitter<VideoItem>();
 

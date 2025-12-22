@@ -80,7 +80,6 @@ export class TrendingVideosComponent implements OnDestroy {
               views: this.formatNumber(item.statistics?.viewCount),
               views_raw: Number(item.statistics?.viewCount) || 0,
               likes: this.formatNumber(item.statistics?.likeCount),
-              // Trending videos usually don't have sentiment yet, so we set defaults
               sentiment_score: 0,
               sentiment_label: 'Not Analyzed',
             },

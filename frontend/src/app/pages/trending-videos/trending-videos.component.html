@@ -24,7 +24,8 @@
 
     @if (paginatedData().items.length > 0) {
 
-    <app-videos-table [paginated]="paginatedData()" (openVideo)="onViewDetails($event)">
+    <app-videos-table [paginated]="paginatedData()" [pageSize]="10" [pageSizeOptions]="[10]"
+      (openVideo)="onViewDetails($event)">
     </app-videos-table>
 
     } @else if (!isLoading() && !errorMessage()) {
