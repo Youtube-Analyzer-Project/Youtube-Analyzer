@@ -1,17 +1,27 @@
-<mat-toolbar>
+<mat-toolbar color="primary">
   <h1>Trending Videos</h1>
 </mat-toolbar>
 
 <mat-card>
   <mat-card-content>
-    <button matButton (click)="getTrendingVideos()">Fetch current trending videos</button>
+    <div style="margin-bottom: 16px;">
+      <button mat-raised-button color="primary" (click)="getTrendingVideos()">
+        Fetch current trending videos
+      </button>
+    </div>
 
-    @if(isLoading()) {
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    @if (isLoading()) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+
+    @if (errorMessage()) {
+    <div class="error-container" style="color: red; padding: 16px; text-align: center;">
+      <p>{{ errorMessage() }}</p>
+    </div>
     }
 
     @if (youtubeVideos().length > 0) {
-      <app-table [displayedColumns]="displayedColumns" [dataSource]="youtubeVideos()"  />
+    <app-table [displayedColumns]="displayedColumns" [dataSource]="youtubeVideos()" />
     }
   </mat-card-content>
 </mat-card>

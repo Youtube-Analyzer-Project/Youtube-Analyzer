@@ -9,8 +9,8 @@ import { Video } from '../types/raw-video.type';
 export class YoutubeApiService {
   private _httpClient = inject(HttpClient);
 
-  public getVideosByRegion(): Observable<{ message: string }> {
-    return this._httpClient.get<{ message: string }>('http://localhost:8000/api/fetch_trending/');
+public getVideosByRegion(): Observable<any[]> {
+    return this._httpClient.get<any[]>('http://localhost:8000/api/fetch_trending/');
   }
 
   public getRawVideos(): Observable<Video[]> {

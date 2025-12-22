@@ -239,11 +239,36 @@
   text-align: center;
   font-weight: 600;
   font-size: 0.85rem;
-  border-radius: 999px;
+  border-radius: 20px;
   padding: 0.2rem 0.6rem;
   align-self: center;
-  background: color-mix(in srgb, var(--mat-sys-primary) 16%, transparent);
+  background: color-mix(in srgb, var(--mat-sys-primary) 25%, transparent);
   color: var(--mat-sys-primary);
+  &.very-positive {
+    color: #1E5631; 
+    background-color: rgba(100, 248, 130, 0.15);
+    border: 1px solid rgba(30, 86, 49, 0.2);
+  }
+  &.positive {
+    color: #499F5A; 
+    background-color: rgba(73, 159, 90, 0.15);
+    border: 1px solid rgba(73, 159, 90, 0.2);
+  }
+  &.neutral {
+    color: #F3BC24; 
+    background-color: rgba(243, 188, 36, 0.15);
+    border: 1px solid rgba(243, 188, 36, 0.2);
+  }
+  &.negative {
+    color: #DD4046; 
+    background-color: rgba(221, 64, 70, 0.15);
+    border: 1px solid rgba(221, 64, 70, 0.2);
+  }
+  &.very-negative {
+    color: #9B1B1E; 
+    background-color: rgba(155, 27, 30, 0.15);
+    border: 1px solid rgba(155, 27, 30, 0.2);
+  }
 }
 
 .negative-score {
@@ -274,12 +299,20 @@
   gap: 0.5rem;
 }
 
+.very-positive {
+  color: #1E5631;
+}
+
 .positive {
   color: #499F5A;
 }
 
 .negative {
   color: #DD4046;
+}
+
+.very-negative {
+  color: #9B1B1E;
 }
 
 .neutral {
@@ -296,4 +329,24 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: transparent;
+
+  &.sentiment-badge {
+
+    &.very-positive {
+      color: #1E5631;
+    }
+    &.positive {
+      color: #499F5A;
+    }
+    &.neutral {
+      color: #F3BC24;
+    }
+    &.negative {
+      color: #DD4046;
+    }
+    &.very-negative {
+      color: #9B1B1E;
+    }
+  }
 }

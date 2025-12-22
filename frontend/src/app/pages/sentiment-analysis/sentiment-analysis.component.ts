@@ -127,7 +127,7 @@ export class SentimentAnalysisComponent implements OnInit, OnDestroy {
           },
           {
             id: 3,
-            label: 'Average Sentiment Score',
+            label: 'Overall Sentiment Score',
             content: `${data.avg_sentiment.toFixed(2)} (${data.overall_sentiment_label})`,
             details: 'Compared to last period',
             icon: sentiment,
@@ -140,10 +140,18 @@ export class SentimentAnalysisComponent implements OnInit, OnDestroy {
             icon: increasing,
           },
         ];
+        const veryPositiveCount = data.sentiment_distribution.very_positive;
+        const veryNegativeCount = data.sentiment_distribution.very_negative;
         const positiveCount = data.sentiment_distribution.positive;
         const neutralCount = data.sentiment_distribution.neutral;
         const negativeCount = data.sentiment_distribution.negative;
-        this.sentimentDistributions.set([positiveCount, neutralCount, negativeCount]);
+        this.sentimentDistributions.set([
+          veryPositiveCount,
+          positiveCount,
+          neutralCount,
+          negativeCount,
+          veryNegativeCount,
+        ]);
         this.widgets.set(sentimentWidgets);
       });
   }
@@ -151,22 +159,27 @@ export class SentimentAnalysisComponent implements OnInit, OnDestroy {
   private _getChartData(): void {
     this._sentimentChartsSubscription = this._sentimentService.getSentimentData().subscribe({
       next: (data) => {
-        // this.lineChartData.set(data.series);
-        this.lineChartData.set(MOCK_SERIES);
-        const uniqueCategories = [...new Set(MOCK_SERIES.map((item) => item.category_id))];
-        uniqueCategories.forEach((category) => {
-          const series = this._getSeriesByCategory(category);
-          if (category === uniqueCategories[0]) {
+        const seriesData = data.series || [];
+        const categories = data.categories || [];
+
+        this.lineChartData.set(seriesData);
+
+        categories.forEach((cat: any, index: number) => {
+          const series = seriesData.filter((s) => s.category_id === cat.id);
+
+          if (index === 0) {
             this.dataset1.set(series);
-          } else if (category === uniqueCategories[1]) {
+          } else if (index === 1) {
             this.dataset2.set(series);
-          } else if (category === uniqueCategories[2]) {
+          } else if (index === 2) {
             this.dataset3.set(series);
           }
         });
+
         this.chartIsLoaded.set(true);
       },
-      error: () => {
+      error: (err) => {
+        console.error('Sentiment Chart Error:', err);
         this.chartIsLoaded.set(false);
       },
     });

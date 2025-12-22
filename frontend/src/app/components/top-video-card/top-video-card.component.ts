@@ -1,23 +1,30 @@
-import {Component, inject, input} from '@angular/core';
-import {MatCard, MatCardActions, MatCardHeader, MatCardSubtitle, MatCardTitle} from '@angular/material/card';
-import {MatChip} from '@angular/material/chips';
-import {LiveVideoDetailsService} from '../../services/live-video-details.service';
-import {LiveVideo} from '../../types/live-video.type';
-import {DecimalPipe} from '@angular/common';
+import { Component, inject, input } from '@angular/core';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardHeader,
+  MatCardSubtitle,
+  MatCardTitle,
+} from '@angular/material/card';
+import { MatChip } from '@angular/material/chips';
+import { LiveVideoDetailsService } from '../../services/live-video-details.service';
+import { LiveVideo } from '../../types/live-video.type';
+import { CommonModule, DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-top-video-card',
   imports: [
+    CommonModule,
     MatCard,
     MatCardHeader,
     MatCardTitle,
     MatCardSubtitle,
     MatChip,
     MatCardActions,
-    DecimalPipe
+    DecimalPipe,
   ],
   templateUrl: './top-video-card.component.html',
-  styleUrl: './top-video-card.component.scss'
+  styleUrl: './top-video-card.component.scss',
 })
 export class TopVideoCardComponent {
   private _liveVideoDetailsService = inject(LiveVideoDetailsService);
@@ -25,6 +32,22 @@ export class TopVideoCardComponent {
   first = input<boolean>(false);
   second = input<boolean>(false);
   third = input<boolean>(false);
+
+  getSentimentClass(score: number): string {
+    if (score < 0.25) return 'very-negative';
+    if (score < 0.45) return 'negative';
+    if (score < 0.55) return 'neutral';
+    if (score < 0.75) return 'positive';
+    return 'very-positive';
+  }
+
+  getSentimentLabel(score: number): string {
+    if (score < 0.25) return 'Very Negative';
+    if (score < 0.45) return 'Negative';
+    if (score < 0.55) return 'Neutral';
+    if (score < 0.75) return 'Positive';
+    return 'Very Positive';
+  }
 
   collapseDetails(): void {
     this._liveVideoDetailsService.updateShowDetails(false);

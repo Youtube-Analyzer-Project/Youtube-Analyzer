@@ -12,9 +12,11 @@ export interface SentimentSummaryDto {
   avg_sentiment: number;
   overall_sentiment_label: string;
   sentiment_distribution: {
+    very_positive: number;
     positive: number;
     neutral: number;
     negative: number;
+    very_negative: number;
   };
   trend_distribution: {
     increasing: number;

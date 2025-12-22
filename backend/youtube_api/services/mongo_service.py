@@ -15,7 +15,6 @@ def save_trending_videos(videos):
 
     if videos:
         for video in videos:
-            # Ensure each video has a unique _id field (using its 'id')
             video_doc = dict(video)
             if 'id' in video_doc:
                 video_doc['_id'] = video_doc['id']
@@ -32,22 +31,39 @@ def create_stats_view(video):
 
 def get_view_videos(skip, limit, search):
     collection = get_collection("videos")
+
     match = {}
-    if search is not None:
+    if search:
         match = {
-                "$or": [
-                    {"title": {"$regex": search, "$options": "i"}},
-                    {"channel_name": {"$regex": search, "$options": "i"}}
-                ]
-            }
+            "$or": [
+                {"title": {"$regex": search, "$options": "i"}},
+                {"channel_name": {"$regex": search, "$options": "i"}}
+            ]
+        }
+
+    total_videos = collection.count_documents(match)
+
     project = {
-        "tags": 0, "description": 0,  "highlights": 0, "last_updated": 0
+        "tags": 0, "description": 0, "highlights": 0
     }
-    videos = list(collection.aggregate([{"$match": match}, {'$skip': skip}, {'$limit': limit}, {"$project": project}]))
-    total_videos = collection.count_documents({})
+
+    pipeline = []
+    if match:
+        pipeline.append({"$match": match})
+
+    pipeline.append({"$sort": {"last_updated": -1}})
+
+    pipeline.extend([
+        {"$skip": skip},
+        {"$limit": limit},
+        {"$project": project}
+    ])
+
+    videos = list(collection.aggregate(pipeline))
 
     for video in videos:
         create_stats_view(video)
+
     return videos, total_videos
 
 
@@ -74,16 +90,22 @@ def get_view_top_categories():
                 "sentiment_label": {
                     "$switch": {
                         "branches": [
-                            {"case": {"$lte": ["$avg_sentiment", 0.20]}, "then": "Very Negative"},
-                            {"case": {"$and": [{"$gt": ["$avg_sentiment", 0.20]}, {"$lte": ["$avg_sentiment", 0.40]}]},
-                             "then": "Negative"},
-                            {"case": {"$and": [{"$gt": ["$avg_sentiment", 0.40]}, {"$lte": ["$avg_sentiment", 0.60]}]},
-                             "then": "Neutral"},
-                            {"case": {"$and": [{"$gt": ["$avg_sentiment", 0.60]}, {"$lte": ["$avg_sentiment", 0.80]}]},
-                             "then": "Positive"},
-                            {"case": {"$gt": ["$avg_sentiment", 0.80]}, "then": "Very Positive"},
+                            {"case": {"$lt": ["$avg_sentiment", 0.35]}, "then": "Negative"},
+                            {"case": {
+                                "$and": [
+                                    {"$gte": ["$avg_sentiment", 0.35]},
+                                    {"$lte": ["$avg_sentiment", 0.60]}
+                                ]
+                            }, "then": "Neutral"},
+                            {"case": {
+                                "$and": [
+                                    {"$gt": ["$avg_sentiment", 0.60]},
+                                    {"$lte": ["$avg_sentiment", 0.85]}
+                                ]
+                            }, "then": "Positive"},
+                            {"case": {"$gt": ["$avg_sentiment", 0.85]}, "then": "Very Positive"},
                         ],
-                        "default": "Unknown"
+                        "default": "Mixed"
                     }
                 }
             }
@@ -92,7 +114,7 @@ def get_view_top_categories():
             "$sort": {"avg_sentiment": -1}
         },
         {
-            "$limit": 5
+            "$limit": 10
         }
     ]
     return list(collection.aggregate(pipeline))
@@ -124,6 +146,11 @@ def get_sentiment_summary():
                 "total_videos": {"$sum": 1},
                 "total_views": {"$sum": "$stats.views"},
                 "avg_sentiment": {"$avg": "$sentiment.score"},
+                "very_positive": {
+                    "$sum": {
+                        "$cond": [{"$eq": ["$sentiment.label", "Very Positive"]}, 1, 0]
+                    }
+                },
                 "positive": {
                     "$sum": {
                         "$cond": [{"$eq": ["$sentiment.label", "Positive"]}, 1, 0]
@@ -137,6 +164,11 @@ def get_sentiment_summary():
                 "negative": {
                     "$sum": {
                         "$cond": [{"$eq": ["$sentiment.label", "Negative"]}, 1, 0]
+                    }
+                },
+                "very_negative": {
+                    "$sum": {
+                        "$cond": [{"$eq": ["$sentiment.label", "Very Negative"]}, 1, 0]
                     }
                 },
                 "trend_increasing": {
@@ -160,16 +192,17 @@ def get_sentiment_summary():
 
     agg = list(collection.aggregate(pipeline))
     if not agg:
-        # fallback when there are no videos in the collection
         return {
             "total_videos": 0,
             "total_views": 0,
             "avg_sentiment": None,
             "overall_sentiment_label": "Unknown",
             "sentiment_distribution": {
+                "very_positive": 0,
                 "positive": 0,
                 "neutral": 0,
                 "negative": 0,
+                "very_negative": 0,
             },
             "trend_distribution": {
                 "increasing": 0,
@@ -182,9 +215,11 @@ def get_sentiment_summary():
     doc = agg[0]
 
     sentiment_distribution = {
+        "very_positive": doc.get("very_positive", 0),
         "positive": doc.get("positive", 0),
         "neutral": doc.get("neutral", 0),
         "negative": doc.get("negative", 0),
+        "very_negative": doc.get("very_negative", 0),
     }
 
     trend_distribution = {
@@ -234,23 +269,16 @@ def get_sentiment_top_videos(limit: int = 5, direction: str = "positive"):
 
     return videos
 
-def get_sentiment_timeseries_top_categories(days: int = 30, top_k: int = 5):
-    collection = get_collection("videos")
 
+def get_sentiment_timeseries_top_categories(days: int = 90, top_k: int = 3):
+    collection = get_collection("videos")
     start_dt = datetime.utcnow() - timedelta(days=days)
-    start_str = start_dt.isoformat()
 
     top_pipeline = [
-        {"$unwind": "$sentiment.history"},
-        {
-            "$match": {
-                "sentiment.history.date": {"$gte": start_str}
-            }
-        },
         {
             "$group": {
                 "_id": "$category_id",
-                "total_views": {"$sum": "$sentiment.history.views"},
+                "total_views": {"$sum": "$stats.views"},
                 "videos_count": {"$sum": 1}
             }
         },
@@ -263,34 +291,49 @@ def get_sentiment_timeseries_top_categories(days: int = 30, top_k: int = 5):
         return {"categories": [], "series": []}
 
     category_ids = [d["_id"] for d in top_docs]
-
     categories_meta = [
-        {
-            "id": d["_id"],
-            "total_views": d.get("total_views", 0),
-            "videos_count": d.get("videos_count", 0),
-        }
+        {"id": d["_id"], "total_views": d["total_views"], "videos_count": d["videos_count"]}
         for d in top_docs
     ]
 
     ts_pipeline = [
         {"$match": {"category_id": {"$in": category_ids}}},
-        {"$unwind": "$sentiment.history"},
+        {
+            "$addFields": {
+                "combined_history": {
+                    "$concatArrays": [
+                        {"$ifNull": ["$sentiment.history", []]},
+                        [
+                            {
+                                "date": "$last_updated",
+                                "score": "$sentiment.score"
+                            }
+                        ]
+                    ]
+                }
+            }
+        },
+        {"$unwind": "$combined_history"},
+        {
+            "$addFields": {
+                "h_date": {"$toDate": "$combined_history.date"}
+            }
+        },
         {
             "$match": {
-                "sentiment.history.date": {"$gte": start_str}
+                "h_date": {"$gte": start_dt}
             }
         },
         {
             "$group": {
                 "_id": {
-                    "date": {"$substr": ["$sentiment.history.date", 0, 10]},
+                    "date": {"$dateToString": {"format": "%Y-%m-%d", "date": "$h_date"}},
                     "category_id": "$category_id",
                 },
-                "avg_score": {"$avg": "$sentiment.history.score"},
+                "avg_score": {"$avg": "$combined_history.score"},
             }
         },
-        {"$sort": {"_id.date": 1, "_id.category_id": 1}},
+        {"$sort": {"_id.date": 1, "_id.category_id": 1}}
     ]
 
     docs = list(collection.aggregate(ts_pipeline))
@@ -304,10 +347,8 @@ def get_sentiment_timeseries_top_categories(days: int = 30, top_k: int = 5):
         for d in docs
     ]
 
-    return {
-        "categories": categories_meta,
-        "series": series,
-    }
+    return {"categories": categories_meta, "series": series}
+
 
 def store_live_trends(videos):
     if videos:
