@@ -23,9 +23,10 @@ export class LiveSentimentComponent implements OnInit {
   private _liveSentimentApiService = inject(LiveSentimentApiService);
 
   ngOnInit(): void {
-    setInterval(() => {
-      this._fetchLiveVideos();
-    }, 1500);
+    this._fetchLiveVideos();
+    // setInterval(() => {
+    //   this._fetchLiveVideos();
+    // }, 1500);
   }
 
   private _fetchLiveVideos(): void {

@@ -23,11 +23,7 @@
     <h2 class="live-video-details">Recent Messages</h2>
 
     @for (comment of video()?.comments?.slice(0, 10); track $index) {
-      <mat-card class="kpi-card">
-        <mat-card-content>
-          <p class="message-text">{{ comment }}</p>
-        </mat-card-content>
-      </mat-card>
+      <mat-chip class="comment-chip">{{ comment }}</mat-chip>
     }
   }
 

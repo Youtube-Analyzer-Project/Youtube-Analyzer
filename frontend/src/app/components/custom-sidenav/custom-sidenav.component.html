@@ -8,7 +8,7 @@
 <mat-nav-list [class.collapsed]="isCollapsed()">
   @for(item of menuItem(); track item.id) {
   <a mat-list-item [routerLink]="item.route" routerLinkActive #rla="routerLinkActive" [activated]="rla.isActive"
-    [matTooltip]="isCollapsed() ? item.label : null" matTooltipPosition="right">
+    [matTooltip]="isCollapsed() ? item.label : null" matTooltipPosition="right" (click)="resetServices()">
     <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
     <span matListItemTitle [class.hidden]="isCollapsed()">{{ item.label }}</span>
   </a>

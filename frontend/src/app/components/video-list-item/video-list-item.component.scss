@@ -10,7 +10,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 93%;
 }
 
 .video-details {
@@ -19,6 +19,7 @@
   gap: 4px;
   flex: 1;
   min-width: 0;
+  max-width: 30%;
   margin-right: 16px;
 }
 
