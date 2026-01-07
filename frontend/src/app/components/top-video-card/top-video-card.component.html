@@ -1,29 +1,22 @@
-<mat-card class="kpi-card" [class.first]=first() (click)="collapseDetails()">
-  @if (first()) {
-  <div class="first-position">#1</div>
-  }
+<mat-card class="kpi-card" [class.first-place]="first()" [ngClass]="'shadow-' + getSentimentClass(video().score)"
+  (click)=" viewVideosDetails()">
 
-  @if (second()) {
-  <div class="second-position">#2</div>
-  }
+  @if (first()) { <div class="rank-badge rank-1">#1</div> }
+  @if (second()) { <div class="rank-badge rank-2">#2</div> }
+  @if (third()) { <div class="rank-badge rank-3">#3</div> }
 
-  @if (third()) {
-  <div class="third-position">#3</div>
-  }
-  <mat-card-header>
+  <img mat-card-image [src]="handleThumbnail()" alt="Video thumbnail">
+
+  <mat-card-content>
     <mat-card-title class="kpi-title">{{ video().title }}</mat-card-title>
-    <mat-card-subtitle>{{ video().channel }}</mat-card-subtitle>
-  </mat-card-header>
+    <mat-card-subtitle class="kpi-channel">{{ video().channel }}</mat-card-subtitle>
+  </mat-card-content>
 
   <mat-card-actions>
-
-    <mat-chip class="sentiment-details" [ngClass]="getSentimentClass(video().score)">
-
-      <span [ngClass]="getSentimentClass(video().score)">
-        {{ video().score | number : '1.2-2' }}
-        {{ getSentimentLabel(video().score) }}
-      </span>
-
-    </mat-chip>
+    <div class="sentiment-pill" [ngClass]="getSentimentClass(video().score)">
+      <span class="sentiment-value">{{ video().score | number : '1.2-2' }}</span>
+      <span class="sentiment-label">{{ getSentimentLabel(video().score) }}</span>
+    </div>
   </mat-card-actions>
+
 </mat-card>

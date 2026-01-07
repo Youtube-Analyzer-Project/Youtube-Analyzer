@@ -6,4 +6,6 @@ export interface LiveVideo {
   viewCount: string;
   score: number;
   comments: string[];
+  publishedAt: string;
+  thumbnail: string;
 }

@@ -1,0 +1,78 @@
+<div class="live-video-details video-dialog-content">
+
+    @if (loading()) {
+    <div class="loading-state">
+        <mat-progress-spinner mode="indeterminate" diameter="40" strokeWidth="4"></mat-progress-spinner>
+        <p>Loading live video…</p>
+    </div>
+    }
+
+    @if (error()) {
+    <p class="error-message">{{ error() }}</p>
+    }
+
+    @if (!loading() && !error() && video()) {
+    <div class="video-header">
+
+        @if (safeUrl()) {
+        <div class="video-frame-wrapper">
+            <iframe [src]="safeUrl()" allowfullscreen></iframe>
+        </div>
+        }
+
+        <div class="video-main-info">
+
+            <h2 class="dialog-title">{{ video()!.title }}</h2>
+
+            <div class="channel-row">
+
+                <div class="channel-name">
+                    <mat-icon style="font-size: 1.2rem; vertical-align: middle; margin-right: 4px;">person</mat-icon>
+                    {{ video()!.channel }}
+                </div>
+
+                <div class="sentiment-pill" [ngClass]="getSentimentClass(video()!.score)"
+                    [class.sentiment-positive]="video()!.score >= 0.55"
+                    [class.sentiment-neutral]="video()!.score >= 0.45 && video()!.score < 0.55"
+                    [class.sentiment-negative]="video()!.score < 0.45">
+                    Avg Sentiment: {{ video()!.score | number:'1.2-2' }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    @if (video()!.comments.length) {
+    <section class="comments-section" *ngIf="comments.length">
+        <h3>Recent Comments</h3>
+
+        <div class="comment-row" *ngFor="let comment of comments; let i = index" (click)="toggleComment(i)"
+            style="cursor: pointer; margin-bottom: 0.5rem;">
+
+            <div class="comment-text">
+                <div class="comment-body">
+                    {{ comment.expanded ? comment.text : comment.truncated }}
+                    <span class="read-more" *ngIf="comment.needsTruncate"
+                        style="color: var(--mat-sys-primary); font-weight: 500;">
+                        {{ comment.expanded ? '(Show Less)' : '... (Read More)' }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+    }
+    }
+</div>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+    @if (showYoutubeButton()) {
+    <a class="action-btn youtube-btn" [href]="youtubeUrl()" target="_blank" rel="noopener noreferrer">
+        <mat-icon>open_in_new</mat-icon>
+        Open in YouTube
+    </a>
+    }
+    <button class="action-btn share-btn" (click)="close()">
+        <mat-icon>close</mat-icon>
+        Close
+    </button>
+</mat-dialog-actions>

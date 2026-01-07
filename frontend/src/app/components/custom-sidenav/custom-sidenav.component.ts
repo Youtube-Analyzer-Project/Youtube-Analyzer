@@ -1,10 +1,11 @@
-import { Component, signal, Output, EventEmitter } from '@angular/core';
+import {Component, signal, Output, EventEmitter, inject} from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { DarkButtonComponent } from '../dark-button/dark-button.component';
 import { MenuItem } from '../../types/custom-sidenav.types';
+import {LiveVideoDetailsService} from '../../services/live-video-details.service';
 
 @Component({
   selector: 'app-custom-sidenav',
@@ -22,6 +23,7 @@ import { MenuItem } from '../../types/custom-sidenav.types';
   host: { '[class.collapsed]': 'isCollapsed()' },
 })
 export class CustomSidenavComponent {
+  private liveVideoDetailsService = inject(LiveVideoDetailsService);
   @Output() collapsedChange = new EventEmitter<boolean>();
 
   isCollapsed = signal<boolean>(false);
@@ -29,11 +31,15 @@ export class CustomSidenavComponent {
     { id: 1, icon: 'dashboard', label: 'Dashboard', route: 'dashboard' },
     { id: 2, icon: 'trending_up', label: 'Trending Videos', route: 'trending' },
     { id: 3, icon: 'mood', label: 'Sentiment Analysis', route: 'sentiment' },
-    { id: 4, icon: 'analytics', label: 'Topics & Trends', route: 'topics' },
+    { id: 4, icon: 'analytics', label: 'Live Pulse', route: 'topics' },
   ]);
 
   toggleCollapsed(): void {
     this.isCollapsed.set(!this.isCollapsed());
     this.collapsedChange.emit(this.isCollapsed());
+  }
+
+  resetServices(): void {
+    this.liveVideoDetailsService.updateShowDetails(true);
   }
 }

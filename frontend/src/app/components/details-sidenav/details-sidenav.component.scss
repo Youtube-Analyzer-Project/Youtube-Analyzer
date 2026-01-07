@@ -32,6 +32,7 @@
 .message-text {
   @extend .kpi-details;
   margin-bottom: 8px;
+  max-width: 50%;
 }
 
 .meta-chip {
@@ -77,4 +78,16 @@
     border-color: #ff5252;
     transform: translateY(-2px);
   }
+}
+
+.comment-chip {
+  display: block;
+  margin: 8px 16px;
+  max-width: 80%;
+  padding: 4px 8px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  white-space: normal;
 }

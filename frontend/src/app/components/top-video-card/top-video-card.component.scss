@@ -1,90 +1,93 @@
-.sentiment-details {
-  margin: 1rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.mat-mdc-card-actions {
-  justify-content: center;
-}
-
-.mat-icon {
-  vertical-align: middle;
-  font-size: 1.25rem;
-}
-
-.positive {
-  background-color: #b1f1b1 !important;
-}
-
-.very-positive {
-  background-color: #7ef178 !important;
-}
-
-.very-negative {
-  background-color: #f78c8c !important;
-}
-
-.positive-text {
-  color: #01871c;
-  font-weight: bold;
-}
-
-.neutral {
-  background-color: #FFF3CD !important;
-}
-
-.neutral-text {
-  color: #B38700;
-  font-weight: bold;
-}
-
-.negative {
-  color: #DD4046 !important;
-}
-
-.neutral {
-  color: #F3BC24 !important;
-}
-
-.first {
-  scale: 1.15;
-}
-
-.first-position {
-  font-weight: bold;
-  margin: 0.5rem auto;
-  padding: 0.5rem;
-  font-size: 1.25rem;
-  background-color: #FFF3CD;
-  color: #B38700;
-  width: fit-content;
-  border-radius: 8px;
-}
-
-.second-position {
-  font-weight: bold;
-  margin: 0.5rem auto;
-  padding: 0.5rem;
-  font-size: 1.25rem;
-  background-color: lightgray;
-  color: gray;
-  width: fit-content;
-  border-radius: 8px;
-}
-
-.third-position {
-  font-weight: bold;
-  margin: 0.5rem auto;
-  padding: 0.5rem;
-  font-size: 1.25rem;
-  background-color: #F1E3D3;
-  color: #8C5A2B;
-  width: fit-content;
-  border-radius: 8px;
-}
-
 .kpi-card {
-  max-width: 25rem;
+width: 18rem;
+position: relative;
+overflow: visible;
+border-radius: 16px;
+cursor: pointer;
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+background-color: --mat-sys-surface;
+margin-top: 2rem;
 }
 
+.first-place {
+transform: scale(1.15);
+z-index: 10;
+margin-top: 0;
+}
+
+img[mat-card-image] {
+border-top-left-radius: 16px;
+border-top-right-radius: 16px;
+height: 140px;
+object-fit: cover;
+width: 100%;
+margin: 0;
+}
+
+mat-card-content {
+padding: 1rem 1rem 0 1rem;
+text-align: left;
+}
+
+.kpi-title {
+font-size: 1rem;
+font-weight: 700;
+line-height: 1.2;
+margin-bottom: 0.25rem;
+display: -webkit-box;
+-webkit-line-clamp: 2;
+-webkit-box-orient: vertical;
+overflow: hidden;
+}
+
+.kpi-channel {
+font-size: 0.875rem;
+color: #666;
+}
+
+.rank-badge {
+position: absolute;
+top: 10px;
+left: 10px;
+padding: 4px 12px;
+border-radius: 8px;
+font-weight: 900;
+font-size: 1.1rem;
+z-index: 2;
+}
+
+.rank-1 { background-color: #D1E7DD; color: #0f5132; }
+.rank-2 { background-color: #f8f9fa; color: #666; }
+.rank-3 { background-color: #fae3d0; color: #8C5A2B; }
+
+mat-card-actions {
+padding: 1rem;
+display: flex;
+justify-content: center;
+}
+
+.sentiment-pill {
+width: 100%;
+padding: 8px 16px;
+border-radius: 12px;
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 6px;
+font-weight: bold;
+font-size: 1rem;
+}
+
+.shadow-very-positive,
+.shadow-positive {
+  box-shadow: 0 10px 30px rgba(15, 81, 50, 0.4);
+}
+
+.shadow-neutral {
+  box-shadow: 0 10px 30px rgba(133, 100, 4, 0.4);
+}
+
+.shadow-negative,
+.shadow-very-negative {
+  box-shadow: 0 10px 30px rgba(114, 28, 36, 0.4);
+}

@@ -38,6 +38,7 @@ def get_comments_by_video_id(video_id):
 
     return response.raise_for_status()
 
+
 def get_trending_live_streams():
     url = f"{BASE_URL}search"
     params = {
@@ -46,10 +47,10 @@ def get_trending_live_streams():
         "type": "video",
         "order": "viewCount",
         "maxResults": 30,
-        "regionCode": "GB",
+        "regionCode": "RO",
         "key": YOUTUBE_API_KEY,
         "q": " ",
-        "relevanceLanguage": "en"
+        "relevanceLanguage": "ro"
     }
     response = requests.get(url, params=params)
     search_data = response.json()
@@ -63,7 +64,7 @@ def get_trending_live_streams():
         "part": "snippet,liveStreamingDetails,statistics",
         "id": ",".join(video_ids),
         "key": YOUTUBE_API_KEY,
-        "regionCode": "GB",
+        "regionCode": "RO",
     }
     videos_resp = requests.get(videos_url, params=videos_params)
     videos_data = videos_resp.json()
@@ -71,16 +72,24 @@ def get_trending_live_streams():
     live_streams = []
     for item in videos_data.get("items", []):
         live_chat_id = item.get("liveStreamingDetails", {}).get("activeLiveChatId")
-        if live_chat_id:  # only include currently live streams
+        snippet = item.get("snippet", {})
+        thumbnails = snippet.get("thumbnails", {})
+
+        thumbnail_url = None
+        if "maxres" in thumbnails:
+            thumbnail_url = thumbnails["maxres"]["url"]
+
+        if live_chat_id:
             live_streams.append({
-                "_id": item["id"],  # correct usage for /videos
-                "title": item["snippet"]["title"],
-                "channel": item["snippet"]["channelTitle"],
+                "_id": item["id"],
+                "title": snippet["title"],
+                "channel": snippet["channelTitle"],
                 "liveChatId": live_chat_id,
-                "viewCount": item.get("statistics", {}).get("viewCount")
+                "viewCount": item.get("statistics", {}).get("viewCount"),
+                "thumbnail": thumbnail_url,
+                "startedAt": item.get("liveStreamingDetails", {}).get("actualStartTime")
             })
     return live_streams
-
 
 def fetch_live_comments(live_chat_id, max_comments=20):
     url = f"{BASE_URL}liveChat/messages"

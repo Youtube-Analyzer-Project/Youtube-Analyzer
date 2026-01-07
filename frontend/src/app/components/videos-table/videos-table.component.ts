@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { VideoItem, VideosListPaginated } from '../../../../types/dashboard-api.types';
+import { VideoItem, VideosListPaginated } from '../../types/dashboard-api.types';
 
 @Component({
   selector: 'app-videos-table',

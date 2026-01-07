@@ -3,9 +3,9 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { VideoDialogData } from '../../../../types/dashboard-api.types';
-import { DashboardApiService } from '../../../../services/dashboard-api.service';
-import { BackendVideoDetails } from '../../../../types/backend-api.types';
+import { VideoDialogData } from '../../types/dashboard-api.types';
+import { DashboardApiService } from '../../services/dashboard-api.service';
+import { BackendVideoDetails } from '../../types/backend-api.types';
 import { DecimalPipe, DatePipe, CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChip } from '@angular/material/chips';

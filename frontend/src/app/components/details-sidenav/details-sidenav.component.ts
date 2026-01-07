@@ -3,7 +3,6 @@ import {MatIcon} from "@angular/material/icon";
 import {MatTabNavPanel} from '@angular/material/tabs';
 import {LiveVideoDetailsService} from '../../services/live-video-details.service';
 import {LiveVideo} from '../../types/live-video.type';
-import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatChip} from '@angular/material/chips';
 
 @Component({
@@ -11,8 +10,6 @@ import {MatChip} from '@angular/material/chips';
   imports: [
     MatIcon,
     MatTabNavPanel,
-    MatCard,
-    MatCardContent,
     MatChip
   ],
   templateUrl: './details-sidenav.component.html',
