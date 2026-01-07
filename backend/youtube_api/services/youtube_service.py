@@ -47,10 +47,10 @@ def get_trending_live_streams():
         "type": "video",
         "order": "viewCount",
         "maxResults": 30,
-        "regionCode": "GB",
+        "regionCode": "RO",
         "key": YOUTUBE_API_KEY,
         "q": " ",
-        "relevanceLanguage": "en"
+        "relevanceLanguage": "ro"
     }
     response = requests.get(url, params=params)
     search_data = response.json()
