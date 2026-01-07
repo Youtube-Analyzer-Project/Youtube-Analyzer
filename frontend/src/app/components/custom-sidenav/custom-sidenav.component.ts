@@ -31,7 +31,7 @@ export class CustomSidenavComponent {
     { id: 1, icon: 'dashboard', label: 'Dashboard', route: 'dashboard' },
     { id: 2, icon: 'trending_up', label: 'Trending Videos', route: 'trending' },
     { id: 3, icon: 'mood', label: 'Sentiment Analysis', route: 'sentiment' },
-    { id: 4, icon: 'analytics', label: 'Topics & Trends', route: 'topics' },
+    { id: 4, icon: 'analytics', label: 'Live Pulse', route: 'topics' },
   ]);
 
   toggleCollapsed(): void {

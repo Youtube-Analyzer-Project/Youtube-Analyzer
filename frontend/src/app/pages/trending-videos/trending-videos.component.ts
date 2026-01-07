@@ -10,8 +10,8 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { YoutubeApiService } from '../../services/youtube-api-service';
-import { VideoDialogComponent } from '../dashboard/widgets/video-dialog/video-dialog.component';
-import { VideosTableComponent } from '../dashboard/widgets/videos-table/videos-table.component';
+import { VideoDialogComponent } from '../../components/video-dialog/video-dialog.component';
+import { VideosTableComponent } from '../../components/videos-table/videos-table.component';
 import { VideoItem, VideosListPaginated } from '../../types/dashboard-api.types';
 
 @Component({

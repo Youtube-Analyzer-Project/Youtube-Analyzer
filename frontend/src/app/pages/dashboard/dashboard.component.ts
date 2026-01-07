@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { SearchBarComponent } from './widgets/search-bar/search-bar.component';
-import { TrendingCategoriesComponent } from './widgets/trending-categories/trending-categories.component';
-import { VideosTableComponent } from './widgets/videos-table/videos-table.component';
-import { VideoDialogComponent } from './widgets/video-dialog/video-dialog.component';
+import { SearchBarComponent } from '../../components/search-bar/search-bar.component';
+import { TrendingCategoriesComponent } from '../../components/trending-categories/trending-categories.component';
+import { VideosTableComponent } from '../../components/videos-table/videos-table.component';
+import { VideoDialogComponent } from '../../components/video-dialog/video-dialog.component';
 
 import {
   TopCategoryCard,

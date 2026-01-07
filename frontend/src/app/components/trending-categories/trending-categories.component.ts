@@ -1,9 +1,18 @@
-import {Component, Input, Output, EventEmitter, ViewChild, ElementRef, signal, OnInit} from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+  signal,
+  OnInit,
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { TopCategoryCard } from '../../../../types/dashboard-api.types';
-import {WidgetComponent} from '../../../../components/widget/widget.component';
-import {Widget} from '../../../../types/sentiment.types';
+import { TopCategoryCard } from '../../types/dashboard-api.types';
+import { WidgetComponent } from '../widget/widget.component';
+import { Widget } from '../../types/sentiment.types';
 
 @Component({
   selector: 'app-trending-categories',
@@ -35,15 +44,14 @@ export class TrendingCategoriesComponent implements OnInit {
       category.sentiment_label === 'Positive'
         ? 'sentiment_satisfied'
         : category.sentiment_label === 'Negative'
-          ? 'sentiment_dissatisfied'
-          : 'sentiment_neutral';
+        ? 'sentiment_dissatisfied'
+        : 'sentiment_neutral';
     return {
       id: index,
       label: category.category_name,
       content: category.sentiment_label,
       details: `${category.videos_count} videos`,
-      icon: sentiment
-    }
+      icon: sentiment,
+    };
   }
-
 }
