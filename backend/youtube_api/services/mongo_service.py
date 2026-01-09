@@ -254,12 +254,17 @@ def get_sentiment_top_videos(limit: int = 5, direction: str = "positive"):
 
     sort_order = -1 if direction == "positive" else 1
 
-    cursor = collection.find({}, {
-        "tags": 0,
-        "description": 0,
-        "highlights": 0,
-        "last_updated": 0,
-    }).sort("sentiment.score", sort_order).limit(limit)
+    cursor = collection.find(
+        {
+            "sentiment.score": {"$ne": 0.00}
+        },
+        {
+            "tags": 0,
+            "description": 0,
+            "highlights": 0,
+            "last_updated": 0,
+        }
+    ).sort("sentiment.score", sort_order).limit(limit)
 
     videos = list(cursor)
     for v in videos:
