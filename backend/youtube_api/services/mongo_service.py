@@ -28,7 +28,6 @@ def create_stats_view(video):
         video['stats']['sentiment_score'] = video['sentiment']['score']
         video.pop('sentiment', None)
 
-
 def get_view_videos(skip, limit, search):
     collection = get_collection("videos")
 
@@ -51,7 +50,7 @@ def get_view_videos(skip, limit, search):
     if match:
         pipeline.append({"$match": match})
 
-    pipeline.append({"$sort": {"last_updated": -1}})
+    pipeline.append({"$sort": {"published_at": -1, "_id": 1}})
 
     pipeline.extend([
         {"$skip": skip},
@@ -65,7 +64,6 @@ def get_view_videos(skip, limit, search):
         create_stats_view(video)
 
     return videos, total_videos
-
 
 def get_view_video(video_id):
     collection = get_collection("videos")
