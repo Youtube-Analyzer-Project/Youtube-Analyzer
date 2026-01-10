@@ -4,7 +4,7 @@
 The **YouTube Trending & Sentiment Analyzer** is a data-driven application that collects, processes, and visualizes public reactions to trending YouTube videos.
 
 It aims to analyze audience sentiment, detect trends, and display interactive visual insights.  
-The system uses the **YouTube Data API**, **sentiment analysis models**, and **Big Data technologies** (Hadoop, Spark, Kafka) to process both batch and real-time data.
+The system uses the **YouTube Data API**, **sentiment analysis models**, and **Big Data technologies** (Hadoop, Spark) to process both batch and real-time data.
 
 ---
 
@@ -26,11 +26,11 @@ As students in the **Big Data Master’s program**, this project demonstrates:
 ## Implementation Plan
 
 ### Data Flow Summary
-1. **Data Sources** – YouTube Data API + stored history  
+1. **Data Sources** – YouTube Data API 
 2. **Ingestion** – Python scripts + Spark (for streaming)  
-3. **Storage** – JSON for raw data; MongoDB for processed results  
-4. **Processing** – PySpark for batch; Spark Streaming for real-time  
-5. **ML** – VADER or DistilBERT for sentiment analysis  
+3. **Storage** – JSON for raw data (in HADOOP); MongoDB for processed results  
+4. **Processing** – PySpark for batch; Django for real-time  
+5. **ML** – VADER for sentiment analysis  
 6. **Visualization** – Django REST API + Angular dashboard  
 
 ---
@@ -40,9 +40,9 @@ As students in the **Big Data Master’s program**, this project demonstrates:
 
 **Flow:**
 1. Open dashboard → see trending videos grid  
-2. Filter by region or category  
+2. Search by name or youtube channel  
 3. View detailed analytics (sentiment charts, top comments, timelines)  
-4. See overall trends and real-time updates  
+4. See overall trends and real-time live videos  
 
 **Alternative Flows:**
 - If API quota exhausted → load last stored data  
